@@ -44,6 +44,9 @@ class Discipline
      */
     private $artworks;
 
+    const DISCIPLINES = ["Arts visuels","Arts du mouvement", "Arts Littéraires", "Arts Musicaux" ];
+    const COLORS = ["#0c18f2",'#8c08f5','#f4e90b','#f24d0d'];
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
