@@ -42,6 +42,17 @@ class Artwork
      */
     private $updatedAt;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Discipline::class, inversedBy="artworks")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $discipline;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="artworks")
+     */
+    private $user;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -103,6 +114,30 @@ class Artwork
     public function setUpdatedAt(\DateTimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getDiscipline(): ?Discipline
+    {
+        return $this->discipline;
+    }
+
+    public function setDiscipline(?Discipline $discipline): self
+    {
+        $this->discipline = $discipline;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }
