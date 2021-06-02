@@ -10,7 +10,7 @@ class DisciplineFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
     {
-        for ($i = 0; $i < 4; $i++) {
+        for ($i = 0; $i < count(Discipline::DISCIPLINES); $i++) {
             $discipline = new Discipline();
             $discipline->setName(Discipline::DISCIPLINES[$i]);
             $discipline->setColor(Discipline::COLORS[$i]);

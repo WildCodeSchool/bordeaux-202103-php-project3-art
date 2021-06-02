@@ -11,7 +11,7 @@ use Doctrine\Persistence\ObjectManager;
 
 class UserFixtures extends Fixture
 {
-    const zipCodes = [
+    public const ZIP_CODES = [
         '33000',
         '17000',
         '33400',
@@ -19,11 +19,11 @@ class UserFixtures extends Fixture
         '33100',
         '33300'
     ];
+    public const NB_USERS = 6;
+
     public function load(ObjectManager $manager)
     {
-        // $product = new Product();
-        // $manager->persist($product);
-        for ($i = 1; $i <= 6; $i++) {
+        for ($i = 1; $i <= self::NB_USERS; $i++) {
             $avatar = new Avatar();
             $avatar->setUrl('artist' . $i . 'jpg');
             $manager->persist($avatar);
@@ -32,9 +32,12 @@ class UserFixtures extends Fixture
             $user = new User();
             $user->setFirstname('Artiste');
             $user->setLastname($i);
-            $user->setDescription('Je m\'appelle artiste ' . $i . ', Contrairement à une opinion répandue, le Lorem Ipsum n\'est pas simplement du texte aléatoire.');
+            $user->setDescription(
+                'Je m\'appelle artiste ' . $i .
+                ', Contrairement à une opinion répandue, le Lorem Ipsum n\'est pas simplement du texte aléatoire.'
+            );
             $user->setPseudo('Artist' . $i);
-            $user->setZipCode(self::zipCodes[$i - 1]);
+            $user->setZipCode(self::ZIP_CODES[$i - 1]);
             $user->setCreatedAt(new DateTime());
             $user->setUpdatedAt(new DateTime());
             $user->setEmail('artiste' . $i . '@gmail.com');

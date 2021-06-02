@@ -12,7 +12,7 @@ use App\DataFixtures\DisciplineFixtures;
 
 class ArtworkFixtures extends Fixture implements DependentFixtureInterface
 {
-    const MEDIA_LINKS = [
+    public const MEDIA_LINKS = [
         'https://www.youtube.com/watch?v=eIBCd4zmPDA',
         'https://www.youtube.com/watch?v=W25W2jOmKUM',
         'https://www.youtube.com/watch?v=XNhfV_53W7A',
@@ -30,7 +30,7 @@ class ArtworkFixtures extends Fixture implements DependentFixtureInterface
         'https://www.youtube.com/watch?v=J78NMdKN5UQ',
         'https://www.youtube.com/watch?v=T19d8I4v1Gw',
     ];
-    const USER_REPARTITION = [
+    public const USER_REPARTITION = [
         'user_1',
         'user_1',
         'user_1',
@@ -49,7 +49,7 @@ class ArtworkFixtures extends Fixture implements DependentFixtureInterface
         'user_6'
     ];
 
-    const DISCIPLINE_REPARTITION = [
+    public const DISCIPLINE_REPARTITION = [
         'discipline_1',
         'discipline_1',
         'discipline_1',
@@ -71,10 +71,13 @@ class ArtworkFixtures extends Fixture implements DependentFixtureInterface
 
     public function load(ObjectManager $manager)
     {
-        for ($i = 0; $i < 16; $i++) {
+        for ($i = 0; $i < count(self::USER_REPARTITION); $i++) {
             $artwork = new Artwork();
             $artwork->setName('oeuvre ' . ($i + 1));
-            $artwork->setDescription('descr' . ($i + 1) . 'Cuius acerbitati uxor grave accesserat incentivum, germanitate Augusti turgida supra modum,');
+            $artwork->setDescription(
+                'descr' . ($i + 1) .
+                'Cuius acerbitati uxor grave accesserat incentivum, germanitate Augusti turgida supra modum,'
+            );
             $artwork->setMedia(self::MEDIA_LINKS[$i]);
             $artwork->setCreatedAt(new DateTime());
             $artwork->setUpdatedAt(new DateTime());
