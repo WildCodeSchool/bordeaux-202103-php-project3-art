@@ -1,0 +1,21 @@
+@import "variables.scss";
+
+@mixin skewLines($color){
+  &:before{
+    content: "";
+    float: left;
+    height: 100px;
+    width: 100%;
+    transform: translateY(-30px) skewY(-2deg);
+    background-color: $color;
+  }
+  &:after {
+    content: "";
+    float: left;
+    height: 100px;
+    width: 100%;
+    transform: translateY(-10px) skewY(-2deg);
+    background-color: $color;
+  }
+}
+
