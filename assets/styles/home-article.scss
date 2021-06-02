@@ -1,5 +1,24 @@
 @import "variables.scss";
 
+@mixin skewLines($color){
+  &:before{
+    content: "";
+    float: left;
+    height: 100px;
+    width: 100%;
+    transform: translateY(-35px) skewY(-2deg);
+    background-color: $color;
+  }
+  &:after {
+    content: "";
+    float: left;
+    height: 100px;
+    width: 100%;
+    transform: translateY(-15px) skewY(-2deg);
+    background-color: $color;
+  }
+}
+
 .bloc-article{
   background-color: $article;
 }
@@ -8,31 +27,5 @@
   background: $article;
   margin-bottom: 80px;
   padding-bottom: 40px;
-  &:before{
-    content: "";
-    float: left;
-    height: 100px;
-    width: 100%;
-    transform: translateY(-35px) skewY(-2deg);
-    background-color: $article;
-  }
-  &:after{
-    content: "";
-    float: left;
-    height: 100px;
-    width: 100%;
-    transform: translateY(-15px) skewY(-2deg);
-    background-color: $article;
-  }
+  @include skewLines($article);
 }
-
-/* #article-bas{
-  &:before{
-    content: "";
-    float: left;
-    height: 100px;
-    width: 100%;
-    transform: translateY(-120px) skewY(-2deg);
-    background-color: $article;
-  }
-} */
