@@ -1,23 +1,5 @@
 @import "variables.scss";
-
-@mixin skewLines($color){
-  &:before{
-    content: "";
-    float: left;
-    height: 100px;
-    width: 100%;
-    transform: translateY(-35px) skewY(-2deg);
-    background-color: $color;
-  }
-  &:after {
-    content: "";
-    float: left;
-    height: 100px;
-    width: 100%;
-    transform: translateY(-15px) skewY(-2deg);
-    background-color: $color;
-  }
-}
+@import "homepage.scss";
 
 .bloc-article{
   background-color: $article;
@@ -28,4 +10,8 @@
   margin-bottom: 80px;
   padding-bottom: 40px;
   @include skewLines($article);
+}
+
+.white-title{
+  color: $contact;
 }
