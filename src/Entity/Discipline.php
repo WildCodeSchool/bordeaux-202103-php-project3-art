@@ -17,32 +17,35 @@ class Discipline
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private int $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $name;
+    private string $name;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $identifier;
+    private string $identifier;
 
     /**
      * @ORM\Column(type="string", length=7)
      */
-    private $color;
+    private string $color;
 
     /**
      * @ORM\ManyToMany(targetEntity=User::class, inversedBy="disciplines")
      */
-    private $users;
+    private string $users;
 
     /**
      * @ORM\OneToMany(targetEntity=Artwork::class, mappedBy="discipline")
      */
-    private $artworks;
+    private ArrayCollection $artworks;
+
+    public const DISCIPLINES = ["Arts visuels","Arts du mouvement", "Arts Littéraires", "Arts Musicaux" ];
+    public const COLORS = ["#0c18f2",'#8c08f5','#f4e90b','#f24d0d'];
 
     public function __construct()
     {
