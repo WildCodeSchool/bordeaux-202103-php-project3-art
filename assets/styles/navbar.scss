@@ -1,0 +1,18 @@
+@import "variables";
+
+.navbar-nav {
+  float:none;
+  margin:0 auto;
+  display: block;
+  text-align: center;
+  align-items: center;
+}
+
+.navbar-collapse {
+  text-align: center;
+}
+
+.bg-deko {
+  background-color: $navbar-bg;
+}
+
