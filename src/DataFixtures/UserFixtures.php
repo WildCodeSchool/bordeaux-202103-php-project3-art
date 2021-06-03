@@ -7,9 +7,10 @@ use App\Entity\Avatar;
 use App\Entity\Discipline;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
-class UserFixtures extends Fixture
+class UserFixtures extends Fixture implements DependentFixtureInterface
 {
     public const ZIP_CODES = [
         '33000',
@@ -18,6 +19,23 @@ class UserFixtures extends Fixture
         '33240',
         '33100',
         '33300'
+    ];
+    public const EXPERTISES = [
+        'danseuse',
+        'danseuse',
+        'écrivain',
+        'écrivaine',
+        'chanteur',
+        'chanteur'
+    ];
+    public const DISCIPLINES = [
+      'discipline_2',
+      'discipline_2',
+      'discipline_3',
+      'discipline_3',
+      'discipline_4',
+      'discipline_4',
+
     ];
     public const NB_USERS = 6;
 
@@ -44,9 +62,18 @@ class UserFixtures extends Fixture
             $user->setPassword("1234");
             $user->setRoles(['ARTIST']);
             $user->setAvatar($avatar);
+            $user->setExpertise(self::EXPERTISES[$i - 1]);
+            $user->addDiscipline($this->getReference(self::DISCIPLINES[$i - 1]));
             $manager->persist($user);
             $this->addReference('user_' . $i, $user);
         }
         $manager->flush();
+    }
+
+    public function getDependencies()
+    {
+        return [
+            DisciplineFixtures::class,
+        ];
     }
 }
