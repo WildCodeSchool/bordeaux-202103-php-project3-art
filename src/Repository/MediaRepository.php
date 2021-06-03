@@ -14,7 +14,6 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class MediaRepository extends ServiceEntityRepository
 {
-    public const SUPPORT_CHOICE = ['video', 'photo'];
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Media::class);

@@ -10,6 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Media
 {
+    public const SUPPORT_CHOICE = ['video', 'photo'];
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
