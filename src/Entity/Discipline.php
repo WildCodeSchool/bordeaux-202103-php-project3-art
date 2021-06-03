@@ -44,8 +44,8 @@ class Discipline
      */
     private  $artworks;
 
-    public const DISCIPLINES = ["Arts visuels","Arts du mouvement", "Arts Littéraires", "Arts Musicaux" ];
-    public const COLORS = ["#0c18f2",'#8c08f5','#f4e90b','#f24d0d'];
+    public const DISCIPLINES = ['Arts visuels','Arts du mouvement', 'Arts Littéraires', 'Arts Musicaux' ];
+    public const COLORS = ['visual','move','letters','music'];
 
     public function __construct()
     {
@@ -97,7 +97,7 @@ class Discipline
     /**
      * @return Collection|User[]
      */
-    public function getUsers(): Collection
+    public function getUsers()
     {
         return $this->users;
     }
@@ -121,7 +121,7 @@ class Discipline
     /**
      * @return Collection|Artwork[]
      */
-    public function getArtworks(): Collection
+    public function getArtworks()
     {
         return $this->artworks;
     }

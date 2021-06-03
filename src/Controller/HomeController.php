@@ -11,24 +11,19 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+    /**
+     * @Route("/", name="home_")
+     */
 class HomeController extends AbstractController
 {
-    /**
-     * @Route("/", name="home")
-     */
-    public function index(UserRepository $userRepository): Response
-    {
-        $users = $userRepository->findAll();
-        return $this->render('home/index.html.twig', [
-            'users' => $users,
-        ]);
-    }
 
     /**
-     * @Route("/", name="home")
+     * @Route("/", name="page")
      */
-    public function sendMessage(Request $request): Response
+    public function index(Request $request, UserRepository $userRepository): Response
     {
+        $users = $userRepository->findAll();
+
         $message = new Message();
         $form = $this->createForm(MessageType::class, $message);
         $form->handleRequest($request);
@@ -44,7 +39,8 @@ class HomeController extends AbstractController
             return $this->redirectToRoute('home');
         }
         return $this->render('home/index.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'artists' => $users,
         ]);
     }
 }

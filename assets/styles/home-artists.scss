@@ -1,0 +1,31 @@
+@import "variables.scss";
+@import "homepage.scss";
+
+#bloc-artists{
+  background: transparent;
+  margin-bottom: 80px;
+  padding-bottom: 40px;
+  @include skewLines(white);
+}
+.artist-image{
+  opacity: 75%;
+}
+.artist-name{
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+.bg-move{
+  background-color: $movement-arts;
+}
+.bg-visu{
+  background-color: $visual-arts;
+}
+.bg-music
+{
+  background-color: $musical-arts;
+}
+.bg-letters{
+  background-color: $littery-arts;
+}
+
