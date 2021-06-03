@@ -1,6 +1,7 @@
 $navbar-bg: #8c08f5;
+$presentation: #8c08f5;
 $navbar-text: white;
-$text: rgb(48, 48, 48);
+$text: #303030;
 $visual-arts: #8c08f5;
 $movement-arts: #8c08f5;
 $littery-arts: #f4e90b;
@@ -9,5 +10,7 @@ $article: #f4e90b;
 $main: #8c08f5 ;
 $contact: #f0f0f0;
 $highlight: #bdf4bd;
+$text-light: #ffffff;
+$text-dark: #303030;
 
 @import "~bootstrap/scss/bootstrap";
