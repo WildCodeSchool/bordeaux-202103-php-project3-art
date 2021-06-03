@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %} Profil - {{  (artist.pseudo) ? artist.pseudo : artist.firstname }}{% endblock %}
+{% block title %} Profil - {{ (artist.pseudo) ? artist.pseudo : artist.firstname }}{% endblock %}
 
 {% block body %}
     <div class="memphis-background">
@@ -22,11 +22,9 @@
                     </p>
                 </div>
             </div>
-                
         </div>
         <div class="container">
             <h2 class=" text-uppercase font-weight-bold py-5">Recherche</h2>
-            {{ dump(artist) }}
         </div>
         <div class="container">
             <h2 class="text-uppercase font-weight-bold py-5">Les annonces</h2>
