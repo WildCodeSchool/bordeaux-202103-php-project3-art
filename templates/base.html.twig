@@ -23,6 +23,11 @@
 			{% include 'component/_navbar.html.twig' %}
 		{% endblock %}
 	</header>
+	{% for message in app.flashes('success') %}
+		<div class="alert alert-success">
+			{{ message }}
+		</div>
+	{% endfor %}
 	<body>
 		{% block body %}{% endblock %}
 	</body>
