@@ -28,11 +28,6 @@ class Artwork
     private $description;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $media;
-
-    /**
      * @ORM\Column(type="datetime")
      */
     private $createdAt;
@@ -52,6 +47,11 @@ class Artwork
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="artworks")
      */
     private $user;
+
+    /**
+     * @ORM\OneToOne(targetEntity=Media::class, mappedBy="artwork", cascade={"persist", "remove"})
+     */
+    private $media;
 
     public function getId(): ?int
     {
@@ -78,18 +78,6 @@ class Artwork
     public function setDescription(?string $description): self
     {
         $this->description = $description;
-
-        return $this;
-    }
-
-    public function getMedia(): ?string
-    {
-        return $this->media;
-    }
-
-    public function setMedia(string $media): self
-    {
-        $this->media = $media;
 
         return $this;
     }
@@ -138,6 +126,23 @@ class Artwork
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getMedia(): ?Media
+    {
+        return $this->media;
+    }
+
+    public function setMedia(Media $media): self
+    {
+        // set the owning side of the relation if necessary
+        if ($media->getArtwork() !== $this) {
+            $media->setArtwork($this);
+        }
+
+        $this->media = $media;
 
         return $this;
     }

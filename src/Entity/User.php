@@ -106,6 +106,11 @@ class User implements UserInterface
      */
     private $articles;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $expertise;
+
     public function __construct()
     {
         $this->disciplines = new ArrayCollection();
@@ -477,6 +482,18 @@ class User implements UserInterface
                 $article->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getExpertise(): ?string
+    {
+        return $this->expertise;
+    }
+
+    public function setExpertise(string $expertise): self
+    {
+        $this->expertise = $expertise;
 
         return $this;
     }
