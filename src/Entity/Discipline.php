@@ -37,12 +37,12 @@ class Discipline
     /**
      * @ORM\ManyToMany(targetEntity=User::class, inversedBy="disciplines")
      */
-    private string $users;
+    private  $users;
 
     /**
      * @ORM\OneToMany(targetEntity=Artwork::class, mappedBy="discipline")
      */
-    private ArrayCollection $artworks;
+    private  $artworks;
 
     public const DISCIPLINES = ["Arts visuels","Arts du mouvement", "Arts Littéraires", "Arts Musicaux" ];
     public const COLORS = ["#0c18f2",'#8c08f5','#f4e90b','#f24d0d'];
