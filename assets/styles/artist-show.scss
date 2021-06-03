@@ -6,10 +6,6 @@
   height: 200px;
 }
 
-.icon{
-  color: $movement-arts;
-}
-
 .icon-localisation{
   font-size: 2em;
 }
@@ -17,23 +13,30 @@
 .icon-secondary{
   font-size: 2em;
 }
-.color-title{
-  color:$movement-arts;
-}
+
 .profil-link{
-  color: $movement-arts;
-  border-bottom: 1px solid $movement-arts;
   &:hover{
-    color: $movement-arts;
     text-decoration: none;
     border-bottom: none;
   }
   &:visited{
-    color: $movement-arts;
     text-decoration: none;
   }
 }
 
 .title-shadow-grey{
   @include highLight($contact);
+}
+
+.profil-link-border-move{
+  border-bottom: 1px solid $movement-arts;
+}
+.profil-link-border-visu{
+  border-bottom: 1px solid $visual-arts;
+}
+.profil-link-border-music{
+  border-bottom: 1px solid $musical-arts;
+}
+.profil-link-border-letters{
+  border-bottom: 1px solid $littery-arts;
 }
