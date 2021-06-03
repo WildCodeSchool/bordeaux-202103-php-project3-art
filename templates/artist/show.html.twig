@@ -5,29 +5,42 @@
 {% block body %}
     <div class="memphis-background">
         <div class="container pt-5">
-            <h2 class="font-weight-bold text-uppercase py-5">Bienvenu.e</h2>
-            <div class="d-flex">
+            <h2 class="title-shadow font-weight-bold text-uppercase">
+                <span class="title-content">Bienvenu.e</span>
+            </h2>
+            <div class="d-flex mt-5">
                 <div class="d-flex flex-column align-items-end pr-5">
                 <img class="avatar-picture" src="{{ asset('build/artists/%s')|format(artist.avatar.url) }}">
                     <a href="#" class="profil-link mt-1">Modifier mon profil</a>
                 </div>
                 <div class="d-flex flex-column">
-                    <h3 class="text-uppercase"><strong>{{ artist.firstname }}</strong> {{ artist.lastname }}</h3>
-                    <h4 class="text-uppercase">Danseuse</h4>
+                    <div class="d-flex flex-column align-items-start">
+                    <h3 class="text-uppercase title-shadow-grey color-title ">
+                        <span class="title-content"><strong>{{ artist.firstname }}</strong> {{ artist.lastname }}</span>
+                    </h3>
+                    <h4 class="title-shadow-grey text-uppercase color-title">
+                        <span class="title-content">{{ artist.expertise }}</span>
+                    </h4>
+                    </div>
                     <p><i class="fas fa-map-marker-alt icon icon-localisation"></i> {{ artist.zipcode }}</p>
                     <p>{{ artist.description }}</p>
-                    <p clas="inline">
+                    <p>
                         <i class="fas fa-user-friends mr-2 icon icon-secondary"></i> 5
                         <i class="fas fa-envelope mr-3 ml-2 icon icon-secondary"></i>3
                     </p>
                 </div>
             </div>
         </div>
-        <div class="container">
-            <h2 class=" text-uppercase font-weight-bold py-5">Recherche</h2>
+        <div class="container py-5">
+            <h2 class="title-shadow text-uppercase font-weight-bold ">
+                <span class="title-content">Recherche</span>
+            </h2>
         </div>
-        <div class="container">
-            <h2 class="text-uppercase font-weight-bold py-5">Les annonces</h2>
+
+        <div class="container py-5">
+            <h2 class="title-shadow text-uppercase font-weight-bold ">
+                <span class="title-content">Les annonces</span>
+            </h2>
         </div>
 
     </div>

@@ -1,4 +1,5 @@
 @import "variables.scss";
+@import "homepage.scss";
 
 .avatar-picture{
   width: 300px;
@@ -16,7 +17,9 @@
 .icon-secondary{
   font-size: 2em;
 }
-
+.color-title{
+  color:$movement-arts;
+}
 .profil-link{
   color: $movement-arts;
   border-bottom: 1px solid $movement-arts;
@@ -29,4 +32,8 @@
     color: $movement-arts;
     text-decoration: none;
   }
+}
+
+.title-shadow-grey{
+  @include highLight($contact);
 }
