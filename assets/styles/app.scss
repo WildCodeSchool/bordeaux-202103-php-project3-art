@@ -4,5 +4,10 @@
 @import "home-article.scss";
 @import "home-about-them.scss";
 @import "home-title.scss";
+@import "artist-show.scss";
 
 @import "~bootstrap/scss/bootstrap";
+$fa-font-path: '~@fortawesome/fontawesome-free/webfonts';
+@import '~@fortawesome/fontawesome-free/scss/fontawesome';
+@import '~@fortawesome/fontawesome-free/scss/solid';
+@import '~@fortawesome/fontawesome-free/scss/regular';

@@ -1,0 +1,32 @@
+@import "variables.scss";
+
+.avatar-picture{
+  width: 300px;
+  height: 200px;
+}
+
+.icon{
+  color: $movement-arts;
+}
+
+.icon-localisation{
+  font-size: 2em;
+}
+
+.icon-secondary{
+  font-size: 2em;
+}
+
+.profil-link{
+  color: $movement-arts;
+  border-bottom: 1px solid $movement-arts;
+  &:hover{
+    color: $movement-arts;
+    text-decoration: none;
+    border-bottom: none;
+  }
+  &:visited{
+    color: $movement-arts;
+    text-decoration: none;
+  }
+}
