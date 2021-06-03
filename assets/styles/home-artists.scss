@@ -3,9 +3,7 @@
 
 #bloc-artists{
   background: transparent;
-  margin-bottom: 80px;
   padding-bottom: 40px;
-  @include skewLines(white);
 }
 .artist-image{
   opacity: 75%;
