@@ -25,7 +25,7 @@ class UserFixtures extends Fixture
     {
         for ($i = 1; $i <= self::NB_USERS; $i++) {
             $avatar = new Avatar();
-            $avatar->setUrl('artist' . $i . 'jpg');
+            $avatar->setUrl('artist_' . $i . '.jpg');
             $manager->persist($avatar);
 
 
