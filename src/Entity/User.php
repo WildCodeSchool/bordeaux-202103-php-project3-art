@@ -6,10 +6,14 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @UniqueEntity(fields={"email"}, message="Email déjà inscrit")
+ * @UniqueEntity(fields={"pseudo"},message="Nom d'artiste non disponible")
+ * ORM\HasLifecycleCallbacks
  */
 class User implements UserInterface
 {
@@ -477,6 +481,37 @@ class User implements UserInterface
                 $article->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * Gets triggered only on insert
+     * @ORM\PrePersist
+     */
+    public function onPrePersist()
+    {
+        $this->createdAt = new \DateTime();
+        $this->updatedAt = new \DateTime();
+    }
+
+    /**
+     * Gets triggered only on update
+     * @ORM\PreUpdate()
+     */
+    public function onPreUpdate()
+    {
+        $this->updatedAt = new \DateTime();
+    }
+
+    public function getExpertise(): ?string
+    {
+        return $this->expertise;
+    }
+
+    public function setExpertise(string $expertise): self
+    {
+        $this->expertise = $expertise;
 
         return $this;
     }
