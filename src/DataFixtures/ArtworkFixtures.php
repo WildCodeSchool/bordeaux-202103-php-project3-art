@@ -62,10 +62,8 @@ class ArtworkFixtures extends Fixture implements DependentFixtureInterface
                 'descr' . ($i + 1) .
                 'Cuius acerbitati uxor grave accesserat incentivum, germanitate Augusti turgida supra modum,'
             );
-
-            $artwork->setMedia(MediaFixtures::MEDIA_LINKS[$i]);
-            $artwork->setCreatedAt(new \DateTime());
-            $artwork->setUpdatedAt(new \DateTime());
+            $artwork->setCreatedAt(new DateTime());
+            $artwork->setUpdatedAt(new DateTime());
             $artwork->setDiscipline($this->getReference(self::DISCIPLINE_REPARTITION[$i]));
             $artwork->setUser($this->getReference(self::USER_REPARTITION[$i]));
             $manager->persist($artwork);
