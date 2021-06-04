@@ -38,7 +38,7 @@ class HomeController extends AbstractController
 
             $this->addFlash('success', 'Message envoyé !');
 
-            return $this->redirectToRoute('home');
+            return $this->redirectToRoute('home_page');
         }
         return $this->render('home/index.html.twig', [
             'form' => $form->createView(),
