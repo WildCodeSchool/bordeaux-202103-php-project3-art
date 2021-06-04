@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+{% form_theme registrationForm 'bootstrap_4_layout.html.twig' %}
+{% block title %}Connexion
+{% endblock %}
+
+{% block body %}
+	{% for flashError in app.flashes('verify_email_error') %}
+		<div class="alert alert-danger" role="alert">{{ flashError }}</div>
+	{% endfor %}
+	{{ form_start(registrationForm) }}
+	<div class="container">
+		<h1 class="mb-5 mt-5 font-weight-bold text-center">CRÉER UN COMPTE</h1>
+		<div class="mb-5 d-inline-block">
+			<a>Déjà inscrit?</a>
+			<a href="" class="btn">
+        	CONNEXION</a>
+		</div>
+
+		{{ form_start(registrationForm) }}
+		{{ form_widget(registrationForm, { 'attr': {'class': 'foo'} }) }}
+		{{ form_errors(registrationForm) }}
+
+
+		<button type="submit" class="btn">CRÉER UN COMPTE</button>
+	</div>
+	{{ form_end(registrationForm) }}
+{% endblock %}
