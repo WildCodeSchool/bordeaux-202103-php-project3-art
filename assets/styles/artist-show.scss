@@ -1,0 +1,42 @@
+@import "variables.scss";
+@import "homepage.scss";
+
+.avatar-picture{
+  width: 300px;
+  height: 200px;
+}
+
+.icon-localisation{
+  font-size: 2em;
+}
+
+.icon-secondary{
+  font-size: 2em;
+}
+
+.profil-link{
+  &:hover{
+    text-decoration: none;
+    border-bottom: none;
+  }
+  &:visited{
+    text-decoration: none;
+  }
+}
+
+.title-shadow-grey{
+  @include highLight($contact);
+}
+
+.profil-link-border-move{
+  border-bottom: 1px solid $movement-arts;
+}
+.profil-link-border-visu{
+  border-bottom: 1px solid $visual-arts;
+}
+.profil-link-border-music{
+  border-bottom: 1px solid $musical-arts;
+}
+.profil-link-border-letters{
+  border-bottom: 1px solid $littery-arts;
+}

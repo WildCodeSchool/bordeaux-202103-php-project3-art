@@ -1,0 +1,35 @@
+@import 'variables.scss';
+@import "homepage.scss";
+
+.presentation-bloc {
+    padding: 0;
+    margin: 0;
+}
+
+.presentation {
+    @include skewLines($presentation);
+    margin-top: 80px;
+    margin-bottom: 80px;
+    padding-bottom: 40px;
+    background: $presentation;
+}
+
+.presentation-title {
+    color: $text-light;
+}
+
+.presentation-body {
+    border-color: transparent;
+}
+
+.presentation-text {
+    color: $text-light;
+}
+
+.title-shadow {
+  @include highLight($highlight);
+  }
+
+.title-content {
+  @include spanHighlight();
+  }

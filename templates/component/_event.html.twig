@@ -1,0 +1,51 @@
+<div id="bloc-event" class="bloc-event">
+    <div class="container mt-5 pt-5">
+        <h2 class="ml-3 mb-5 presentation-title card-title title-shadow text-dark text-uppercase font-weight-bold">
+            <span class="title-content ">Actualités</span>
+        </h2>
+            <div class="mt-5 pb-5">
+        <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active pb-5">
+                        <div class="col-sm-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <h5 class="card-title">{{ happenings[0].title }}</h5>
+                                            <p class="card-text">{{ happenings[0].content }}</p>
+                                            <a href="#" class="btn btn-secondary">En savoir plus</a>
+                                        </div>
+                                        <div class="col-sm-6 text-right">
+                                            <img src="{{ happenings[0].media }}" alt="{{ happenings[0].title }}" width="200px">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% for happening in happenings|slice(1,2)%}
+                        <div class="carousel-item pb-5" >
+                            <div class="col-sm-6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <h5 class="card-title">{{ happening.title }}</h5>
+                                                <p class="card-text">{{ happening.content }}</p>
+                                                <a href="#" class="btn btn-secondary">En savoir plus</a>
+                                            </div>
+                                            <div class="col-sm-6 text-right">
+                                                <img src="{{ happening.media }}" alt="{{ happening.title }}" width="200px">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

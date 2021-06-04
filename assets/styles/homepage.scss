@@ -1,0 +1,30 @@
+@import "variables.scss";
+
+@mixin skewLines($color){
+  &:before{
+    content: "";
+    float: left;
+    height: 100px;
+    width: 100%;
+    transform: translateY(-35px) skewY(-2deg);
+    background-color: $color;
+  }
+  &:after {
+    content: "";
+    float: left;
+    height: 100px;
+    width: 100%;
+    transform: translateY(-10px) skewY(-2deg);
+    background-color: $color;
+  }
+}
+
+@mixin highLight($color){
+    background: linear-gradient(180deg, rgba(0,0,0,0) 56%, $color 56%);
+    display: inline;
+}
+
+@mixin spanHighlight(){
+  margin-right: 20px;
+  margin-left: -20px;
+}

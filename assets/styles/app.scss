@@ -1,6 +1,17 @@
-@import 'variables.scss';
+@import "variables.scss";
+@import "colors-class";
+@import "homepage.scss";
+@import "navbar.scss";
+@import "home-title.scss";
+@import "home-presentation.scss";
+@import "home-article.scss";
+@import "home-about-them.scss";
+@import "home-artists.scss";
+@import "artist-show.scss";
+@import "contact.scss";
 
-body {
-    background-color: $wild-color;
-    color: $light;
-}
+@import "~bootstrap/scss/bootstrap";
+$fa-font-path: '~@fortawesome/fontawesome-free/webfonts';
+@import '~@fortawesome/fontawesome-free/scss/fontawesome';
+@import '~@fortawesome/fontawesome-free/scss/solid';
+@import '~@fortawesome/fontawesome-free/scss/regular';
