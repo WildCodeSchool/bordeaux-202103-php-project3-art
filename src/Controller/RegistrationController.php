@@ -33,13 +33,14 @@ class RegistrationController extends AbstractController
                 )
             );
             $user->setRoles(["artiste"]);
-            $user->setPseudo("");
+            $user->setPseudo(null);
             $user->setFirstname("");
             $user->setLastname("");
-            $user->setDescription("");
-            $user->setZipCode(0);
-            $user->setCreatedAt(new DateTimeInterface());
-            $user->setUpdatedAt(new DateTimeInterface());
+            $user->setDescription(null);
+            $user->setZipCode(null);
+            $user->setCreatedAt(new \DateTime());
+            $user->setUpdatedAt(new \DateTime());
+            $user->setExpertise("");
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();

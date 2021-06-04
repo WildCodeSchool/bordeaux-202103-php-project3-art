@@ -11,9 +11,8 @@
 	<div class="container">
 		<h1 class="mb-5 mt-5 font-weight-bold text-center">CRÉER UN COMPTE</h1>
 		<div class="mb-5 d-inline-block">
-			<a>Déjà inscrit?</a>
-			<a href="" class="btn">
-        	CONNEXION</a>
+			<p>Déjà inscrit? <a href="{{ path('app_login') }}" class="btn">
+        	CONNEXION</a> </p>
 		</div>
 
 		{{ form_start(registrationForm) }}

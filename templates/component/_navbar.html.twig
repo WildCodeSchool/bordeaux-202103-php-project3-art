@@ -5,14 +5,14 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-            <a class="nav-link" href="#">LES ARTISTES</a>
-            <a class="nav-link" href="#">L'ASSO</a>
-            <a class="nav-link" href="#">L'ACTUALITE</a>
-            <a class="nav-link" href="#">BLOG</a>
+            <a class="nav-link font-weight-bold" href="#">LES ARTISTES</a>
+            <a class="nav-link font-weight-bold" href="#">L'ASSO</a>
+            <a class="nav-link font-weight-bold" href="#">L'ACTUALITE</a>
+            <a class="nav-link font-weight-bold" href="#">BLOG</a>
             <a href="/"><img src="{{ asset('build/logo.png') }}" alt="logo arts d'eko" width="100px"></a>
-            <a class="nav-link" href="#">CONTACT</a>
-            <a class="nav-link" href="#">CONNEXION</a>
-            <a class="nav-link" href="#">RECHERCHE</a>
+            <a class="nav-link font-weight-bold" href="#">CONTACT</a>
+            <a class="nav-link font-weight-bold" href="{{ path('app_login') }}">{{ (app.user) ? "MON PROFIL" : "CONNEXION" }}</a>
+            <a class="nav-link font-weight-bold" href="#">RECHERCHE</a>
         </div>
     </div>
 </nav>
