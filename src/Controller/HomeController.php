@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Happening;
 use App\Entity\Message;
 use App\Form\MessageType;
+use App\Repository\HappeningRepository;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,9 +21,10 @@ class HomeController extends AbstractController
     /**
      * @Route("/", name="page")
      */
-    public function index(Request $request, UserRepository $userRepository): Response
+    public function index(Request $request, UserRepository $userRepository, HappeningRepository $happeningRepository): Response
     {
         $users = $userRepository->findAll();
+        $happenings = $happeningRepository->findAll();
 
         $message = new Message();
         $form = $this->createForm(MessageType::class, $message);
@@ -41,6 +43,7 @@ class HomeController extends AbstractController
         return $this->render('home/index.html.twig', [
             'form' => $form->createView(),
             'artists' => $users,
+            'happenings' => $happenings
         ]);
     }
 }
