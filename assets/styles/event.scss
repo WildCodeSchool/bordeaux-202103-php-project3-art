@@ -1,0 +1,12 @@
+@import "variables.scss";
+@import "homepage.scss";
+
+.bloc-event{
+  background-color: $text-light;
+}
+
+#bloc-event{
+  background: $text-light;
+  margin-bottom: 80px;
+  padding-bottom: 40px;
+}
