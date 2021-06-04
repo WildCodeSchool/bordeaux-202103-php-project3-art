@@ -3,12 +3,13 @@
     {{ parent() }} - Home
 {% endblock %}
 {% block body %}
-    <div class="homepage-memphis">
-
+    <div class="memphis-background">
     {% include 'component/_home_title.html.twig' %}
+    {% include 'component/_home_artists.html.twig' %}
     {% include 'component/_home_presentation.html.twig' %}
     {% include 'component/_home_articles.html.twig' %}
     {% include 'component/_home_about_them.html.twig' %}
+    {% include 'component/_contact.html.twig' %}
 
     </div>
 {% endblock %}

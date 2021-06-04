@@ -32,6 +32,10 @@ $breakpoints: (
   background-color: $main;
 }
 
+.memphis-background{
+  background-image: url('../images/memphis-mini.png');
+}
+
 .skew-line-title {
   &:after {
     content: "";

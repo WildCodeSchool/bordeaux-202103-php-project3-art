@@ -1,0 +1,65 @@
+<div id="bloc-artists" >
+    <div class="container" class="mt-5 pt-5">
+        <h2 class="ml-3 mb-5 presentation-title card-title title-shadow text-dark text-uppercase font-weight-bold">
+            <span class="title-content ">Les artistes</span>
+        </h2>
+        <div class="row mt-5" >
+            {% for i in 0..5 %}
+            <div class="col-sm-6 col-md-4">
+                <p class="bg-{{ artists[i].disciplines[0].color }} position-relative">
+                    <a href="#collapse{{ i + 1 }}" data-toggle="collapse" class="trigger" >
+                        <img  class="artist-image" src="{{ asset('build/artists/' ~ artists[i].avatar.url) }}" alt="{{ artists[i].firstName }} {{ artists[i].lastName }}" width="100%">
+                        <span class=" {{ artists[i].disciplines[0].color }}"></span>
+                        <span class="text-white artist-name">
+                            {{ artists[i].firstname }} {{ artists[i].lastname }}
+                        </span>
+                    </a>
+               </p>
+            </div>
+            {% endfor %}
+        </div>
+
+        {% for i in 0..5 %}
+            <div class="collapse mt-5" id="collapse{{ i + 1 }}">
+                <div class="row">
+                    <div class="col-6">
+                        <img  class="m-3" src="{{ asset('build/artists/' ~ artists[i].avatar.url) }}" alt="{{ artists[i].firstName }} {{ artists[i].lastName }}" width="85%">
+                    </div>
+                    <div class="col-6">
+                        <h3 class="text-uppercase title-shadow-grey color-{{ artists[i].disciplines[0].color }}">
+                            <span class="title-content"><strong>{{ artists[i].firstname }}</strong> {{ artists[i].lastname }}</span>
+                        </h3>
+                        <br>
+                        <h4 class="title-shadow-grey text-uppercase color-{{ artists[i].disciplines[0].color }}">
+                            <span class="title-content">{{ artists[i].expertise }}</span>
+                        </h4>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vel pretium lectus quam id leo. Egestas maecenas pharetra convallis posuere morbi leo urna molestie. Faucibus in ornare quam viverra orci sagittis eu volutpat. Sit amet tellus cras adipiscing. Sed sed risus pretium quam vulputate dignissim suspendisse in est. Pellentesque pulvinar pellentesque habitant morbi tristique senectus. Egestas tellus rutrum tellus pellentesque eu tincidunt tortor.                   </p>
+                        </p>
+                    </div>
+                    <div class="row my-3">
+                        {% for artwork in artists[i].artworks %}
+                            {% if artwork.media.support == "photo" %}
+                                <div class="col-4">
+                                    <h4 class="title-shadow-grey text-uppercase color-{{ artists[i].disciplines[0].color }}">
+                                        <span class="title-content">{{ artwork.name }}</span>
+                                    </h4>
+                                    <img src="{{ artwork.media.url }}" alt="{{ artwork.name }}" width="100%">
+                                </div>
+                                {% elseif artwork.media.support == "video" %}
+                                <div class="col-12 col-md-6">
+                                    <h4 class="title-shadow-grey text-uppercase color-{{ artists[i].disciplines[0].color }}">
+                                        <span class="title-content">{{ artwork.name }}</span>
+                                    </h4>
+                                    <iframe width="100%" height="360" src="{{ artwork.media.url }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                </div>
+                            {% endif %}
+                        {% else %}
+                            <p>Pas de contenu pour l'instant </p>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>

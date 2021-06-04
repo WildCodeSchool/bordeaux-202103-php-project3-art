@@ -1,0 +1,15 @@
+{% block body %}
+<div id="bloc-contact" class="bloc-contact mt-5 contact-line-title">
+    <div class="container">
+        <h2 class="font-weight-bold mb-4 title-shadow text-uppercase">
+            <span class="title-content">Nous écrire</span>
+        </h2>
+    {% form_theme form 'bootstrap_4_layout.html.twig' %}
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_errors(form) }}
+    <input type='submit' id="submit" value='ENVOYER'>
+    {{ form_end(form) }}
+    </div>
+</div>
+{% endblock %}

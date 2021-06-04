@@ -1,0 +1,68 @@
+@import 'variables.scss';
+
+.bg-move{
+  background-color: $movement-arts;
+}
+.bg-visu{
+  background-color: $visual-arts;
+}
+.bg-music
+{
+  background-color: $musical-arts;
+}
+.bg-letters{
+  background-color: $littery-arts;
+}
+
+.color-move{
+  color: $movement-arts;
+}
+
+.color-visu{
+  color: $visual-arts;
+}
+
+.color-music{
+  color: $musical-arts;
+}
+.color-letters{
+  color: $littery-arts;
+}
+
+.link-move{
+  color: $movement-arts;
+  &:hover{
+    color: $movement-arts;
+  }
+  &:visited{
+    color: $movement-arts;
+;
+  }
+}
+.link-visu{
+  color: $visual-arts;
+  &:hover{
+    color: $visual-arts;
+  }
+  &:visited{
+    color: $visual-arts;
+  }
+}
+.link-music{
+  color: $musical-arts;
+  &:hover{
+    color: $musical-arts;
+  }
+  &:visited{
+    color: $musical-arts;
+  }
+}
+.link-letters{
+  color: $littery-arts;
+  &:hover{
+    color: $littery-arts;
+  }
+  &:visited{
+    color: $littery-arts;
+  }
+}

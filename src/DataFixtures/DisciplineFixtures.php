@@ -4,6 +4,7 @@ namespace App\DataFixtures;
 
 use App\Entity\Discipline;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
 class DisciplineFixtures extends Fixture
@@ -19,4 +20,5 @@ class DisciplineFixtures extends Fixture
             $manager->flush();
         }
     }
+
 }
