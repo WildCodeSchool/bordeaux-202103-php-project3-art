@@ -2,11 +2,11 @@
 
 namespace App\Controller;
 
-use App\Entity\Happening;
 use App\Entity\Message;
 use App\Form\MessageType;
 use App\Repository\HappeningRepository;
 use App\Repository\UserRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,7 +21,7 @@ class HomeController extends AbstractController
     /**
      * @Route("/", name="page")
      */
-    public function index(Request $request, UserRepository $userRepository, HappeningRepository $happeningRepository): Response
+    public function index(Request $request, EntityManagerInterface $entityManager, UserRepository $userRepository, HappeningRepository $happeningRepository): Response
     {
         $users = $userRepository->findAll();
         $happenings = $happeningRepository->findAll();
@@ -30,7 +30,6 @@ class HomeController extends AbstractController
         $form = $this->createForm(MessageType::class, $message);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
             $message->setSendAt(new \DateTime());
             $message->setIsRead(false);
             $entityManager->persist($message);

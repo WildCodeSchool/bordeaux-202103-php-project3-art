@@ -23,8 +23,7 @@ class MessageType extends AbstractType
                 'label' => 'ECRIRE A UN ARTISTE',
                 'choice_label' => 'pseudo',
                 'multiple' => false,
-                'expanded' => false,
-                'by_reference' => false
+                'expanded' => false
             ])
             ->add('mail', EmailType::class, [
                 'label' => 'VOTRE ADRESSE MAIL'
@@ -35,8 +34,6 @@ class MessageType extends AbstractType
             ->add('content', TextareaType::class, [
                 'label' => 'VOTRE MESSAGE'
             ])
-            ->add('sendAt', HiddenType::class)
-            ->add('isRead', HiddenType::class)
         ;
     }
 
