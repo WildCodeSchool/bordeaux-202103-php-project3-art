@@ -23,11 +23,21 @@ class ArtistController extends AbstractController
     }
 
     /**
-     * @Route("/show/{id}", name="show")
+     * @Route("/edit/{id}", name="edit")
      */
     public function show(User $user): Response
     {
-        return $this->render('artist/show.html.twig', [
+        return $this->render('artist/edit.html.twig', [
+            'artist' => $user,
+        ]);
+    }
+
+     /**
+     * @Route("/update/{id}", name="update")
+     */
+    public function update(User $user): Response
+    {
+        return $this->render('artist/update_artist_page.html.twig', [
             'artist' => $user,
         ]);
     }
