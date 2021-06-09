@@ -6,6 +6,7 @@ use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 /**
  * @Route ("/artist", name="artist_")
@@ -13,32 +14,40 @@ use Symfony\Component\Routing\Annotation\Route;
 class ArtistController extends AbstractController
 {
     /**
-     * @Route("/", name="index")
+     * @Route("/show/{id}", name="show")
      */
-    public function index(): Response
+    public function show(User $user): Response
     {
-        return $this->render('artist/index.html.twig', [
-            'controller_name' => 'ArtistController',
+        return $this->render('artist/show.html.twig', [
+            'artist' => $user,
         ]);
     }
 
     /**
-     * @Route("/edit/{id}", name="edit")
+     * @Route("/edit/{user_id}", name="edit")
+     * @ParamConverter("user", class="App\Entity\User", options={"mapping": {"user_id" : "id"}})
      */
-    public function show(User $user): Response
+    public function edit(User $user): Response
     {
         return $this->render('artist/edit.html.twig', [
             'artist' => $user,
         ]);
     }
 
-     /**
-     * @Route("/update/{id}", name="update")
+    /**
+     * @Route("/profil", name="profil")
      */
-    public function update(User $user): Response
+    public function profil(): Response
     {
-        return $this->render('artist/update_artist_page.html.twig', [
-            'artist' => $user,
-        ]);
+        return $this->render('artist/profil.html.twig');
+    }
+
+    /**
+     * @Route("/contact/{user_id}", name="contact")
+     * @ParamConverter("user", class="App\Entity\User", options={"mapping": {"user_id" : "id"}})
+     */
+    public function contactArtist(): Response
+    {
+        return $this->render('artist/contact.html.twig');
     }
 }
