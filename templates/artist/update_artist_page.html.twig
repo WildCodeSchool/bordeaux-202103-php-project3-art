@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	Profil -
+	{{ (artist.pseudo) ? artist.pseudo : artist.firstname }}
+{% endblock %}
+
+{% block body %}
+	<div class="memphis-background">
+		<div class="container pt-5">
+			<h2 class="ml-3 mb-5 card-title title-shadow text-uppercase font-weight-bold">
+				<span class="title-content ">Modifier mon
+					<br>profil
+				</span>
+			</h2>
+			<div class="d-flex">
+				<div class="d-flex mt-5">
+					<div class="d-flex flex-column align-items-end pr-5">
+						<img class="avatar-picture " src="{{ asset('build/artists/%s')|format(artist.avatar.url) }}">
+						<div class="dropdown float-left">
+							<a role="button" class="m-2 far fa-edit color-{{ artist.disciplines[0].color }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
+							<div class="dropdown-menu bg-transparent border-light">
+								<form style="width: 40rem;">
+									<form>
+										<div class="form">
+											<input type="file" class="form-control-file" id="exampleFormControlFile1">
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="d-flex flex-column">
+						<div class="d-flex flex-column align-items-start">
+							<h3 class="text-uppercase title-shadow-grey color-{{ artist.disciplines[0].color }}">
+								<span class="title-content">
+									<strong>{{ artist.firstname }}</strong>
+									{{ artist.lastname }}</span>
+							</h3>
+							<a class="m-2 float-end far fa-edit color-{{ artist.disciplines[0].color }}"></a>
+							<h4 class="title-shadow-grey text-uppercase color-{{ artist.disciplines[0].color }}">
+								<span class="title-content">{{ artist.expertise }}</span>
+							</h4>
+						</div>
+						<p>
+							<i class="fas fa-map-marker-alt icon icon-localisation color-{{ artist.disciplines[0].color }}"></i>
+							{{ artist.zipcode }}
+						</p>
+						<p>{{ artist.description }}</p>
+						<div class="dropdown">
+							<a role="button" class="m-2 far fa-edit color-{{ artist.disciplines[0].color }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
+							<div class="dropdown-menu bg-transparent border-light">
+								<form style="width: 40rem;">
+									<form>
+										<div class="form">
+											<textarea type="textarea" class="form-control" rows="4" placeholder="{{ artist.description }}">
+												{{ artist.description }}</textarea>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="container py-5">
+				<h2 class="title-shadow text-uppercase font-weight-bold ">
+					<span class="title-content">Les annonces</span>
+				</h2>
+				<div class="card mt-5" style="width: 18rem;">
+					<div class="card-body">
+						<i class="fas fa-plus mx-auto"></i>
+					</div>
+				</div>
+			</div>
+		</div>
+	{% endblock %}

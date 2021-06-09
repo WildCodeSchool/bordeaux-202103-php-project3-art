@@ -9,18 +9,22 @@
 	{% endfor %}
 	{{ form_start(registrationForm) }}
 	<div class="container">
-		<h1 class="mb-5 mt-5 font-weight-bold text-center">CRÉER UN COMPTE</h1>
+		<h1 class="mb-5 mt-5 font-weight-bold text-center text-uppercase">Créer un compte</h1>
 		<div class="mb-5 d-inline-block">
-			<p>Déjà inscrit? <a href="{{ path('app_login') }}" class="btn">
-        	CONNEXION</a> </p>
+			<p>Déjà inscrit?   
+				<a href="{{ path('app_login') }}" class="btn text-uppercase">
+					connexion</a>
+			</p>
 		</div>
 
 		{{ form_start(registrationForm) }}
-		{{ form_widget(registrationForm, { 'attr': {'class': 'foo'} }) }}
 		{{ form_errors(registrationForm) }}
+		{{ form_row(registrationForm.email) }}
+		{{ form_row(registrationForm.plainPassword, {label_attr: {class:'form-custom'} }) }}
 
 
-		<button type="submit" class="btn">CRÉER UN COMPTE</button>
+		<button type="submit" class="btn text-uppercase">Créer un compte</button>
+		{{ form_end(registrationForm) }}
+
 	</div>
-	{{ form_end(registrationForm) }}
 {% endblock %}

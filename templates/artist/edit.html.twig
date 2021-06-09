@@ -1,0 +1,14 @@
+{% extends "artist/_show_artist.html.twig" %}
+
+{% block title %}
+	Modifier profil -
+	{{ (artist.pseudo) ? artist.pseudo : artist.firstname }}
+{% endblock %}
+
+{%block head_title%}Modifier
+<br>
+mon profil
+{%endblock%}
+{% block body %}
+	{{ parent()}}
+{% endblock %}
