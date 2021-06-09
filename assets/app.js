@@ -10,6 +10,7 @@ import './styles/app.scss';
 
 // start the Stimulus application
 import './bootstrap';
+import './swiper';
 
 const $ = require('jquery');
 require('bootstrap');
