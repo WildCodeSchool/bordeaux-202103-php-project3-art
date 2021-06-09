@@ -3,12 +3,12 @@
         <h2 class="ml-3 mb-5 presentation-title card-title title-shadow text-dark text-uppercase font-weight-bold">
             <span class="title-content ">Les artistes</span>
         </h2>
-        <div class="row mt-5" >
+        <div class="row mt-5 " >
             {% for i in 0..5 %}
             <div class="col-sm-6 col-md-4">
-                <p class="bg-{{ artists[i].disciplines[0].color }} position-relative">
-                    <a href="#collapse{{ i + 1 }}" data-toggle="collapse" class="trigger" >
-                        <img  class="artist-image" src="{{ asset('build/artists/' ~ artists[i].avatar.url) }}" alt="{{ artists[i].firstName }} {{ artists[i].lastName }}" width="100%">
+                <p class="bg-{{ artists[i].disciplines[0].color }}  position-relative">
+                    <a class="trigger" href="#collapse{{ i + 1 }}" data-toggle="collapse"  >
+                        <img  class="artist-image " src="{{ asset('build/artists/' ~ artists[i].avatar.url) }}" alt="{{ artists[i].firstName }} {{ artists[i].lastName }}" width="100%">
                         <span class=" {{ artists[i].disciplines[0].color }}"></span>
                         <span class="text-white artist-name">
                             {{ artists[i].firstname }} {{ artists[i].lastname }}

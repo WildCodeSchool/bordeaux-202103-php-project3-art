@@ -4,6 +4,9 @@
 }
 .artist-image{
   opacity: 75%;
+  &:hover{
+    opacity: 100%;
+  }
 }
 .artist-name{
   position: absolute;

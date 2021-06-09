@@ -1,5 +1,3 @@
-@import "variables";
-
 $breakpoints: (
         "small": 576px,
         "medium": 768px,
@@ -28,11 +26,11 @@ $breakpoints: (
   }
 }
 
-.bloc-title{
+.bloc-title {
   background-color: $main;
 }
 
-.memphis-background{
+.memphis-background {
   background-image: url('../images/memphis-mini.png');
 }
 
@@ -42,11 +40,14 @@ $breakpoints: (
     float: left;
     height: 100px;
     width: 100%;
-    transform: translateY(-50px) skewY(-2deg);
+    transform: translateY(-50px) skewY(-3deg);
     background-color: $main;
   }
 }
 
+.white-title {
+  color:white;
+}
 .secondary-title{
   text-transform: uppercase;
 }
@@ -55,7 +56,7 @@ $breakpoints: (
   .main-title{
     font-size: 9em;
   }
-  .secondary-title{
+  .secondary-title {
     font-size: 3em;
   }
 };
@@ -64,7 +65,7 @@ $breakpoints: (
   .main-title{
     font-size: 6em;
   }
-  .secondary-title{
+  .secondary-title {
      font-size: 2em;
    }
 };
@@ -73,12 +74,12 @@ $breakpoints: (
   .main-title{
     font-size: 4em;
   }
-  .secondary-title{
+  .secondary-title {
     font-size: 1.5em;
   }
 };
 
-@include media-xsmall("small"){
+@include media-xsmall("small") {
   .main-title{
     font-size: 3em;
   }
