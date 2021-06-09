@@ -11,20 +11,15 @@
 	<div class="container">
 		<h1 class="mb-5 mt-5 font-weight-bold text-center text-uppercase">Créer un compte</h1>
 		<div class="mb-5 d-inline-block">
-			<p>Déjà inscrit?   
-				<a href="{{ path('app_login') }}" class="btn text-uppercase">
-					connexion</a>
+			<p>Déjà inscrit?
+				<a href="{{ path('app_login') }}" class="btn text-uppercase">connexion</a>
 			</p>
 		</div>
-
 		{{ form_start(registrationForm) }}
 		{{ form_errors(registrationForm) }}
 		{{ form_row(registrationForm.email) }}
-		{{ form_row(registrationForm.plainPassword, {label_attr: {class:'form-custom'} }) }}
-
-
+		{{ form_row(registrationForm.plainPassword) }}
 		<button type="submit" class="btn text-uppercase">Créer un compte</button>
 		{{ form_end(registrationForm) }}
-
 	</div>
 {% endblock %}
