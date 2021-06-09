@@ -18,10 +18,10 @@ class RegistrationController extends AbstractController
     /**
      * @Route("/register", name="app_register")
      */
-    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, Authenticator $authenticator): Response
+    public function register(Request $request, GuardAuthenticatorHandler $guardHandler, Authenticator $authenticator, UserPasswordEncoderInterface $passwordEncoder): Response
     {
         $user = new User();
-        $form = $this->createForm(RegistrationFormType::class, $user);
+        $form = $this->createForm(RegistrationFormType::class,  $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -32,15 +32,9 @@ class RegistrationController extends AbstractController
                     $form->get('plainPassword')->getData()
                 )
             );
-            $user->setRoles(["artiste"]);
-            $user->setPseudo(null);
-            $user->setFirstname("");
-            $user->setLastname("");
-            $user->setDescription(null);
-            $user->setZipCode(null);
+            $user->setRoles(['ROLE_USER']);
             $user->setCreatedAt(new \DateTime());
             $user->setUpdatedAt(new \DateTime());
-            $user->setExpertise("");
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();

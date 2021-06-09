@@ -9,9 +9,11 @@ use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserFixtures extends Fixture implements DependentFixtureInterface
 {
+
     public const ZIP_CODES = [
         '33000',
         '17000',
@@ -39,6 +41,12 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
     ];
     public const NB_USERS = 6;
 
+    private $encoder;
+    public function __construct(UserPasswordEncoderInterface $encoder)
+    {
+        $this->encoder = $encoder;
+    }
+
     public function load(ObjectManager $manager)
     {
         for ($i = 1; $i <= self::NB_USERS; $i++) {
@@ -59,7 +67,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
             $user->setCreatedAt(new DateTime());
             $user->setUpdatedAt(new DateTime());
             $user->setEmail('artiste' . $i . '@gmail.com');
-            $user->setPassword("1234");
+            $user->setPassword($this->encoder->encodePassword($user, '1234'));
             $user->setRoles(['ARTIST']);
             $user->setAvatar($avatar);
             $user->setExpertise(self::EXPERTISES[$i - 1]);
