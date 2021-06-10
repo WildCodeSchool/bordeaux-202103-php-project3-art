@@ -1,5 +1,4 @@
 const triggers = document.getElementsByClassName('trigger');
-console.log(triggers);
 let itemClicked;
 for (const trigger of triggers) {
     trigger.addEventListener('click',(e) => {
