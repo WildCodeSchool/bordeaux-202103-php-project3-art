@@ -14,7 +14,7 @@
 .profil-link{
   &:hover{
     text-decoration: none;
-    border-bottom: none;
+    border-bottom: 1px solid transparent;
   }
   &:visited{
     text-decoration: none;

@@ -1,5 +1,4 @@
-<div class="container-fluid-nav">
-<nav class="navbar navbar-expand-lg navbar-dark bg-deko">
+<nav id='navbar' class="navbar sticky-navbar fixed-top container-fluid-nav navbar-expand-lg navbar-dark">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -16,8 +15,9 @@
             {% else %}
             <a class="nav-link font-weight-bold" href="{{ path('app_login') }}">CONNEXION</a>
             {% endif %}
-            <a class="nav-link font-weight-bold" href="#">RECHERCHE</a>
+            <a class="nav-link navbar-white font-bold text-uppercase" href="#">Recherche</a>
+            </div>
         </div>
     </div>
 </nav>
-</div>
+<div class="space-navbar"></div>
