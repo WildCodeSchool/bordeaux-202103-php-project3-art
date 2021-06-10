@@ -35,8 +35,6 @@ class MessageType extends AbstractType
             ->add('content', TextareaType::class, [
                 'label' => 'VOTRE MESSAGE'
             ])
-            ->add('sendAt', HiddenType::class)
-            ->add('isRead', HiddenType::class)
         ;
     }
 

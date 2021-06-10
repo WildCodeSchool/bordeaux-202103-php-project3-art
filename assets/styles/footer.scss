@@ -1,0 +1,12 @@
+#footer {
+  li {
+    list-style: none;
+    & a {
+      color: whitesmoke;
+      text-decoration: none;
+    }
+    & a:hover {
+      color: $navbar-bg;
+    }
+  }
+}

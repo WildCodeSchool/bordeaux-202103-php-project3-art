@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Entity\Message;
 use App\Entity\User;
 use App\Form\MessageType;
+use App\Form\UserType;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,12 +30,19 @@ class ArtistController extends AbstractController
     }
 
     /**
-     * @Route("/edit/{user_id}", name="edit")
-     * @ParamConverter("user", class="App\Entity\User", options={"mapping": {"user_id" : "id"}})
+    * @Route("/edit/{user_id}", name="edit")
+    * @ParamConverter("user", class="App\Entity\User", options={"mapping": {"user_id" : "id"}})
      */
-    public function edit(User $user): Response
+    public function edit(User $user, Request $request, EntityManagerInterface $manager): Response
     {
+        $form = $this->createForm(UserType::class, $user);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $user->onPreUpdate();
+            $manager-> flush();
+        };
         return $this->render('artist/edit.html.twig', [
+            'form' => $form->createView(),
             'artist' => $user,
         ]);
     }
