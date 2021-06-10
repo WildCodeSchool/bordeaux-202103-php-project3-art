@@ -1,16 +1,32 @@
-.navbar-nav {
-  float:none;
-  margin:0 auto;
-  display: block;
-  text-align: center;
-  align-items: center;
+#navbar {
+  .navbar-white {
+    color: $navbar-text;
+  }
+  >.nav-link {
+    color: $navbar-bg;
+  }
 }
 
-.navbar-collapse {
-  text-align: center;
+.navbar-invisible {
+  opacity: 0;
+  transition:   opacity 0.5s ease-in ;
 }
 
-.bg-deko {
+.sticky-navbar {
   background-color: $navbar-bg;
+  position: sticky;
+  top: 0;
+  .navbar-collapse {
+    text-align: center;
+  }
+  .navbar-nav {
+    float: none;
+    margin: 0 auto;
+    display: block;
+    text-align: center;
+    align-items: center;
+    .adjust-navbar{
+      width: 40%;
+    }
+  }
 }
-
