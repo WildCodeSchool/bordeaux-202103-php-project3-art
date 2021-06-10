@@ -5,8 +5,8 @@
 
 {% block body %}
 	<div class="container mb-5 ">
-		{% for flashError in app.flashes('reset_password_error') %}
-			<div class="alert alert-danger" role="alert">{{ flashError }}</div>
+		{% for flash_error in app.flashes('reset_password_error') %}
+			<div class="alert alert-danger" role="alert">{{ flash_error }}</div>
 		{% endfor %}
 		<h1 class="mb-5 mt-5 font-weight-bold text-center">Réinitialisez votre mot de passe</h1>
 
