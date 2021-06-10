@@ -1,3 +1,12 @@
+.skew:before {
+    content: "";
+    float: left;
+    height: 100px;
+    width: 100%;
+    transform: translateY(-50px) skewY(-3deg);
+    background-color: $main;
+}
+
 #footer {
   li {
     list-style: none;
