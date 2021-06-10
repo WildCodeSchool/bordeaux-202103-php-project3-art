@@ -31,6 +31,9 @@ class HomeController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
+            // TODO remplacer l'adresse par un mail admin généré par fixtures
+            $adminContact = $userRepository->findOneBy(['email' => 'artiste1@gmail.com']);
+            $message->setUser($adminContact);
             $message->setSendAt(new \DateTime());
             $message->setIsRead(false);
             $entityManager->persist($message);
