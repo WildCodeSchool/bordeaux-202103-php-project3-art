@@ -8,8 +8,8 @@
             <a class="nav-link font-weight-bold" href="#">LES ARTISTES</a>
             <a class="nav-link font-weight-bold" href="#">L'ASSO</a>
             <a class="nav-link font-weight-bold" href="#">L'ACTUALITE</a>
-            <a class="nav-link font-weight-bold" href="#">BLOG</a>
-            <a href="/"><img src="{{ asset('build/logo.png') }}" alt="logo arts d'eko" width="100px"></a>
+            <a class="nav-link font-weight-bold" href="{{ path('blog_index') }}">BLOG</a>
+            <a href="{{ path('home_page') }}"><img src="{{ asset('build/logo.png') }}" alt="logo arts d'eko" width="100px"></a>
             <a class="nav-link font-weight-bold" href="#">CONTACT</a>
             <a class="nav-link font-weight-bold" href="{{ (app.user) ? path('artist_profil') : path('app_login') }}">
                 {{ (app.user) ? "MON PROFIL" : "CONNEXION" }}</a>

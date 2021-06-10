@@ -1,6 +1,7 @@
 .skew:before {
     content: "";
-    float: left;
+    display: block;
+    margin-bottom: -100px;
     height: 100px;
     width: 100%;
     transform: translateY(-50px) skewY(-3deg);
@@ -10,12 +11,13 @@
 #footer {
   li {
     list-style: none;
+
     & a {
-      color: whitesmoke;
+      color: $navbar-text;
       text-decoration: none;
     }
     & a:hover {
-      color: $navbar-bg;
+      color: $highlight;
     }
   }
 }

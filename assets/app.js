@@ -14,4 +14,3 @@ import './swiper';
 
 const $ = require('jquery');
 require('bootstrap');
-
