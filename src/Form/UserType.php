@@ -18,34 +18,43 @@ class UserType extends AbstractType
         $builder
 
             ->add('pseudo', TextType::class, [
-                'label' => 'Nom d\'artiste'
+                'label' => 'Nom d\'artiste',
+                'required' => 'false',
             ])
             ->add('firstname', TextType::class, [
-                'label' => 'Prénom'
+                'label' => 'Prénom',
+                'required' => 'false',
             ])
             ->add('lastname', TextType::class, [
-                'label' => 'Nom'
+                'label' => 'Nom',
+                'required' => 'false'
             ])
             ->add('description', TextareaType::class, [
-                'label' => 'Description'
+                'label' => 'Description',
+                'required' => false,
             ])
             ->add('zipCode', TextType::class, [
-                'label' => 'Code Postal'
+                'label' => 'Code Postal',
+                'required' => false,
             ])
             ->add('expertise', TextType::class, [
-                'label' => 'Compétence'
+                'label' => 'Compétence',
+                'required' => false,
             ])
             ->add('facebookUrl', TextType::class, [
-                'label' => 'URL Facebook'
+                'label' => 'URL Facebook',
+                'required' => false,
             ])
             ->add('instagramUrl', TextType::class, [
-                'label' => 'URL Instagram'
+                'label' => 'URL Instagram',
+                'required' => false,
             ])
             ->add('disciplines', EntityType::class, [
                 'class' => Discipline::class,
                 'choice_label' => 'name',
                 'expanded' => true,
                 'multiple' => true,
+                'required' => false,
             ])
         ;
     }
