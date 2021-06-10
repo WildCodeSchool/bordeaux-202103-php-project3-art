@@ -1,21 +1,25 @@
 .skew:before {
-    content: "";
-    float: left;
-    height: 100px;
-    width: 100%;
-    transform: translateY(-50px) skewY(-3deg);
-    background-color: $main;
+  content: "";
+  display: block;
+  margin-bottom: -100px;
+  height: 100px;
+  width: 100%;
+  transform: translateY(-50px) skewY(-3deg);
+  background-color: $main;
 }
 
-#footer {
+.footer {
+  background-color: $main;
+  padding: 0;
+  margin: 0;
   li {
     list-style: none;
     & a {
-      color: whitesmoke;
+      color: $navbar-text;
       text-decoration: none;
     }
     & a:hover {
-      color: $navbar-bg;
+      color: $highlight;
     }
   }
 }

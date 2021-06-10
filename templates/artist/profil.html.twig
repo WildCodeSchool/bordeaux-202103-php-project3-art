@@ -20,7 +20,7 @@
 {% endblock %}
 
 {% block link_edit_profil %}
- <a href="{{ path('artist_edit', {user_id: artist.id}) }}" class="link-{{( artist.disciplines is defined) ? 'move' : artist.disciplines[0].color }}
+ <a href="{{ path('artist_edit', {user_id: artist.id}) }}" class="link-{{ (artist.disciplines is defined) ? 'move' : artist.disciplines[0].color }}
     profil-link mt-1 profil-link-border-{{ (artist.disciplines is defined) ? 'move' : artist.disciplines[0].color }}">
         Modifier mon profil</a>
 {% endblock %}
