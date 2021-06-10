@@ -57,6 +57,13 @@
                         {% else %}
                             <p>Pas de contenu pour l'instant </p>
                         {% endfor %}
+                        {% if not app.user is same as(artists[i]) %}
+                            <div class="mt-3 container d-flex justify-content-end">
+                                <a href="{{ path('artist_contact',{ user_id: artists[i].id }) }}" class="link-{{ (artists[i].disciplines is empty) ? 'move' : artists[i].disciplines[0].color }}
+                                    profil-link mt-1 profil-link-border-{{ (artists[i].disciplines is empty) ? 'move' : artists[i].disciplines[0].color }}">
+                                    Contacter l'artiste</a>
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
