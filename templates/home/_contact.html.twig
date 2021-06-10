@@ -1,17 +1,19 @@
 {% block body %}
-<div id="bloc-contact" class="bloc-contact mt-5 contact-line-title">
-    <div class="container">
-        <h2 class="font-weight-bold mb-4 title-shadow text-uppercase">
-            <span class="title-content">Nous écrire</span>
-        </h2>
-        <div class="mt-5">
-    {% form_theme form 'bootstrap_4_layout.html.twig' %}
-    {{ form_start(form) }}
-    {{ form_widget(form) }}
-    {{ form_errors(form) }}
-                <input type='submit' value='ENVOYER'>
-    {{ form_end(form) }}
-        </div>
-    </div>
-</div>
+	<div class="bloc-contact">
+		<div class="bloc-contact contact-line-title">
+			<div class="container">
+				<h2 class="ml-3 card-title title-shadow text-uppercase font-weight-bold">
+					<span class="title-content">Nous écrire</span>
+				</h2>
+				<div class="mt-5">
+					{% form_theme form 'bootstrap_4_layout.html.twig' %}
+					{{ form_start(form) }}
+					{{ form_widget(form) }}
+					{{ form_errors(form) }}
+					<input type='submit' value='ENVOYER'>
+					{{ form_end(form) }}
+				</div>
+			</div>
+		</div>
+	</div>
 {% endblock %}
