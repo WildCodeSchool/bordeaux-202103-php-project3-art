@@ -40,6 +40,7 @@ class ArtistController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $user->onPreUpdate();
             $manager-> flush();
+            return $this->redirectToRoute('artist_show', ['id' => $user->getId()]);
         };
         return $this->render('artist/edit.html.twig', [
             'form' => $form->createView(),

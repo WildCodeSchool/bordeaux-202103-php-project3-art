@@ -45,10 +45,10 @@
                     {% block icon %}{% endblock %}
                     <p class="ml-4">
                         {% if artist.facebookUrl is not null %}
-                            <a href="#"><i class="fab fa-facebook fa-2x mr-2 icon color-{{ (artist.disciplines is empty) ? 'move' : artist.disciplines[0].color }} icon-secondary"></i></a>
+                            <a href="artist.facebookUrl "><i class="fab fa-facebook fa-2x mr-2 icon color-{{ (artist.disciplines is empty) ? 'move' : artist.disciplines[0].color }} icon-secondary"></i></a>
                         {% endif %}
                         {% if artist.instagramUrl is not null %}
-                            <a href="#"><i class="fab fab fa-instagram fa-2x ml-2 mr-2 icon color-{{ (artist.disciplines is empty) ? 'move' : artist.disciplines[0].color }} icon-secondary"></i></a>
+                            <a href="artist.instagramUrl"><i class="fab fab fa-instagram fa-2x ml-2 mr-2 icon color-{{ (artist.disciplines is empty) ? 'move' : artist.disciplines[0].color }} icon-secondary"></i></a>
                     </p>{% endif %}
                     </div>
                 </div>

@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Entity\Avatar;
 use App\Entity\Discipline;
 use App\Entity\User;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -10,6 +11,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Vich\UploaderBundle\Form\Type\VichFileType;
 
 class UserType extends AbstractType
 {
@@ -56,6 +58,9 @@ class UserType extends AbstractType
                 'multiple' => true,
                 'required' => false,
             ])
+//            ->add('imageFile', VichFileType::class, [
+//                'required' => false,
+//            ])
         ;
     }
 
