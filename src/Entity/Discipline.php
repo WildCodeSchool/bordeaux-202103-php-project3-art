@@ -47,6 +47,11 @@ class Discipline
     public const DISCIPLINES = ['Arts visuels','Arts du mouvement', 'Arts Littéraires', 'Arts Musicaux' ];
     public const COLORS = ['visual','move','letters','music'];
 
+    public function __sleep()
+    {
+        return [];
+    }
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
