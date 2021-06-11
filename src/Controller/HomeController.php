@@ -17,14 +17,20 @@ use Symfony\Component\Routing\Annotation\Route;
      */
 class HomeController extends AbstractController
 {
+    public const MAX_ARTICLES_CAROUSEL = 3;
 
     /**
      * @Route("/", name="page")
      */
     public function index(Request $request, EntityManagerInterface $entityManager, UserRepository $userRepository, HappeningRepository $happeningRepository): Response
     {
+
         $users = $userRepository->findAll();
-        $happenings = $happeningRepository->findAll();
+        $happenings = $happeningRepository->findBy(
+            [],
+            ['id' => 'DESC'],
+            self::MAX_ARTICLES_CAROUSEL,
+        );
 
         $message = new Message();
         $form = $this->createForm(MessageType::class, $message);
@@ -34,7 +40,7 @@ class HomeController extends AbstractController
             // TODO remplacer l'adresse par un mail admin généré par fixtures
             $adminContact = $userRepository->findOneBy(['email' => 'artiste1@gmail.com']);
             $message->setUser($adminContact);
-            $message->setSendAt(new \DateTime());
+            $message->onPrePersist();
             $message->setIsRead(false);
             $entityManager->persist($message);
             $entityManager->flush();
