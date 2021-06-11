@@ -1,11 +1,10 @@
 .bloc-contact {
   background-color: $contact;
-  padding-bottom: 60px;
+  padding-bottom: 20px;
 }
 
 .contact-line-title {
   @include skewLines($contact);
-  margin-bottom: -20px;
   margin-top: 100px;
   background: $contact;
 }
