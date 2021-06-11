@@ -4,8 +4,9 @@
 {% endblock %}
 
 {% block body %}
-	<div class="container mb-5 pb-5">
-		<form class="mb-5 pb-5" method="post">
+	<h1 class="mb-5 mt-5 font-weight-bold text-center text-uppercase">Connexion</h1>
+	<div class="col-4 card mx-auto mt-5">
+		<form method="post">
 			{% if error %}
 				<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
 			{% endif %}
@@ -17,25 +18,23 @@
 						Déconnexion</a>
 				</div>
 			{% endif %}
-			<h1 class="mb-5 mt-5 font-weight-bold text-center text-uppercase">Connexion</h1>
-			<div class="mb-5 d-inline-block">
-				<a>Vous souhaitez vous inscrire?</a>
-				<a href="{{ path('app_register') }}" class="btn text-uppercase">
-					Créer un compte</a>
-			</div>
-			<h1 class="font-bold h3 mb-3 font-weight-normal">Veuillez-vous connecter</h1>
-			<label for="inputEmail" class="text-uppercase">Email:
-			</label>
+			<label for="inputEmail" class="text-uppercase mt-5">Email</label>
 			<input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control mb-3" autocomplete="email" required autofocus>
 			<label for="inputPassword" class="text-uppercase">Mot de passe</label>
 			<input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
-
 			<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-			<a href="{{ path('app_forgot_password_request') }}">
-				Mot de passe oublié</a>
-			<button class="btn" type="submit">
-				CONNEXION
-			</button>
+			<div>
+				<a href="{{ path('app_forgot_password_request') }}">
+					Mot de passe oublié</a>
+			</div>
+			<div class="mt-5 mb-5 d-inline-block">
+				<button class="btn btn-outline-secondary mr-5 text-uppercase" type=" submit">
+					CONNEXION
+				</button>
+				<a href="{{ path('app_register') }}" class="btn btn-outline-secondary text-uppercase">
+					Créer un compte</a>
+			</div>
 		</form>
+
 	</div>
 {% endblock %}
