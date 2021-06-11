@@ -1,32 +1,32 @@
 <div id="bloc-event" class="mt-5 pt-5">
-	<div class="container pt-5 pb-5">
-		<h2 class="ml-3 mb-5 presentation-title card-title title-shadow text-dark text-uppercase font-weight-bold">
-			<span class="title-content ">Actualités</span>
-		</h2>
-		<div class="d-flex justify-content-center">
-			<div class="swiper-container pt-5 pb-5">
-				<div class="swiper-wrapper position-relative">
-					{% for happening in happenings %}
-						<div class="swiper-slide">
-							<div class="card">
-								<div class="card-body">
-									<div class="row">
-										<div class="col-sm-6">
-											<h5 class="card-title">{{ happening.title }}</h5>
-											<p class="card-text text-justify">{{ happening.content|u.truncate(300, '...') }}</p>
-											<a href="{{ path('blog_article', {'id': happening.id}) }}" class="btn btn-outline-secondary">En savoir plus</a>
-										</div>
-										<div class="col-sm-6 text-right">
-											<img src="{{ happening.media }}" alt="{{ happening.title }}" class="img-fluid">
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					{% endfor %}
-				</div>
-				<div class="swiper-pagination"></div>
-			</div>
-		</div>
-	</div>
+    <div class="container pt-5 pb-5">
+        <h2 class="ml-3 mb-5 presentation-title card-title title-shadow text-dark text-uppercase font-weight-bold">
+            <span class="title-content ">Actualités</span>
+        </h2>
+        <div class="d-flex justify-content-center">
+        <div class="swiper-container pt-5 pb-5">
+            <div class="swiper-wrapper">
+                    {% for happening in happenings %}
+                       <div class="swiper-slide">
+                           <div class="card">
+                               <div class="card-body">
+                                   <div class="row">
+                                       <div class="col-sm-6">
+                                           <h5 class="card-title font-medium">{{ happening.title }}</h5>
+                                           <p class="card-text font-light text-justify">{{ happening.content }}</p>
+                                           <a href="#" class="btn btn-outline-secondary">En savoir plus</a>
+                                       </div>
+                                       <div class="col-sm-6 text-right">
+                                           <img src="{{ happening.media }}" alt="{{ happening.title }}" class="img-fluid">
+                                       </div>
+                                   </div>
+                               </div>
+                           </div>
+                       </div>
+                    {% endfor %}
+                </div>
+            <div class="swiper-pagination"></div>
+            </div>
+        </div>
+        </div>
 </div>
