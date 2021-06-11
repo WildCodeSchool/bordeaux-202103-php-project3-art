@@ -1,0 +1,69 @@
+$breakpoints: (
+        "small": 576px,
+        "medium": 768px,
+        "large": 992px,
+);
+
+@mixin media-xsmall($_key) {
+  @media screen and (max-width: map-get($breakpoints, $_key)) {
+    @content;
+  }
+}
+
+@mixin media-small($_key) {
+  @media screen and (max-width: map-get($breakpoints, $_key)) {
+    @content;
+  }
+}
+@mixin media-medium($_key) {
+  @media screen and (max-width: map-get($breakpoints, $_key)) {
+    @content;
+  }
+}
+@mixin media-large($_key) {
+  @media screen and (min-width: map-get($breakpoints, $_key)) {
+    @content;
+  }
+}
+
+@include media-large("large") {
+  .main-title{
+    font-size: 9em;
+  }
+  .secondary-title {
+    font-size: 3em;
+  }
+  .space-navbar{
+    height: 80px;
+  }
+};
+
+@include media-medium("large") {
+  .main-title{
+    font-size: 6em;
+  }
+  .secondary-title {
+    font-size: 2em;
+  }
+};
+
+@include media-small("medium") {
+  .main-title{
+    font-size: 4em;
+  }
+  .secondary-title {
+    font-size: 1.5em;
+  }
+};
+
+@include media-xsmall("small") {
+  .main-title{
+    font-size: 3em;
+  }
+  .secondary-title{
+    font-size: 1em;
+  }
+  .space-navbar{
+    height: 40px;
+  }
+};
