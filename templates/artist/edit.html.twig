@@ -15,7 +15,11 @@
 			</h2>
 			<div class=" row col-12 mt-5">
 				<div class=" col-4 pr-5">
-					<img class="avatar-picture " src="{{ asset('build/artists/%s')|format(artist.avatar.url) }}">
+					{% if artist.avatar %}
+						<img class="avatar-picture " src="{{ asset('build/artists/%s')|format(artist.avatar.url) }}" >
+					{% else %}
+						<img class="avatar-picture " src="{{ asset('build/default-profile.png') }}">
+					{% endif %}
 				</div>
 				<div class="col-4 d-flex flex-column ">
 					{{ form_start(form) }}
