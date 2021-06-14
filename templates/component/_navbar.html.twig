@@ -1,19 +1,27 @@
-<div class="container-fluid-nav">
-<nav class="navbar navbar-expand-lg navbar-dark bg-deko">
+<div class="container-fluid-nav"></div>
+<nav id='navbar' class="navbar sticky-navbar fixed-top navbar-expand-lg navbar-dark">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div class="navbar-nav">
-            <a class="nav-link font-weight-bold" href="#">LES ARTISTES</a>
-            <a class="nav-link font-weight-bold" href="#">L'ASSO</a>
-            <a class="nav-link font-weight-bold" href="#">L'ACTUALITE</a>
-            <a class="nav-link font-weight-bold" href="#">BLOG</a>
-            <a href="/"><img src="{{ asset('build/logo.png') }}" alt="logo arts d'eko" width="100px"></a>
-            <a class="nav-link font-weight-bold" href="#">CONTACT</a>
-            <a class="nav-link font-weight-bold" href="{{ path('app_login') }}">{{ (app.user) ? "MON PROFIL" : "CONNEXION" }}</a>
-            <a class="nav-link font-weight-bold" href="#">RECHERCHE</a>
+    <div  class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav container d-flex  flex-nowrap  justify-content-between">
+            <div class="adjust-navbar d-flex flex-column flex-lg-row justify-content-around">
+            <a class="nav-link navbar-white font-bold text-uppercase" href="#">Les artistes</a>
+            <a class="nav-link navbar-white font-bold text-uppercase" href="#">L'asso</a>
+            <a class="nav-link navbar-white font-bold text-uppercase" href="#bloc-event">L'actualité</a>
+            <a class="nav-link navbar-white font-bold text-uppercase" href="{{ path('blog_index') }}">Blog</a>
+            </div>
+            <a href="/"><img id='logo-navbar' class='' src="{{ asset('build/logo.png') }}" alt="logo arts d'eko" width="100px"></a>
+            <div class="adjust-navbar d-flex flex-column flex-lg-row justify-content-between">
+            <a class="nav-link navbar-white font-bold text-uppercase" href="#bloc-contact">Contact</a>
+            <a class="nav-link navbar-white font-bold text-uppercase" href="{{ (app.user) ? path('artist_profil') : path('app_login') }}">
+                {{ (app.user) ? "Profil" : "Connexion" }}</a>
+            {% if app.user %}
+                <a class="nav-link navbar-white font-bold text-uppercase" href="{{ path("app_logout") }}">Déconnexion</a>
+            {% endif %}
+            <a class="nav-link navbar-white font-bold text-uppercase" href="#">Recherche</a>
+            </div>
         </div>
     </div>
 </nav>
-</div>
+<div class="space-navbar"></div>

@@ -1,0 +1,27 @@
+.skew:before {
+  content: "";
+  display: block;
+  margin-bottom: -100px;
+  margin-top: 200px;
+  height: 100px;
+  width: 100%;
+  transform: translateY(-50px) skewY(-3deg);
+  background-color: $main;
+}
+
+.footer {
+  background-color: $main;
+  padding: 0;
+  margin: 0;
+  li {
+    list-style: none;
+
+    & a {
+      color: $navbar-text;
+      text-decoration: none;
+    }
+    & a:hover {
+      color: $highlight;
+    }
+  }
+}

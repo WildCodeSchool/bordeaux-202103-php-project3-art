@@ -46,12 +46,12 @@ class User implements UserInterface
     private $pseudo;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $firstname;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $lastname;
 
@@ -111,9 +111,19 @@ class User implements UserInterface
     private $articles;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $expertise;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $facebookUrl;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $instagramUrl;
 
     public function __construct()
     {
@@ -167,6 +177,12 @@ class User implements UserInterface
     public function setRoles(array $roles): self
     {
         $this->roles = $roles;
+
+        return $this;
+    }
+    public function addRoles(array $roles): self
+    {
+        $this->roles[] = $roles;
 
         return $this;
     }
@@ -518,6 +534,30 @@ class User implements UserInterface
     public function setExpertise(string $expertise): self
     {
         $this->expertise = $expertise;
+
+        return $this;
+    }
+
+    public function getFacebookUrl(): ?string
+    {
+        return $this->facebookUrl;
+    }
+
+    public function setFacebookUrl(?string $facebookUrl): self
+    {
+        $this->facebookUrl = $facebookUrl;
+
+        return $this;
+    }
+
+    public function getInstagramUrl(): ?string
+    {
+        return $this->instagramUrl;
+    }
+
+    public function setInstagramUrl(?string $instagramUrl): self
+    {
+        $this->instagramUrl = $instagramUrl;
 
         return $this;
     }

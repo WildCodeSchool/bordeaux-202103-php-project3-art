@@ -1,50 +1,18 @@
-{% extends 'base.html.twig' %}
+{% extends "artist/_show_artist.html.twig" %}
 
-{% block title %} Profil - {{ (artist.pseudo) ? artist.pseudo : artist.firstname }}{% endblock %}
-
-{% block body %}
-    <div class="memphis-background">
-        <div class="container pt-5">
-            <h2 class="title-shadow font-weight-bold text-uppercase">
-                <span class="title-content">Bienvenu.e</span>
-            </h2>
-            <div class="d-flex mt-5">
-                <div class="d-flex flex-column align-items-end pr-5">
-                <img class="avatar-picture " src="{{ asset('build/artists/%s')|format(artist.avatar.url) }}">
-                    <a href="#" class="link-{{ artist.disciplines[0].color }} profil-link mt-1
-                        profil-link-border-{{ artist.disciplines[0].color }}">
-                        Modifier mon profil</a>
-                </div>
-                <div class="d-flex flex-column">
-                    <div class="d-flex flex-column align-items-start">
-                    <h3 class="text-uppercase title-shadow-grey color-{{ artist.disciplines[0].color }}">
-                        <span class="title-content"><strong>{{ artist.firstname }}</strong> {{ artist.lastname }}</span>
-                    </h3>
-                    <h4 class="title-shadow-grey text-uppercase color-{{ artist.disciplines[0].color }}">
-                        <span class="title-content">{{ artist.expertise }}</span>
-                    </h4>
-                    </div>
-                    <p><i class="fas fa-map-marker-alt icon icon-localisation color-{{ artist.disciplines[0].color }}">
-                        </i> {{ artist.zipcode }}
-                    </p>
-                    <p>{{ artist.description }}</p>
-                    <p>
-                        5<i class="fas fa-user-friends ml-2 mr-2 icon color-{{ artist.disciplines[0].color }} icon-secondary"></i>
-                        3<i class="fas fa-envelope ml-2 icon color-{{ artist.disciplines[0].color }} icon-secondary"></i>
-                    </p>
-                </div>
-            </div>
-        </div>
-        <div class="container py-5">
-            <h2 class="title-shadow text-uppercase font-weight-bold ">
-                <span class="title-content">Recherche</span>
-            </h2>
-        </div>
-
-        <div class="container py-5">
-            <h2 class="title-shadow text-uppercase font-weight-bold ">
-                <span class="title-content">Les annonces</span>
-            </h2>
-        </div>
-    </div>
+{% block title %}
+    Mon profil -
+    {% if artist.pseudo is not null %}
+        {{ artist.pseudo }}
+    {% elseif artist.firstname is not null %}
+        {{ artist.firstname }}
+    {% else %}
+        {{ "Arts D'Eko" }}
+    {% endif %}
 {% endblock %}
+
+{% block head_title %}Bienvenu.e{% endblock %}
+{% block body %}
+    {{ parent() }}
+{% endblock %}
+

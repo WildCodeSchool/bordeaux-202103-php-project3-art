@@ -4,23 +4,24 @@
 {% endblock %}
 
 {% block body %}
-	{% for flashError in app.flashes('verify_email_error') %}
-		<div class="alert alert-danger" role="alert">{{ flashError }}</div>
-	{% endfor %}
-	{{ form_start(registrationForm) }}
-	<div class="container">
-		<h1 class="mb-5 mt-5 font-weight-bold text-center">CRÉER UN COMPTE</h1>
-		<div class="mb-5 d-inline-block">
-			<p>Déjà inscrit? <a href="{{ path('app_login') }}" class="btn">
-        	CONNEXION</a> </p>
-		</div>
-
+	<h1 class="mb-5 mt-5 font-weight-bold text-center text-uppercase">Créer un compte</h1>
+	<div class="col-4 card mx-auto mt-5">
+		{% for flash_error in app.flashes('verify_email_error') %}
+			<div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+		{% endfor %}
 		{{ form_start(registrationForm) }}
-		{{ form_widget(registrationForm, { 'attr': {'class': 'foo'} }) }}
-		{{ form_errors(registrationForm) }}
-
-
-		<button type="submit" class="btn">CRÉER UN COMPTE</button>
+		<div class="container">
+			<div class="mb-5 d-inline-block">
+				<small>Déjà inscrit?
+					<a href="{{ path('app_login') }}" class="btn text-uppercase text-secondary">connexion</a>
+				</small>
+			</div>
+			{{ form_start(registrationForm) }}
+			{{ form_errors(registrationForm) }}
+			{{ form_row(registrationForm.email) }}
+			{{ form_row(registrationForm.plainPassword) }}
+			<button type="submit" class="mt-3 mb-5 btn btn-outline-secondary text-uppercase">Créer un compte</button>
+			{{ form_end(registrationForm) }}
+		</div>
 	</div>
-	{{ form_end(registrationForm) }}
 {% endblock %}

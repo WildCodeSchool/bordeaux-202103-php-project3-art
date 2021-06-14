@@ -1,18 +1,34 @@
-@import "variables";
+#navbar {
+  .navbar-white {
+    color: $navbar-text;
+  }
+  >.nav-link {
+    color: $navbar-bg;
+  }
+}
 
-.navbar-nav {
-  float:none;
-  margin:0 auto;
-  display: block;
-  text-align: center;
-  align-items: center;
+.navbar-invisible {
+  opacity: 0;
+  transition:   opacity 0.5s ease-in ;
+}
+
+.sticky-navbar {
+  background-color: $navbar-bg;
+  position: sticky;
+  top: 0;
 }
 
 .navbar-collapse {
   text-align: center;
 }
 
-.bg-deko {
-  background-color: $navbar-bg;
+.navbar-nav {
+  float: none;
+  margin: 0 auto;
+  display: block;
+  text-align: center;
+  align-items: center;
 }
-
+.adjust-navbar {
+    width: 40%;
+}

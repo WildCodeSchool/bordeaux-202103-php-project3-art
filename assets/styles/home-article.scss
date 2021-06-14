@@ -1,17 +1,11 @@
-@import "variables.scss";
-@import "homepage.scss";
-
 .bloc-article{
   background-color: $article;
 }
 
 #bloc-article{
   background: $article;
+  margin-top: 100px;
   margin-bottom: 80px;
   padding-bottom: 40px;
   @include skewLines($article);
-}
-
-.white-title{
-  color: $contact;
 }

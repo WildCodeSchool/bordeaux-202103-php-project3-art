@@ -1,25 +1,24 @@
 {% extends 'base.html.twig' %}
-
+{% form_theme requestForm 'bootstrap_4_layout.html.twig' %}
 {% block title %}Reset your password
 {% endblock %}
 
 {% block body %}
-	{% for flashError in app.flashes('reset_password_error') %}
-		<div class="alert alert-danger" role="alert">{{ flashError }}</div>
-	{% endfor %}
-	<div class="container">
-		<h1 class="mb-5 mt-5 font-weight-bold text-center">Réinitialisez votre mot de passe</h1>
-
-		{{ form_start(requestForm) }}
-		{{ form_row(requestForm.email) }}
-		<div>
-			<small>
-				Entrez votre adresse e-mail et nous vous enverrons un
-				lien pour réinitialiser votre mot de passe.
-			</small>
+	<h1 class="mb-5 mt-5 font-weight-bold text-center text-uppercase">Réinitialisez
+		<br>votre mot de passe
+	</h1>
+	<div class="col-4 card mx-auto mb-5 mt-5">
+		{% for flash_error in app.flashes('reset_password_error') %}
+			<div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+		{% endfor %}
+		<div class="mb-2 mt-5">
+			{{ form_start(requestForm) }}
+			{{ form_row(requestForm.email) }}
 		</div>
-
-		<button class="btn">ENVOYER</button>
+		<div>
+			Entrez votre adresse e-mail et nous vous enverrons un lien pour réinitialiser votre mot de passe.
+		</div>
+		<button class="btn btn-outline-secondary text-uppercase mt-5 mb-5 mx-auto">ENVOYER</button>
 		{{ form_end(requestForm) }}
 	</div>
 {% endblock %}

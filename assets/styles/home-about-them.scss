@@ -1,3 +1,37 @@
-#about-them{
+#about-them {
   background-color: transparent;
+}
+
+.zoom-parent {
+  overflow: hidden;
+  height: 400px;
+  width: 320px;
+  &hover{
+    .zoom-child {
+      &before {
+        display: block;
+      }
+    }
+  }
+  &focus {
+    .zoom-child {
+      &before {
+        display: block;
+      }
+    }
+  }
+}
+
+
+.zoom-child {
+  width: 100%;
+  height: 100%;
+  transition: all .5s;
+  &before {
+  display: block;
+  }
+  &:hover {
+    transform: scale(1.2);
+    animation-timing-function: ease-in-out;
+  }
 }

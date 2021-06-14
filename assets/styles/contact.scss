@@ -1,22 +1,10 @@
-@import "variables.scss";
-@import "homepage.scss";
-
-.bloc-contact{
+.bloc-contact {
   background-color: $contact;
-}
-
-#bloc-contact{
-  background: $contact;
-  padding-bottom: 60px;
+  padding-bottom: 20px;
 }
 
 .contact-line-title {
-  &:before{
-    content: "";
-    float: left;
-    height: 100px;
-    width: 100%;
-    transform: translateY(-30px) skewY(-2deg);
-    background-color: $contact;
-  }
+  @include skewLines($contact);
+  margin-top: 100px;
+  background: $contact;
 }
