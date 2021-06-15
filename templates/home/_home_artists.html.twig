@@ -6,9 +6,9 @@
         <div class="row mt-5 " >
             {% for i in 0..5 %}
             <div class="col-sm-6 col-md-4">
-                <p class="bg-{{ artists[i].disciplines[0].color }}  position-relative">
+                <p class="bg-{{ artists[i].disciplines[0].color }}  position-relative img-container">
                     <a class="trigger" href="#collapse{{ i + 1 }}" data-toggle="collapse"  >
-                        <img  class="artist-image " src="{{ asset('build/artists/' ~ artists[i].avatar.url) }}" alt="{{ artists[i].firstName }} {{ artists[i].lastName }}" width="100%">
+                        <img  class="artist-image " src="/uploads/images/users/{{  artists[i].avatar.image }}" alt="{{ artists[i].firstName }} {{ artists[i].lastName }}" width="100%">
                         <span class=" {{ artists[i].disciplines[0].color }}"></span>
                         <span class="ml-2 text-white artist-name">
                             {{ artists[i].firstname }} {{ artists[i].lastname }}
@@ -22,10 +22,11 @@
         {% for i in 0..5 %}
             <div class="collapse mt-5" id="collapse{{ i + 1 }}">
                 <div class="row">
-                    <div class="col-6">
-                        <img  class="m-3" src="{{ asset('build/artists/' ~ artists[i].avatar.url) }}" alt="{{ artists[i].firstName }} {{ artists[i].lastName }}" width="85%">
+                    <div class="col-sm-6 col-md-4 img-container">
+                        <img  class= "my-3 artist-image " src="/uploads/images/users/{{  artists[i].avatar.image }}" alt="{{ artists[i].firstName }} {{ artists[i].lastName }}" width="100%">
+
                     </div>
-                    <div class="col-6">
+                    <div class="col-sm-6 col-md-4">
                         <h3 class="text-uppercase font-medium title-shadow-grey color-{{ artists[i].disciplines[0].color }}">
                             <span class="title-content"><strong>{{ artists[i].firstname }}</strong> {{ artists[i].lastname }}</span>
                         </h3>
@@ -40,14 +41,14 @@
                     <div class="row my-3">
                         {% for artwork in artists[i].artworks %}
                             {% if artwork.media.support == "photo" %}
-                                <div class="col-4">
+                                <div class="col-sm-6 col-md-4">
                                     <h4 class="title-shadow-grey font-regular text-uppercase color-{{ artists[i].disciplines[0].color }}">
                                         <span class="title-content">{{ artwork.name }}</span>
                                     </h4>
                                     <img src="{{ artwork.media.url }}" alt="{{ artwork.name }}" width="100%">
                                 </div>
                                 {% elseif artwork.media.support == "video" %}
-                                <div class="col-12 col-md-6">
+                                <div class="col-sm-6 col-md-4">
                                     <h4 class="title-shadow-grey text-uppercase color-{{ artists[i].disciplines[0].color }}">
                                         <span class="title-content">{{ artwork.name }}</span>
                                     </h4>
