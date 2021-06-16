@@ -126,6 +126,11 @@ class User implements UserInterface
      */
     private $instagramUrl;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=User::class, inversedBy="friends")
+     */
+    private $friends;
+
     public function __construct()
     {
         $this->disciplines = new ArrayCollection();
@@ -134,6 +139,7 @@ class User implements UserInterface
         $this->happenings = new ArrayCollection();
         $this->announcements = new ArrayCollection();
         $this->articles = new ArrayCollection();
+        $this->friends = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -563,5 +569,32 @@ class User implements UserInterface
         return $this;
     }
 
+    /**
+     * @return Collection|self[]
+     */
+    public function getFriends(): Collection
+    {
+        return $this->friends;
+    }
 
+    public function addFriend(self $friend): self
+    {
+        if (!$this->friends->contains($friend)) {
+            $this->friends[] = $friend;
+        }
+
+        return $this;
+    }
+
+    public function removeFriend(self $friend): self
+    {
+        $this->friends->removeElement($friend);
+
+        return $this;
+    }
+
+    public function isFriend(self $friend): bool
+    {
+        return $this->friends->contains($friend);
+    }
 }

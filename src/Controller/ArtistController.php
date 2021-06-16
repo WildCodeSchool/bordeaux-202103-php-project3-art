@@ -6,7 +6,6 @@ use App\Entity\Message;
 use App\Entity\User;
 use App\Form\MessageType;
 use App\Form\UserType;
-use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -40,7 +39,7 @@ class ArtistController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $user->onPreUpdate();
             $manager-> flush();
-        };
+        }
         return $this->render('artist/edit.html.twig', [
             'form' => $form->createView(),
             'artist' => $user,
@@ -65,7 +64,7 @@ class ArtistController extends AbstractController
         $form = $this->createForm(MessageType::class, $message);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $message->setSendAt(new \DateTime());
+            $message->onPrePersist();
             $message->setIsRead(false);
             $message->setUser($user);
             $entityManager->persist($message);
@@ -76,6 +75,26 @@ class ArtistController extends AbstractController
         return $this->render('artist/artist_contact.html.twig', [
             'form' => $form->createView(),
             'artist' => $user,
+        ]);
+    }
+
+    /**
+     * @Route("/{friend_id}/add_friends", name="add_friends", methods={"GET", "POST"})
+     * @ParamConverter("friend", class="App\Entity\User", options={"mapping": {"friend_id" : "id"}})
+     */
+    public function addToFriends(User $friend, EntityManagerInterface $entityManager): Response
+    {
+        $connectedUser = $this->getUser();
+        if ($connectedUser->getFriends()->contains($friend)) {
+            $connectedUser->removeFriend($friend);
+        } else {
+            $connectedUser->addFriend($friend);
+        }
+
+        $entityManager->flush();
+
+        return $this->json([
+            'isFriend' => $connectedUser->isFriend($friend),
         ]);
     }
 }
