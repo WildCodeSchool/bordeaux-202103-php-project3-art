@@ -584,7 +584,7 @@ class User implements UserInterface
     public function setCity(?City $city): self
     {
         $this->city = $city;
-
+    }
       
     /**
      * @return Collection|self[]
