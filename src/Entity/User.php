@@ -126,6 +126,11 @@ class User implements UserInterface
      */
     private $instagramUrl;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=City::class, inversedBy="users")
+     */
+    private $city;
+
     public function __construct()
     {
         $this->disciplines = new ArrayCollection();
@@ -559,6 +564,18 @@ class User implements UserInterface
     public function setInstagramUrl(?string $instagramUrl): self
     {
         $this->instagramUrl = $instagramUrl;
+
+        return $this;
+    }
+
+    public function getCity(): ?City
+    {
+        return $this->city;
+    }
+
+    public function setCity(?City $city): self
+    {
+        $this->city = $city;
 
         return $this;
     }
