@@ -18,7 +18,7 @@
             <div class="d-flex mt-5">
                 <div class="d-flex flex-column align-items-end pr-5">
                     {% if artist.avatar %}
-                        <img class="avatar-picture " src="{{ asset('build/artists/%s')|format(artist.avatar.url) }}" >
+                        <img class="avatar-picture " src="/uploads/images/users/{{ artist.avatar.image }}" alt="image profil" >
                     {% else %}
                         <img class="avatar-picture " src="{{ asset('build/default-profile.png') }}">
                     {% endif %}
