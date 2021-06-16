@@ -64,7 +64,6 @@ class ArtistController extends AbstractController
         $form = $this->createForm(MessageType::class, $message);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $message->onPrePersist();
             $message->setIsRead(false);
             $message->setUser($user);
             $entityManager->persist($message);
