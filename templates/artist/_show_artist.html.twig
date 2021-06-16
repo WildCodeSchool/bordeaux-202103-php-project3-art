@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
-
+{% block javascripts %}
+{{ encore_entry_script_tags('friend') }}
+{% endblock %}
 {% block title %}
     {% if artist.pseudo is not null %}
         {{ artist.pseudo }}
@@ -42,7 +44,13 @@
                     </p>
                     <p>{{ (artist.description is null) ? 'Description du profil' : artist.description }}</p>
                     <div class="d-flex">
-                    {% block icon %}{% endblock %}
+                    {% block icon %}
+                        {% if app.user and app.user.id != artist.id  %}
+                        <a id="friend" href="{{ path('artist_add_friends', {friend_id: artist.id}) }}">
+                            <i class="{{ app.user.isFriend(artist) ? 'fas fa-heart' : 'far fa-heart' }} fa-2x mr-2 icon color-{{ (artist.disciplines is empty) ? 'move' : artist.disciplines[0].color }} icon-secondary"></i>
+                        </a>Ajouter cet.te artiste à mes favoris
+                        {% endif %}
+                    {% endblock %}
                     <p class="ml-4">
                         {% if artist.facebookUrl is not null %}
                             <a href="artist.facebookUrl"><i class="fab fa-facebook fa-2x mr-2 icon color-{{ (artist.disciplines is empty) ? 'move' : artist.disciplines[0].color }} icon-secondary"></i></a>
