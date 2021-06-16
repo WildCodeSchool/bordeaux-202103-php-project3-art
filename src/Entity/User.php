@@ -127,9 +127,15 @@ class User implements UserInterface
     private $instagramUrl;
 
     /**
+     * @ORM\ManyToOne(targetEntity=City::class, inversedBy="users")
+     */
+    private $city;
+
+     /**
      * @ORM\ManyToMany(targetEntity=User::class, inversedBy="friends")
      */
     private $friends;
+
 
     public function __construct()
     {
@@ -569,6 +575,17 @@ class User implements UserInterface
         return $this;
     }
 
+
+    public function getCity(): ?City
+    {
+        return $this->city;
+    }
+
+    public function setCity(?City $city): self
+    {
+        $this->city = $city;
+
+      
     /**
      * @return Collection|self[]
      */
@@ -582,9 +599,9 @@ class User implements UserInterface
         if (!$this->friends->contains($friend)) {
             $this->friends[] = $friend;
         }
-
         return $this;
     }
+
 
     public function removeFriend(self $friend): self
     {
