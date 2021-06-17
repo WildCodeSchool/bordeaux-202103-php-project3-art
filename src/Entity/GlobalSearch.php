@@ -48,7 +48,7 @@ class GlobalSearch
     {
         $words = trim($this->textTyped);
         $keywords = explode(' ', $words);
-        return $keywords;
+        return  $keywords;
     }
 
     /**

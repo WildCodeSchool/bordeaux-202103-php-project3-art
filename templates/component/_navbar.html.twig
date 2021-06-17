@@ -19,7 +19,7 @@
             {% if app.user %}
                 <a class="nav-link navbar-white font-bold text-uppercase" href="{{ path("app_logout") }}">Déconnexion</a>
             {% endif %}
-            <a class="nav-link navbar-white font-bold text-uppercase" href="#">Recherche</a>
+            <a class="nav-link navbar-white font-bold text-uppercase" href="{{ path("home_search") }}">Recherche</a>
             </div>
         </div>
     </div>

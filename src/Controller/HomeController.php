@@ -69,15 +69,16 @@ class HomeController extends AbstractController
         $globalSearch = new GlobalSearch();
         $form = $this->createForm(GlobalSearchType::class, $globalSearch);
         $form->handleRequest($request);
-        $results = $globalSearchProvider->initSearch();
-
         if ($form->isSubmitted() && $form->isValid()) {
             $globalSearchProvider->createSearch($globalSearch);
             $results = $globalSearch->getResults();
+        } else {
+            $globalSearchProvider->initSearch($globalSearch);
+            $results = $globalSearch->getResults();
         }
-        return $this->render('home/searchBar.html.twig',[
+        return $this->render('home/searchBar.html.twig', [
             'form' => $form->createView(),
-            'result' => $results,
+            'results' => $results,
         ]);
     }
 }

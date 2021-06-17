@@ -3,21 +3,21 @@ html {
 }
 
 body {
-  .font {
-    font-family: 'Oswald', sans-serif!important;
-    font-weight: 300;
-    &bold {
-      font-weight: 700!important;
-    }
-    &medium {
-      font-weight: 500!important;
-    }
-    &regular {
-      font-weight: 400!important;
-    }
-    &light {
+  .font-bold {
+    font-family: 'Oswald', sans-serif !important;
+    font-weight: 700 !important;
+  }
+  .font-medium {
+    font-family: 'Oswald', sans-serif !important;
+    font-weight: 500!important;
+  }
+  .font-regular {
+    font-family: 'Oswald', sans-serif !important;
+    font-weight: 400!important;
+  }
+  .font-regular {
+      font-family: 'Oswald', sans-serif !important;
       font-weight: 300!important;
-    }
   }
 }
 

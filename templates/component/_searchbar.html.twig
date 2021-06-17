@@ -1,11 +1,58 @@
-<div class="container">
-    <h1 class="mt-5">Recherche</h1>
-    <div class="mt-5">
+<div class="container mt-5">
+    <div class="d-flex justify-content-center">
+    <h1 class="mt-5 ml-3 mb-5 card-title text-uppercase font-weight-bold">Recherche</h1>
+    </div>
+    <div class="container">
         {% form_theme form 'bootstrap_4_layout.html.twig' %}
         {{ form_start(form) }}
-        {{ form_widget(form) }}
-        {{ form_errors(form) }}
-        <input type='submit' value='ENVOYER'>
-        {{ form_end(form) }}
+        <div class="d-flex justify-content-center flex-wrap ">
+            {{ form_row(form.type) }}
+        </div>
+        {{ form_row(form.textTyped) }}
+         <div class="d-flex justify-content-center">
+            <input class="btn btn-outline-secondary font-medium text-uppercase" type='submit' value='Rechercher'>
+            {{ form_end(form) }}
+        </div>
+    </div>
+    <div>
+    {% if results.users is not defined and results.happenings is not defined %}
+        <div class="row mt-5 d-flex justify-content-center">
+            <p class="alert-danger">La recherche n'a rien donnée, essayez d'autres mots.</p>
+        </div>
+    {% else %}
+        <div class="row mt-5 ">
+            {% if results.users is defined %}
+                {% for artist in results.users %}
+                <div class="col-sm-6 col-md-4">
+                    <p class="bg-{{ artist.disciplines[0].color }}  position-relative img-container">
+                        <a href="{{ path('artist_show', {id: artist.id}) }}" >
+                            <img  class="artist-image " src="/uploads/images/users/{{ artist.avatar.image }}"
+                                  alt="{{ artist.firstName }} {{ artist.lastName }}" width="100%">
+                            <span class=" {{ artist.disciplines[0].color }}"></span>
+                            <span class="ml-2 text-white artist-name">
+                                {{ artist.firstname }} {{ artist.lastname }}
+                            </span>
+                        </a>
+                    </p>
+                </div>
+                {% endfor %}
+            {% endif %}
+            {% if results.happenings is defined %}
+                {% for happening in results.happenings %}
+                    <div class="col-sm-6 col-md-4">
+                        <p class="position-relative img-container">
+                            <a href="{{ path('blog_article', {id: happening.id}) }}" >
+                                <img  class="artist-image " src="{{ happening.media }}"
+                                      alt="{{ happening.title }}" width="100%">
+                                <span class="ml-2 text-white artist-name">
+                                {{ happening.title }}
+                            </span>
+                            </a>
+                        </p>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    {% endif %}
     </div>
 </div>

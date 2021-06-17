@@ -22,8 +22,22 @@ class GlobalSearchType extends AbstractType
                 ],
                 'expanded' => true,
                 'multiple' => false,
+                'label' => false,
+                'label_attr' => [
+                    'class' => 'radio-inline d-flex justify-content-center font-medium p-2'
+                ],
+                'attr' => [
+                    'class' => ''
+                ],
             ])
-            ->add('textTyped', TextType::class);
+            ->add('textTyped', TextType::class, [
+                'required' => false,
+                'label' => false,
+                'attr' => [
+                    'placeholder' => 'Rechercher',
+                    'class' => 'font-medium',
+                    ],
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
