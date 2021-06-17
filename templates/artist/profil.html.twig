@@ -1,27 +1,30 @@
 {% set artist = app.user %}
 {% extends "artist/_show_artist.html.twig" %}
-
+{% block javascripts %}
+	parent();
+	{{ encore_entry_script_tags('clickable-line') }}
+{% endblock %}
 {% block title %}
- Mon profil -
-    {% if artist.pseudo is not null %}
-        {{ artist.pseudo }}
-    {% elseif artist.firstname is not null %}
-        {{ artist.firstname }}
-    {% else %}
-        {{ "Arts D'Eko" }}
-    {% endif %}
+	Mon profil -
+	{% if artist.pseudo is not null %}
+		{{ artist.pseudo }}
+	{% elseif artist.firstname is not null %}
+		{{ artist.firstname }}
+	{% else %}
+		{{ "Arts D'Eko" }}
+	{% endif %}
 {% endblock %}
 
 {% block icon %}
     <p>
-        5<i class="fas fa-user-friends ml-2 mr-2 icon color-{{ (artist.disciplines is defined) ? 'move' : artist.disciplines[0].color }} icon-secondary"></i>
-        3<i class="fas fa-envelope ml-2 icon color-{{ (artist.disciplines is defined) ? 'move' : artist.disciplines[0].color }} icon-secondary"></i>
+        5<i class="fas fa-user-friends ml-2 mr-2 icon color-{{ (artist.disciplines is empty) ? 'move' : artist.disciplines[0].color  }} icon-secondary"></i>
+        3<i id= "mailbox" class=" fas fa-envelope ml-2 icon color-{{ (artist.disciplines is empty) ? 'move' : artist.disciplines[0].color }} icon-secondary"></i>
     </p>
 {% endblock %}
 
 {% block link_edit_profil %}
- <a href="{{ path('artist_edit', {user_id: artist.id}) }}" class="link-{{ (artist.disciplines is defined) ? 'move' : artist.disciplines[0].color }}
-    profil-link mt-1 profil-link-border-{{ (artist.disciplines is defined) ? 'move' : artist.disciplines[0].color }}">
+ <a href="{{ path('artist_edit', {user_id: artist.id}) }}" class="link-{{ (artist.disciplines is empty) ?  'move': artist.disciplines[0].color}}
+    profil-link mt-1 profil-link-border-{{ (artist.disciplines is empty) ? 'move'  : artist.disciplines[0].color  }}">
         Modifier mon profil</a>
 {% endblock %}
 
@@ -29,10 +32,66 @@
 {% block announcements %}{% endblock %}
 
 
-{% block head_title %}Bienvenu.e{% endblock %}
+{% block head_title %}Bienvenue
+{% endblock %}
 {% block body %}
-    {{ parent() }}
-    <div class="pt-5 mb-5"></div>
+	{{ parent() }}
+<div class="pt-5 mb-5"></div>
 {% endblock %}
 
+
+{% block message %}
+	<div id="block-message" class="d-none mt-5">
+		<h2 class="card-title title-shadow font-weight-bold text-uppercase">
+			<span class="title-content">
+				Messages
+			</span>
+		</h2>
+		<div class="block-mail card mt-5">
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Mail</th>
+						<th>Message</th>
+						<th>SendAt</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for message in messages %}
+						<tr class="cursor-pointer title-message">
+							<td>{{ message.mail }}</td>
+							<td>{{ message.content|length > 50 ? message.content|slice(0, 50) ~ ' ... ' : message.content }}</td>
+							<td>{{ message.sendAt ? message.sendAt|date('Y-m-d H:i') : '' }}</td>
+							<td>
+								<form method="post" action="{{ path('message_delete', {'id': message.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet élément?');">
+									<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ message.id) }}">
+									<button class="btn">
+										<i class="far fa-trash-alt"></i>
+									</button>
+								</form>
+							</td>
+						</tr>
+
+					{% else %}
+						<tr>
+							<td colspan="7">no records found</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+			{% for message in messages %}
+				<div class="p-5 border-top content d-none">
+					<h5 class="mb-3">
+						{{ message.object }}
+					</h5>
+					<p>{{ message.content }}</p>
+					<div class="card-footer">
+						<a class="btn text-uppercase" href="mailto:">Répondre</a>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+{% endblock %}
 

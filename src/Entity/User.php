@@ -127,7 +127,7 @@ class User implements UserInterface
     private $instagramUrl;
 
     /**
-     * @ORM\ManyToOne(targetEntity=City::class, inversedBy="users")
+     * @ORM\ManyToOne(targetEntity=City::class, inversedBy="users", cascade="persist")
      */
     private $city;
 
@@ -586,7 +586,6 @@ class User implements UserInterface
         $this->city = $city;
     }
 
-
     /**
      * @return Collection|self[]
      */
@@ -602,7 +601,6 @@ class User implements UserInterface
         }
         return $this;
     }
-
 
     public function removeFriend(self $friend): self
     {

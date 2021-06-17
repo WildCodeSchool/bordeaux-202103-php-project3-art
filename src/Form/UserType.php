@@ -22,23 +22,22 @@ class UserType extends AbstractType
                 'label' => 'Nom d\'artiste',
                 'required' => false,
             ])
-            ->add('avatar', AvatarType::class)
+            ->add('avatar', AvatarType::class,[
+                'label'=>false,
+            ])
             ->add('firstname', TextType::class, [
                 'label' => 'Prénom',
                 'required' => false,
             ])
             ->add('lastname', TextType::class, [
                 'label' => 'Nom',
-                'required' => false
+                'required' => false,
             ])
             ->add('description', TextareaType::class, [
                 'label' => 'Description',
                 'required' => false,
             ])
-            ->add('zipCode', TextType::class, [
-                'label' => 'Code Postal',
-                'required' => false,
-            ])
+
             ->add('expertise', TextType::class, [
                 'label' => 'Compétence',
                 'required' => false,
@@ -57,7 +56,9 @@ class UserType extends AbstractType
                 'expanded' => true,
                 'multiple' => true,
                 'required' => false,
+                'by_reference' => false,
             ])
+            ->add('city', CityType::class)
         ;
     }
 

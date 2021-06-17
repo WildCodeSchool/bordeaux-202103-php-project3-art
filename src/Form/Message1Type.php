@@ -2,29 +2,29 @@
 
 namespace App\Form;
 
-use App\Entity\City;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+use App\Entity\Message;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class CityType extends AbstractType
+class Message1Type extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('zipCode', TextType::class, [
-                'label' => 'Code Postal'
-            ])
+            ->add('mail')
+            ->add('content')
+            ->add('object')
+            ->add('sendAt')
+            ->add('isRead')
+            ->add('user')
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => City::class,
-            'label' => false,
-
+            'data_class' => Message::class,
         ]);
     }
 }
