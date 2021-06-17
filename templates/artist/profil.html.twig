@@ -18,7 +18,7 @@
 {% block icon %}
     <p>
         5<i class="fas fa-user-friends ml-2 mr-2 icon color-{{ (artist.disciplines is empty) ? 'move' : artist.disciplines[0].color  }} icon-secondary"></i>
-        3<i class="fas fa-envelope ml-2 icon color-{{ (artist.disciplines is empty) ? 'move' : artist.disciplines[0].color }} icon-secondary"></i>
+        3<i id= "mailbox" class=" fas fa-envelope ml-2 icon color-{{ (artist.disciplines is empty) ? 'move' : artist.disciplines[0].color }} icon-secondary"></i>
     </p>
 {% endblock %}
 

@@ -12,43 +12,47 @@
 	{% endif %}
 {% endblock %}
 {% block body %}
-<<<<<<< HEAD
-    <div class="memphis-background">
-        <div class="container pt-5">
-            <h2 class="title-shadow font-weight-bold text-uppercase">
-                {% block head_title %}{% endblock %}
-            </h2>
-            <div class="d-flex mt-5">
-                <div class="d-flex flex-column align-items-end pr-5">
-                    {% if artist.avatar %}
-                        <img class="avatar-picture " src="/uploads/images/users/{{ artist.avatar.image }}" alt="image profil" >
-                    {% else %}
-                        <img class="avatar-picture " src="{{ asset('build/default-profile.png') }}">
-                    {% endif %}
-                {% block link_edit_profil %}{% endblock %}
-                </div>
-                <div class="d-flex flex-column">
-                    <div class="d-flex flex-column align-items-start">
-                    <h3 class="text-uppercase title-shadow-grey
-                        color-{{ (artist.disciplines is empty) ? 'move' : artist.disciplines[0].color }}">
-                        <span class="title-content"><strong>{{ artist.firstname is null ? 'Prénom' : artist.firstname }}</strong>
-                            {{ (artist.lastname is null) ? 'Nom' : artist.lastname }}</span>
-                    </h3>
-                    <h4 class="title-shadow-grey text-uppercase
-                        color-{{ (artist.disciplines is empty) ? 'move' : artist.disciplines[0].color }}">
-                        <span class="title-content">{{ (artist.expertise is null) ? 'Spécialité' : artist.expertise }}</span>
-                    </h4>
-                    </div>
-                    <p><i class="fas fa-map-marker-alt icon icon-localisation
-                        color-{{ (artist.disciplines is empty) ? 'move' : artist.disciplines[0].color }}">
-                        </i> {{ (artist.city is null) ? "Code postal" : artist.city.name }}
-                    </p>
-                    <p>{{ (artist.description is null) ? 'Description du profil' : artist.description }}</p>
-                    <div class="d-flex">
-                    {% block icon %}{% endblock %}
-                    <p class="ml-4">
-                        {% if artist.facebookUrl is not null %}
-                            <a href="artist.facebookUrl"><i class="fab fa-facebook fa-2x mr-2 icon color-{{ (artist.disciplines is empty) ? 'move' : artist.disciplines[0].color }} icon-secondary"></i></a>
+	<div class="memphis-background">
+		<div class="container pt-5">
+			<h2 class="card-title title-shadow font-weight-bold text-uppercase">
+				<span class="title-content">
+					{% block head_title %}{% endblock %}
+				</span>
+			</h2>
+			<div class="d-flex mt-5">
+				<div class="d-flex flex-column align-items-end pr-5">
+					{% if artist.avatar %}
+						<img class="avatar-picture " src="/uploads/images/users/{{ artist.avatar.image }}" alt="image profil" >
+					{% else %}
+						<img class="avatar-picture " src="{{ asset('build/default-profile.png') }}">
+					{% endif %}
+					{% block link_edit_profil %}{% endblock %}
+				</div>
+				<div class="d-flex flex-column">
+					<div class="d-flex flex-column align-items-start">
+						<h3 class="text-uppercase title-shadow-grey
+						 color-{{ (artist.disciplines is empty) ? 'move' : artist.disciplines[0].color }}">
+							<span class="title-content">
+								<strong>{{ artist.firstname is null ? 'Prénom' : artist.firstname }}</strong>
+								{{ (artist.lastname is null) ? 'Nom' : artist.lastname }}</span>
+						</h3>
+						<h4 class="title-shadow-grey text-uppercase
+						color-{{ (artist.disciplines is empty) ? 'move' : artist.disciplines[0].color }}">
+							<span class="title-content">{{ (artist.expertise is null) ? 'Spécialité' : artist.expertise }}</span>
+						</h4>
+					</div>
+					<p>
+						<i class="fas fa-map-marker-alt icon icon-localisation
+					 color-{{ (artist.disciplines is empty) ? 'move' : artist.disciplines[0].color }}"></i>
+						{{ (artist.zipcode is null) ? "Code postal" : artist.zipcode }}
+					</p>
+					<p>{{ (artist.description is null) ? 'Description du profil' : artist.description }}</p>
+					<div class="d-flex">
+						{% block icon %}
+							{% if app.user and app.user.id != artist.id  %}
+                        	<a id="friend" href="{{ path('artist_add_friends', {friend_id: artist.id}) }}">
+                          		<i class="{{ app.user.isFriend(artist) ? 'fas fa-heart' : 'far fa-heart' }} fa-2x mr-2 icon color-{{ (artist.disciplines is empty) ? 'move' : artist.disciplines[0].color }} icon-secondary"></i>
+                        	</a>Ajouter cet.te artiste à mes contacts favoris
                         {% endif %}
 					{% endblock %}
 						<p class="ml-4">
