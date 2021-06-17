@@ -29,7 +29,7 @@ class UserType extends AbstractType
             ])
             ->add('lastname', TextType::class, [
                 'label' => 'Nom',
-                'required' => false
+                'required' => false,
             ])
             ->add('description', TextareaType::class, [
                 'label' => 'Description',
