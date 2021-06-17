@@ -4,7 +4,10 @@
 	Modifier profil -
 	{{ (artist.pseudo) ? artist.pseudo : artist.firstname }}
 {% endblock %}
-
+{% block javascripts %}
+	{{ parent() }}
+	{{ encore_entry_script_tags('inputFileValue') }}
+{% endblock %}
 {% block body %}
 	<div class="memphis-background">
 		<div class="container pt-5 mb-5">
