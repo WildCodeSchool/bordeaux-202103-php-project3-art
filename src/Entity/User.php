@@ -127,7 +127,7 @@ class User implements UserInterface
     private $instagramUrl;
 
     /**
-     * @ORM\ManyToOne(targetEntity=City::class, inversedBy="users")
+     * @ORM\ManyToOne(targetEntity=City::class, inversedBy="users", cascade="persist")
      */
     private $city;
 

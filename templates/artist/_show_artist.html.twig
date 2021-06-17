@@ -38,7 +38,7 @@
                     </div>
                     <p><i class="fas fa-map-marker-alt icon icon-localisation
                         color-{{ (artist.disciplines is empty) ? 'move' : artist.disciplines[0].color }}">
-                        </i> {{ (artist.zipcode is null) ? "Code postal" : artist.zipcode }}
+                        </i> {{ (artist.city is null) ? "Code postal" : artist.city.name }}
                     </p>
                     <p>{{ (artist.description is null) ? 'Description du profil' : artist.description }}</p>
                     <div class="d-flex">

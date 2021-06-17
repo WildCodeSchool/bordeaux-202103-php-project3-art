@@ -2,10 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\City;
 use App\Entity\Message;
 use App\Entity\User;
 use App\Form\MessageType;
 use App\Form\UserType;
+use App\Repository\UserRepository;
+use App\Service\CityBuilder;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,6 +22,13 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
  */
 class ArtistController extends AbstractController
 {
+    private $cityBuilder;
+
+    public function __construct(CityBuilder $cityBuilder)
+    {
+        $this->cityBuilder = $cityBuilder;
+    }
+
     /**
      * @Route("/show/{id}", name="show")
      */
@@ -38,8 +48,10 @@ class ArtistController extends AbstractController
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $user->onPreUpdate();
+            $zipCode = $form->getData()->getCity()->getZipCode();
+            $this->cityBuilder->buildCityForUser($this->getUser(), $zipCode);
             $manager-> flush();
+            return $this->redirectToRoute('artist_profil');
         };
         return $this->render('artist/edit.html.twig', [
             'form' => $form->createView(),
@@ -76,6 +88,20 @@ class ArtistController extends AbstractController
         return $this->render('artist/artist_contact.html.twig', [
             'form' => $form->createView(),
             'artist' => $user,
+        ]);
+    }
+    /**
+     * @Route("/show_all", name="show_all")
+     */
+    public function showAll(UserRepository $repository)
+    {
+        $artists = $repository->findAll();
+        foreach ($artists as $artist) {
+        $dicipline = $artist->getDisciplines()->get(0);
+
+        }
+        return $this->render('artist/artist_show_all.html.twig', [
+            'artists' => $artists,
         ]);
     }
 }
