@@ -37,7 +37,6 @@ class ArtistController extends AbstractController
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $user->onPreUpdate();
             $manager-> flush();
         }
         return $this->render('artist/edit.html.twig', [
