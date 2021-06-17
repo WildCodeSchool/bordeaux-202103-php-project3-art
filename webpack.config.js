@@ -34,7 +34,10 @@ Encore
     .addEntry('app', './assets/app.js')
     .addEntry('toggle','./assets/toggle.js')
     .addEntry('map','./assets/map.js')
+    .addEntry('clickable-line','/assets/clickable-line.js')
     .addEntry('inputFileValue', './assets/inputFileValue.js')
+    .addEntry('friend', './assets/friend.js')
+
 
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
     .enableStimulusBridge('./assets/controllers.json')
