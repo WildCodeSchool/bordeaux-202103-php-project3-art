@@ -72,6 +72,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
             $user->setAvatar($avatar);
             $user->setExpertise(self::EXPERTISES[$i - 1]);
             $user->addDiscipline($this->getReference(self::DISCIPLINES[$i - 1]));
+            $user->setCity($this->getReference('city_' . $i));
             $manager->persist($user);
             $this->addReference('user_' . $i, $user);
         }
@@ -82,6 +83,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
     {
         return [
             DisciplineFixtures::class,
+            CityFixtures::class
         ];
     }
 }

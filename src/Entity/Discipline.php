@@ -37,15 +37,15 @@ class Discipline
     /**
      * @ORM\ManyToMany(targetEntity=User::class, inversedBy="disciplines")
      */
-    private  $users;
+    private $users;
 
     /**
      * @ORM\OneToMany(targetEntity=Artwork::class, mappedBy="discipline")
      */
-    private  $artworks;
+    private $artworks;
 
     public const DISCIPLINES = ['Arts visuels','Arts du mouvement', 'Arts Littéraires', 'Arts Musicaux' ];
-    public const COLORS = ['visual','move','letters','music'];
+    public const COLORS = ['visu','move','letters','music'];
 
     public function __sleep()
     {
@@ -89,6 +89,11 @@ class Discipline
 
     public function getColor(): ?string
     {
+        for ($i = 0; $i < count(self::DISCIPLINES); $i++) {
+            if ($this->name === self::DISCIPLINES[$i]) {
+                $this->color = self::COLORS[$i];
+            }
+        }
         return $this->color;
     }
 
