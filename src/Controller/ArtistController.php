@@ -5,14 +5,17 @@ namespace App\Controller;
 use App\Entity\Message;
 use App\Entity\User;
 use App\Form\MessageType;
+use App\Repository\MessageRepository;
 use App\Form\UserType;
 use DateTime;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @Route ("/artist", name="artist_")
@@ -30,8 +33,8 @@ class ArtistController extends AbstractController
     }
 
     /**
-    * @Route("/edit/{user_id}", name="edit")
-    * @ParamConverter("user", class="App\Entity\User", options={"mapping": {"user_id" : "id"}})
+     * @Route("/edit/{user_id}", name="edit")
+     * @ParamConverter("user", class="App\Entity\User", options={"mapping": {"user_id" : "id"}})
      */
     public function edit(User $user, Request $request, EntityManagerInterface $manager): Response
     {
@@ -39,7 +42,7 @@ class ArtistController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $user->onPreUpdate();
-            $manager-> flush();
+            $manager->flush();
         };
         return $this->render('artist/edit.html.twig', [
             'form' => $form->createView(),
@@ -48,11 +51,14 @@ class ArtistController extends AbstractController
     }
 
     /**
-     * @Route("/profil", name="profil")
+     * @Route("/profil", name="profil",methods={"GET"})
      */
-    public function profile(): Response
-    {
-        return $this->render('artist/profil.html.twig');
+    public function profile(MessageRepository $messageRepository): Response
+    {   
+        $userId = $this->getUser()->getId();
+        return $this->render('artist/profil.html.twig', [
+            'messages' => $messageRepository->findBy(["user" => $userId]),
+        ]);
     }
 
     /**
@@ -78,4 +84,6 @@ class ArtistController extends AbstractController
             'artist' => $user,
         ]);
     }
+
+    
 }

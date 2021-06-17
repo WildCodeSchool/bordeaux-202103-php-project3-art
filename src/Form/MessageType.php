@@ -18,7 +18,7 @@ class MessageType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            /* ->add('user', EntityType::class, [
+          /*  ->add('user', EntityType::class, [
                 'class' => User::class,
                 'label' => 'ECRIRE A UN ARTISTE',
                 'choice_label' => 'pseudo',
