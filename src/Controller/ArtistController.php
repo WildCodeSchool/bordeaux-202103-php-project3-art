@@ -71,7 +71,6 @@ class ArtistController extends AbstractController
         $form = $this->createForm(MessageType::class, $message);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $message->setSendAt(new \DateTime());
             $message->setIsRead(false);
             $message->setUser($user);
             $entityManager->persist($message);
@@ -85,5 +84,23 @@ class ArtistController extends AbstractController
         ]);
     }
 
-    
+    /**
+     * @Route("/{friend_id}/add_friends", name="add_friends", methods={"GET", "POST"})
+     * @ParamConverter("friend", class="App\Entity\User", options={"mapping": {"friend_id" : "id"}})
+     */
+    public function addToFriends(User $friend, EntityManagerInterface $entityManager): Response
+    {
+        $connectedUser = $this->getUser();
+        if ($connectedUser->getFriends()->contains($friend)) {
+            $connectedUser->removeFriend($friend);
+        } else {
+            $connectedUser->addFriend($friend);
+        }
+
+        $entityManager->flush();
+
+        return $this->json([
+            'isFriend' => $connectedUser->isFriend($friend),
+        ]);
+    }
 }

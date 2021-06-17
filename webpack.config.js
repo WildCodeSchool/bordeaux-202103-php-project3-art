@@ -32,8 +32,11 @@ Encore
      * and one CSS file (e.g. app.css) if your JavaScript imports CSS.
      */
     .addEntry('app', './assets/app.js')
-    .addEntry('toggle','./assets/toggle.js')
     .addEntry('clickable-line','/assets/clickable-line.js')
+    .addEntry('toggle', './assets/toggle.js')
+    .addEntry('inputFileValue', './assets/inputFileValue.js')
+    .addEntry('friend', './assets/friend.js')
+
 
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
     .enableStimulusBridge('./assets/controllers.json')

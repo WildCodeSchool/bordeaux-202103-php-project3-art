@@ -51,7 +51,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
     {
         for ($i = 1; $i <= self::NB_USERS; $i++) {
             $avatar = new Avatar();
-            $avatar->setUrl('artist_' . $i . '.jpg');
+            $avatar->setImage('profile' . $i . '.jpg');
             $manager->persist($avatar);
 
 
@@ -67,7 +67,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
             $user->setCreatedAt(new DateTime());
             $user->setUpdatedAt(new DateTime());
             $user->setEmail('artiste' . $i . '@gmail.com');
-            $user->setPassword($this->encoder->encodePassword($user, '1234'));
+            $user->setPassword($this->encoder->encodePassword($user, '123456'));
             $user->setRoles(['ARTIST']);
             $user->setAvatar($avatar);
             $user->setExpertise(self::EXPERTISES[$i - 1]);

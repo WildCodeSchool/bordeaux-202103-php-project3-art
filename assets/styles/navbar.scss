@@ -16,17 +16,19 @@
   background-color: $navbar-bg;
   position: sticky;
   top: 0;
-  .navbar-collapse {
-    text-align: center;
-  }
-  .navbar-nav {
-    float: none;
-    margin: 0 auto;
-    display: block;
-    text-align: center;
-    align-items: center;
-    .adjust-navbar{
-      width: 40%;
-    }
-  }
+}
+
+.navbar-collapse {
+  text-align: center;
+}
+
+.navbar-nav {
+  float: none;
+  margin: 0 auto;
+  display: block;
+  text-align: center;
+  align-items: center;
+}
+.adjust-navbar {
+    width: 40%;
 }

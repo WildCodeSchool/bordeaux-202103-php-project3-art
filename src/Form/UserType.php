@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Entity\Avatar;
 use App\Entity\Discipline;
 use App\Entity\User;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -21,6 +22,7 @@ class UserType extends AbstractType
                 'label' => 'Nom d\'artiste',
                 'required' => false,
             ])
+            ->add('avatar', AvatarType::class)
             ->add('firstname', TextType::class, [
                 'label' => 'Prénom',
                 'required' => false,

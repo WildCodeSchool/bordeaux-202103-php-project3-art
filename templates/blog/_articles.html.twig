@@ -1,0 +1,21 @@
+<div class="container pt-5 pb-5">
+<h2 class="font-weight-bold mb-4 title-shadow text-uppercase">
+    <span class="title-content">Le Blog</span>
+</h2>
+{% for happening in happenings %}
+    <div class="container pt-5 pb-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-6 mb-4">
+        <div class="card">
+            <img class="card-img-top" src="{{ happening.media }}" alt="{{ happening.title }}">
+            <div class="card-body pb-5">
+                <h5 class="card-title font-weight-bold">{{ happening.title }}</h5>
+                <p class="card-text text-justify">{{ happening.content }}</p>
+                <p class="card-text"><small class="text-muted">Last updated</small></p>
+            </div>
+        </div>
+    </div>
+        </div>
+    </div>
+{% endfor %}
+</div>
