@@ -585,7 +585,7 @@ class User implements UserInterface
     {
         $this->city = $city;
     }
-      
+
     /**
      * @return Collection|self[]
      */
@@ -601,7 +601,6 @@ class User implements UserInterface
         }
         return $this;
     }
-
 
     public function removeFriend(self $friend): self
     {

@@ -19,6 +19,15 @@ class HappeningRepository extends ServiceEntityRepository
         parent::__construct($registry, Happening::class);
     }
 
+    public function findByName(array $keywords)
+    {
+        $queryBuilder = $this->createQueryBuilder('h')
+            ->where('h.title IN (:keywords)')
+            ->setParameter('keywords', $keywords)
+            ->orderBy('h.dateStart', 'ASC')
+            ->getQuery();
+        return $queryBuilder->getResult();
+    }
     // /**
     //  * @return Happening[] Returns an array of Happening objects
     //  */
