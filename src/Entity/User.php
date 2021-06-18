@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
+use App\Entity\City;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -581,7 +582,7 @@ class User implements UserInterface
         return $this->city;
     }
 
-    public function setCity(?City $city): self
+    public function setCity(?City $city)
     {
         $this->city = $city;
     }
