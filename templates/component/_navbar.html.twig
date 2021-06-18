@@ -6,7 +6,7 @@
     <div  class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav container d-flex  flex-nowrap  justify-content-between">
             <div class="adjust-navbar d-flex flex-column flex-lg-row justify-content-around">
-            <a class="nav-link navbar-white font-bold text-uppercase" href="#">Les artistes</a>
+            <a class="nav-link navbar-white font-bold text-uppercase" href="{{ path('artist_show_all') }}">Les artistes</a>
             <a class="nav-link navbar-white font-bold text-uppercase" href="#">L'asso</a>
             <a class="nav-link navbar-white font-bold text-uppercase" href="#bloc-event">L'actualité</a>
             <a class="nav-link navbar-white font-bold text-uppercase" href="{{ path('blog_index') }}">Blog</a>
@@ -19,7 +19,7 @@
             {% if app.user %}
                 <a class="nav-link navbar-white font-bold text-uppercase" href="{{ path("app_logout") }}">Déconnexion</a>
             {% endif %}
-            <a class="nav-link navbar-white font-bold text-uppercase" href="#">Recherche</a>
+            <a class="nav-link navbar-white font-bold text-uppercase" href="{{ path("home_search") }}">Recherche</a>
             </div>
         </div>
     </div>

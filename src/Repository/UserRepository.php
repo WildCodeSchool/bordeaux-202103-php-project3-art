@@ -36,6 +36,40 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->_em->flush();
     }
 
+    public function findByFirstnameAndLastname(array $keywords)
+    {
+        $queryBuilder = $this->createQueryBuilder('u')
+            ->where('u.firstname IN (:keywords)')
+            ->orWhere('u.lastname IN (:keywords)')
+            ->orWhere('u.pseudo IN (:keywords)')
+            ->setParameter('keywords', $keywords)
+            ->orderBy('u.firstname', 'ASC')
+            ->getQuery();
+        return $queryBuilder->getResult();
+    }
+
+    public function findByExpertise(array $keywords)
+    {
+        $queryBuilder = $this->createQueryBuilder('u')
+            ->where('u.expertise IN (:keywords)')
+            ->setParameter('keywords', $keywords)
+            ->orderBy('u.firstname', 'ASC')
+            ->getQuery();
+        return $queryBuilder->getResult();
+    }
+
+    public function findByCitiesNameAndZipcode(array $keywords)
+    {
+        $queryBuilder = $this->createQueryBuilder('u')
+            ->where('c.name IN (:keywords)')
+            ->orWhere('c.zipCode in (:keywords)')
+            ->leftJoin('u.city', 'c')
+            ->setParameter('keywords', $keywords)
+            ->orderBy('u.firstname', 'ASC')
+            ->getQuery();
+        return $queryBuilder->getResult();
+    }
+
     // /**
     //  * @return User[] Returns an array of User objects
     //  */

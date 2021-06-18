@@ -3,9 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Message;
+use App\Form\GlobalSearchType;
 use App\Form\MessageType;
+use App\Entity\GlobalSearch;
 use App\Repository\HappeningRepository;
 use App\Repository\UserRepository;
+use App\Service\GlobalSearchProvider;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,9 +25,12 @@ class HomeController extends AbstractController
     /**
      * @Route("/", name="page")
      */
-    public function index(Request $request, EntityManagerInterface $entityManager, UserRepository $userRepository, HappeningRepository $happeningRepository): Response
-    {
-
+    public function index(
+        Request $request,
+        EntityManagerInterface $entityManager,
+        UserRepository $userRepository,
+        HappeningRepository $happeningRepository
+    ): Response {
         $users = $userRepository->findAll();
         $happenings = $happeningRepository->findBy(
             [],
@@ -36,7 +42,6 @@ class HomeController extends AbstractController
         $form = $this->createForm(MessageType::class, $message);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
             // TODO remplacer l'adresse par un mail admin généré par fixtures
             $adminContact = $userRepository->findOneBy(['email' => 'artiste1@gmail.com']);
             $message->setUser($adminContact);
@@ -53,6 +58,27 @@ class HomeController extends AbstractController
             'form' => $form->createView(),
             'artists' => $users,
             'happenings' => $happenings
+        ]);
+    }
+
+    /**
+     * @Route("/recherche", name="search")
+     */
+    public function search(Request $request, GlobalSearchProvider $globalSearchProvider): Response
+    {
+        $globalSearch = new GlobalSearch();
+        $form = $this->createForm(GlobalSearchType::class, $globalSearch);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $globalSearchProvider->createSearch($globalSearch);
+            $results = $globalSearch->getResults();
+        } else {
+            $globalSearchProvider->initSearch($globalSearch);
+            $results = $globalSearch->getResults();
+        }
+        return $this->render('home/searchBar.html.twig', [
+            'form' => $form->createView(),
+            'results' => $results,
         ]);
     }
 }
