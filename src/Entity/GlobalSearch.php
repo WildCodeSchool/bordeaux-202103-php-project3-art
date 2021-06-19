@@ -10,9 +10,9 @@ class GlobalSearch
     private array $results;
 
     /**
-     * @return string
+     * @return ?string
      */
-    public function getTextTyped(): string
+    public function getTextTyped(): ?string
     {
         return $this->textTyped;
     }
