@@ -19,13 +19,22 @@ class MessageType extends AbstractType
     {
         $builder
             ->add('mail', EmailType::class, [
-                'label' => 'VOTRE ADRESSE MAIL'
+                'label' => 'Votre adresse mail',
+                'label_attr' => [
+                    'class' => 'font-regular text-uppercase'
+                ]
             ])
             ->add('object', TextType::class, [
-                'label' => 'OBJET DU MESSAGE'
+                'label' => 'Objet du message',
+                'label_attr' => [
+                    'class' => 'font-regular text-uppercase'
+                    ]
             ])
             ->add('content', TextareaType::class, [
-                'label' => 'VOTRE MESSAGE'
+                'label' => 'Votre message',
+                'label_attr' => [
+                    'class' => 'font-regular text-uppercase'
+                ]
             ])
         ;
     }

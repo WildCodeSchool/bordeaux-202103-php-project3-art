@@ -14,45 +14,49 @@
 {% block body %}
 	<div class="memphis-background">
 		<div class="container pt-5">
-			<h2 class="card-title title-shadow font-weight-bold text-uppercase">
+			<h2 class="card-title title-shadow font-medium text-uppercase">
 				<span class="title-content">
 					{% block head_title %}{% endblock %}
 				</span>
 			</h2>
 			<div class="d-flex mt-5">
 				<div class="d-flex flex-column align-items-end pr-5">
-					{% if artist.avatar %}
-						<img class="avatar-picture " src="/uploads/images/users/{{ artist.avatar.image }}" alt="image profil" >
+					{% if artist.avatar.image is not null %}
+						<img class="avatar-picture" src="/uploads/images/users/{{ artist.avatar.image }}" alt="image profil">
 					{% else %}
-						<img class="avatar-picture " src="{{ asset('build/default-profile.png') }}">
+						<img class="avatar-picture" src="{{ asset('build/default-profile.png') }}">
 					{% endif %}
 					{% block link_edit_profil %}{% endblock %}
 				</div>
 				<div class="d-flex flex-column">
 					<div class="d-flex flex-column align-items-start">
-						<h3 class="text-uppercase title-shadow-grey
+						<h3 class="text-uppercase title-shadow-grey font-medium
 						 color-{{ (artist.disciplines is empty) ? 'move' : artist.disciplines[0].color }}">
 							<span class="title-content">
 								<strong>{{ artist.firstname is null ? 'Prénom' : artist.firstname }}</strong>
 								{{ (artist.lastname is null) ? 'Nom' : artist.lastname }}</span>
 						</h3>
-						<h4 class="title-shadow-grey text-uppercase
+						<h4 class="title-shadow-grey font-regular text-uppercase
 						color-{{ (artist.disciplines is empty) ? 'move' : artist.disciplines[0].color }}">
 							<span class="title-content">{{ (artist.expertise is null) ? 'Spécialité' : artist.expertise }}</span>
 						</h4>
 					</div>
-					<p>
+					<p class="font-regular">
 						<i class="fas fa-map-marker-alt icon icon-localisation
 					 color-{{ (artist.disciplines is empty) ? 'move' : artist.disciplines[0].color }}"></i>
-						{{ (artist.zipcode is null) ? "Code postal" : artist.zipcode }}
+						{% if artist.city is not null %}
+							{{ (artist.city.zipcode is null) ? "Code postal" : artist.city.zipcode }}
+						{% endif %}
 					</p>
-					<p>{{ (artist.description is null) ? 'Description du profil' : artist.description }}</p>
+					<p class="font-regular">{{ (artist.description is null) ? 'Description du profil' : artist.description }}</p>
 					<div class="d-flex">
 						{% block icon %}
 							{% if app.user and app.user.id != artist.id  %}
-                        	<a id="friend" href="{{ path('artist_add_friends', {friend_id: artist.id}) }}">
-                          		<i class="{{ app.user.isFriend(artist) ? 'fas fa-heart' : 'far fa-heart' }} fa-2x mr-2 icon color-{{ (artist.disciplines is empty) ? 'move' : artist.disciplines[0].color }} icon-secondary"></i>
-                        	</a>Ajouter cet.te artiste à mes contacts favoris
+								<p class="font-light">
+									<a id="friend" href="{{ path('artist_add_friends', {friend_id: artist.id}) }}">
+										<i class="{{ app.user.isFriend(artist) ? 'fas fa-heart' : 'far fa-heart' }} fa-2x mr-2 icon color-{{ (artist.disciplines is empty) ? 'move' : artist.disciplines[0].color }} icon-secondary"></i>
+									</a>Ajouter cet.te artiste à mes contacts favoris
+								</p>
                         {% endif %}
 					{% endblock %}
 						<p class="ml-4">
@@ -73,21 +77,23 @@
 				{% block message %}{% endblock %}
 		</div>
 		{% block contacts %}
-            {% if app.user.id == artist.id %}
-            <div class="container mt-5 py-5">
-                <h2 class="title-shadow text-uppercase font-weight-bold">
-                    <span class="title-content">Contacts</span>
-                </h2>
-                <div class="d-flex flex-column">
-                    <div class="container pt-5 d-flex flex-wrap">
-                {% for friend in artist.friends %}
-                   <a href="{{ path('artist_show', {id: friend.id}) }}" target="_blank"><img src="/uploads/images/users/{{ friend.avatar.image }}" class="img-friend p-1"></a>
-                        {% else %}
-                    <p>Pas de favoris pour le moment</p>
-                {% endfor %}
-                    </div>
-            </div>
-            </div>
+			{% if app.user %}
+				{% if app.user.id == artist.id %}
+				<div class="container mt-5 py-5">
+					<h2 class="title-shadow text-uppercase font-weight-bold">
+						<span class="title-content font-medium">Contacts</span>
+					</h2>
+					<div class="d-flex flex-column">
+						<div class="container pt-5 d-flex flex-wrap">
+					{% for friend in artist.friends %}
+					   <a href="{{ path('artist_show', {id: friend.id}) }}" target="_blank"><img src="/uploads/images/users/{{ friend.avatar.image }}" class="img-friend p-1"></a>
+							{% else %}
+						<p>Pas de favoris pour le moment</p>
+					{% endfor %}
+						</div>
+				</div>
+				</div>
+				{% endif %}
             {% endif %}
         {% endblock %}
 		{% block artworks %}
@@ -96,27 +102,28 @@
 					{% for artwork in artist.artworks %}
 						{% if artwork.media.support == "photo" %}
 							<div class="col-4">
-								<h4 class="title-shadow-grey text-uppercase color-{{ artist.disciplines[0].color }}">
+								<h4 class="title-shadow-grey font-regular text-uppercase color-{{ artist.disciplines[0].color }}">
 									<span class="title-content">{{ artwork.name }}</span>
 								</h4>
 								<img src="{{ artwork.media.url }}" alt="{{ artwork.name }}" width="100%">
 							</div>
 						{% elseif artwork.media.support == "video" %}
 							<div class="col-12 col-md-6">
-								<h4 class="title-shadow-grey text-uppercase color-{{ artist.disciplines[0].color }}">
+								<h4 class="title-shadow-grey font-regular text-uppercase color-{{ artist.disciplines[0].color }}">
 									<span class="title-content">{{ artwork.name }}</span>
 								</h4>
 								<iframe width="100%" height="360" src="{{ artwork.media.url }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 							</div>
 						{% endif %}
 					{% else %}
-						<p>Pas de contenu pour l'instant
+						<p class="font-regular">Pas de contenu pour l'instant
 						</p>
 					{% endfor %}
 				</div>
 				{% if not app.user is same as(artist) %}
 					<div class="mt-3 container d-flex justify-content-end">
-						<a href="{{ path('artist_contact', {user_id: artist.id}) }}" class="link-{{ (artist.disciplines is empty) ? 'move' : artist.disciplines[0].color }} profil-link mt-1 profil-link-border-{{ (artist.disciplines is empty) ? 'move' : artist.disciplines[0].color }}">
+						<a href="{{ path('artist_contact', {user_id: artist.id}) }}" class="link-{{ (artist.disciplines is empty) ? 'move' : artist.disciplines[0].color }}
+						 font-light profil-link mt-1 profil-link-border-{{ (artist.disciplines is empty) ? 'move' : artist.disciplines[0].color }}">
 							Contacter l'artiste</a>
 					</div>
 				{% endif %}
@@ -125,15 +132,15 @@
 
 		{% block search %}
 			<div class="container mt-5 py-5">
-				<h2 class="title-shadow text-uppercase font-weight-bold ">
-					<span class="title-content">Recherche</span>
+				<h2 class="title-shadow text-uppercase">
+					<span class="title-content font-medium">Recherche</span>
 				</h2>
 			</div>
 		{% endblock %}
 		{% block announcements %}
 			<div class="container mt-5 py-5">
-				<h2 class="title-shadow text-uppercase font-weight-bold ">
-					<span class="title-content">Les annonces</span>
+				<h2 class="title-shadow text-uppercase">
+					<span class="title-content font-medium">Les annonces</span>
 				</h2>
 			</div>
 		{% endblock %}

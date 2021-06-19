@@ -15,27 +15,34 @@
         </div>
     </div>
     <div>
-    {% if results.users is not defined and results.happenings is not defined %}
-        <div class="row mt-5 d-flex justify-content-center">
-            <p class="alert-danger">La recherche n'a rien donnée, essayez d'autres mots.</p>
-        </div>
-    {% else %}
         <div class="row mt-5 ">
             {% if results.users is defined %}
                 {% for artist in results.users %}
-                <div class="col-sm-6 col-md-4">
-                    <p class="bg-{{ artist.disciplines[0].color }}  position-relative img-container">
-                        <a href="{{ path('artist_show', {id: artist.id}) }}" >
-                            <img  class="artist-image " src="/uploads/images/users/{{ artist.avatar.image }}"
-                                  alt="{{ artist.firstName }} {{ artist.lastName }}" width="100%">
-                            <span class=" {{ artist.disciplines[0].color }}"></span>
-                            <span class="ml-2 text-white artist-name">
-                                {{ artist.firstname }} {{ artist.lastname }}
-                            </span>
-                        </a>
-                    </p>
-                </div>
+                    <div class="col-sm-6 col-md-4">
+                        <p class="bg-{{ (artist.disciplines is empty) ? 'move' : artist.disciplines[0].color }} position-relative img-container">
+                            <a href="{{ path('artist_show', {id: artist.id}) }}" >
+                                {% if artist.avatar.image is not null %}
+                                    <img class="artist-image" src="/uploads/images/users/{{ artist.avatar.image }}"
+                                         alt="{{ artist.firstname is null ? 'Prénom' : artist.firstname }}
+                                            {{ (artist.lastname is null) ? 'Nom' : artist.lastname }}" width="100%">
+                                {% else %}
+                                    <img class="artist-image" src="{{ asset('build/default-profile.png') }}"
+                                         alt="{{ artist.firstname is null ? 'Prénom' : artist.firstname }}
+                                                 {{ (artist.lastname is null) ? 'Nom' : artist.lastname }}" width="100%">
+                                {% endif %}
+                                <span class=" {{ (artist.disciplines is empty) ? 'move' : artist.disciplines[0].color }}"></span>
+                                <span class="ml-2 text-white artist-name">
+                                    {{ artist.firstname is null ? 'Prénom' : artist.firstname }} {{ (artist.lastname is null) ? 'Nom' : artist.lastname }}
+                                </span>
+                            </a>
+                        </p>
+                    </div>
                 {% endfor %}
+                {% if results.users is empty %}
+                    <div class=" offset-1 offset-md-4">
+                        <p class="ml-2 font-medium text-center">La recherche n'a rien donné, essayez d'autres mots.</p>
+                    </div>
+                    {% endif %}
             {% endif %}
             {% if results.happenings is defined %}
                 {% for happening in results.happenings %}
@@ -51,8 +58,12 @@
                         </p>
                     </div>
                 {% endfor %}
+                {% if results.happenings is empty %}
+                    <div class=" offset-1 offset-md-4">
+                        <p class="ml-2 font-medium text-center">La recherche n'a rien donné, essayez d'autres mots.</p>
+                    </div>
+                {% endif %}
             {% endif %}
         </div>
-    {% endif %}
     </div>
 </div>
