@@ -3,14 +3,14 @@
 		<div class="bloc-contact contact-line-title">
 			<div class="container">
 				<h2 class="ml-3 card-title title-shadow text-uppercase font-weight-bold">
-					<span class="title-content">Nous écrire</span>
+					<span class="title-content font-medium">Nous écrire</span>
 				</h2>
 				<div class="mt-5">
 					{% form_theme form 'bootstrap_4_layout.html.twig' %}
 					{{ form_start(form) }}
 					{{ form_widget(form) }}
 					{{ form_errors(form) }}
-					<input type='submit' value='ENVOYER'>
+					<input class="font-regular text-uppercase" type='submit' value='Envoyer'>
 					{{ form_end(form) }}
 				</div>
 			</div>

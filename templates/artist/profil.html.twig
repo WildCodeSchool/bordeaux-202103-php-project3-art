@@ -16,7 +16,7 @@
 {% endblock %}
 
 {% block icon %}
-    <p>
+    <p class="font-regular">
 		{{ artist.friends|length }}<i class="fas fa-user-friends ml-2 mr-2 icon color-{{ (artist.disciplines is empty) ? 'move' : artist.disciplines[0].color }} icon-secondary"></i>
 		{{ artist.messages|length }}<i id="mailbox" class="cursor-pointer fas fa-envelope ml-2 icon color-{{ (artist.disciplines is empty) ? 'move' : artist.disciplines[0].color }} icon-secondary"></i>
     </p>
@@ -24,7 +24,7 @@
 
 {% block link_edit_profil %}
  <a href="{{ path('artist_edit', {user_id: artist.id}) }}" class="link-{{ (artist.disciplines is empty) ? 'move' : artist.disciplines[0].color }}
-    profil-link mt-1 profil-link-border-{{ (artist.disciplines is empty) ? 'move' : artist.disciplines[0].color }}">
+    profil-link mt-1 font-light profil-link-border-{{ (artist.disciplines is empty) ? 'move' : artist.disciplines[0].color }}">
         Modifier mon profil</a>
 {% endblock %}
 
@@ -43,7 +43,7 @@
 {% block message %}
 	<div id="block-message" class="d-none mt-5">
 		<h2 class="card-title title-shadow font-weight-bold text-uppercase">
-			<span class="title-content">
+			<span class="title-content font-medium">
 				Messages
 			</span>
 		</h2>
