@@ -4,7 +4,7 @@ namespace App\Entity;
 
 class GlobalSearch
 {
-    private string $textTyped;
+    private ?string $textTyped;
     private string $type = 'artist';
     private array $keywords;
     private array $results;
@@ -18,9 +18,9 @@ class GlobalSearch
     }
 
     /**
-     * @param string $textTyped
+     * @param ?string $textTyped
      */
-    public function setTextTyped(string $textTyped): void
+    public function setTextTyped(?string $textTyped): void
     {
         $this->textTyped = $textTyped;
     }
@@ -46,8 +46,12 @@ class GlobalSearch
      */
     public function getKeywords(): array
     {
-        $words = trim($this->textTyped);
-        $keywords = explode(' ', $words);
+        if(!empty($this->textTyped)){
+            $words = trim($this->textTyped);
+            $keywords = explode(' ', $words);
+        } else {
+            $keywords = [];
+        }
         return  $keywords;
     }
 
