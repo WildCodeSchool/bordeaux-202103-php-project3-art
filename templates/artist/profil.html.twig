@@ -17,8 +17,8 @@
 
 {% block icon %}
     <p>
-		{{ app.user.friends|length }}<i class="fas fa-user-friends ml-2 mr-2 icon color-{{ (artist.disciplines is empty) ? 'move' : artist.disciplines[0].color }} icon-secondary"></i>
-		{{ app.user.messages|length }}<i id="mailbox" class="cursor-pointer fas fa-envelope ml-2 icon color-{{ (artist.disciplines is empty) ? 'move' : artist.disciplines[0].color }} icon-secondary"></i>
+		{{ artist.friends|length }}<i class="fas fa-user-friends ml-2 mr-2 icon color-{{ (artist.disciplines is empty) ? 'move' : artist.disciplines[0].color }} icon-secondary"></i>
+		{{ artist.messages|length }}<i id="mailbox" class="cursor-pointer fas fa-envelope ml-2 icon color-{{ (artist.disciplines is empty) ? 'move' : artist.disciplines[0].color }} icon-secondary"></i>
     </p>
 {% endblock %}
 
