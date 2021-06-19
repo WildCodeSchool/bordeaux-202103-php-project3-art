@@ -73,21 +73,23 @@
 				{% block message %}{% endblock %}
 		</div>
 		{% block contacts %}
-            {% if app.user.id == artist.id %}
-            <div class="container mt-5 py-5">
-                <h2 class="title-shadow text-uppercase font-weight-bold">
-                    <span class="title-content">Contacts</span>
-                </h2>
-                <div class="d-flex flex-column">
-                    <div class="container pt-5 d-flex flex-wrap">
-                {% for friend in artist.friends %}
-                   <a href="{{ path('artist_show', {id: friend.id}) }}" target="_blank"><img src="/uploads/images/users/{{ friend.avatar.image }}" class="img-friend p-1"></a>
-                        {% else %}
-                    <p>Pas de favoris pour le moment</p>
-                {% endfor %}
-                    </div>
-            </div>
-            </div>
+			{% if app.user %}
+				{% if app.user.id == artist.id %}
+				<div class="container mt-5 py-5">
+					<h2 class="title-shadow text-uppercase font-weight-bold">
+						<span class="title-content">Contacts</span>
+					</h2>
+					<div class="d-flex flex-column">
+						<div class="container pt-5 d-flex flex-wrap">
+					{% for friend in artist.friends %}
+					   <a href="{{ path('artist_show', {id: friend.id}) }}" target="_blank"><img src="/uploads/images/users/{{ friend.avatar.image }}" class="img-friend p-1"></a>
+							{% else %}
+						<p>Pas de favoris pour le moment</p>
+					{% endfor %}
+						</div>
+				</div>
+				</div>
+				{% endif %}
             {% endif %}
         {% endblock %}
 		{% block artworks %}
