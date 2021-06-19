@@ -21,10 +21,10 @@
 			</h2>
 			<div class="d-flex mt-5">
 				<div class="d-flex flex-column align-items-end pr-5">
-					{% if artist.avatar %}
-						<img class="avatar-picture " src="/uploads/images/users/{{ artist.avatar.image }}" alt="image profil" >
+					{% if artist.avatar.image is not null %}
+						<img class="avatar-picture" src="/uploads/images/users/{{ artist.avatar.image }}" alt="image profil">
 					{% else %}
-						<img class="avatar-picture " src="{{ asset('build/default-profile.png') }}">
+						<img class="avatar-picture" src="{{ asset('build/default-profile.png') }}">
 					{% endif %}
 					{% block link_edit_profil %}{% endblock %}
 				</div>
@@ -44,7 +44,9 @@
 					<p>
 						<i class="fas fa-map-marker-alt icon icon-localisation
 					 color-{{ (artist.disciplines is empty) ? 'move' : artist.disciplines[0].color }}"></i>
-						{{ (artist.city.zipcode is null) ? "Code postal" : artist.city.zipcode }}
+						{% if artist.city is not null %}
+							{{ (artist.city.zipcode is null) ? "Code postal" : artist.city.zipcode }}
+						{% endif %}
 					</p>
 					<p>{{ (artist.description is null) ? 'Description du profil' : artist.description }}</p>
 					<div class="d-flex">

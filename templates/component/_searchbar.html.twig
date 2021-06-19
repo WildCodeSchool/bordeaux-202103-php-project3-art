@@ -24,13 +24,20 @@
             {% if results.users is defined %}
                 {% for artist in results.users %}
                 <div class="col-sm-6 col-md-4">
-                    <p class="bg-{{ artist.disciplines[0].color }}  position-relative img-container">
+                    <p class="bg-{{ (artist.disciplines is empty) ? 'move' : artist.disciplines[0].color }} position-relative img-container">
                         <a href="{{ path('artist_show', {id: artist.id}) }}" >
-                            <img  class="artist-image " src="/uploads/images/users/{{ artist.avatar.image }}"
-                                  alt="{{ artist.firstName }} {{ artist.lastName }}" width="100%">
-                            <span class=" {{ artist.disciplines[0].color }}"></span>
+                            {% if artist.avatar.image is not null %}
+                                <img class="artist-image" src="/uploads/images/users/{{ artist.avatar.image }}"
+                                     alt="{{ artist.firstname is null ? 'Prénom' : artist.firstname }}
+                                     {{ (artist.lastname is null) ? 'Nom' : artist.lastname }}" width="100%">
+                            {% else %}
+                                <img class="artist-image" src="{{ asset('build/default-profile.png') }}"
+                                     alt="{{ artist.firstname is null ? 'Prénom' : artist.firstname }}
+                                          {{ (artist.lastname is null) ? 'Nom' : artist.lastname }}" width="100%">
+                            {% endif %}
+                            <span class=" {{ (artist.disciplines is empty) ? 'move' : artist.disciplines[0].color }}"></span>
                             <span class="ml-2 text-white artist-name">
-                                {{ artist.firstname }} {{ artist.lastname }}
+                                {{ artist.firstname is null ? 'Prénom' : artist.firstname }} {{ (artist.lastname is null) ? 'Nom' : artist.lastname }}
                             </span>
                         </a>
                     </p>
