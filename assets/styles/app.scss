@@ -16,7 +16,6 @@
 @import "searchbar";
 @import "artist_show_all";
 
-
 @import "~bootstrap/scss/bootstrap";
 $fa-font-path: '~@fortawesome/fontawesome-free/webfonts';
 @import '~@fortawesome/fontawesome-free/scss/fontawesome';
@@ -24,3 +23,5 @@ $fa-font-path: '~@fortawesome/fontawesome-free/webfonts';
 @import '~@fortawesome/fontawesome-free/scss/solid';
 @import '~@fortawesome/fontawesome-free/scss/regular';
 @import '~@fortawesome/fontawesome-free/scss/brands';
+@import "~leaflet";
+@import "~@ansur/leaflet-pulse-icon/dist/L.Icon.Pulse.css";

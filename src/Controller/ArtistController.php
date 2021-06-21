@@ -53,7 +53,10 @@ class ArtistController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             $zipCode = $form->getData()->getCity()->getZipCode();
-            $this->cityBuilder->buildCityForUser($this->getUser(), $zipCode);
+            $city = $this->cityBuilder->fetchCity($zipCode);
+            $this->getUser()->getCity()->setName($city['nom']);
+            $this->getUser()->getCity()->setLongitude($city['centre']['coordinates'][0]);
+            $this->getUser()->getCity()->setLatitude($city['centre']['coordinates'][1]);
             $manager-> flush();
             return $this->redirectToRoute('artist_profil');
 

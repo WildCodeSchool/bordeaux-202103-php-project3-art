@@ -1,61 +1,76 @@
+import L from 'leaflet';
+import 'devbridge-autocomplete';
+
+console.log('Propiétés de L', L);
+
 const artistCards = document.getElementsByClassName('artist-card');
-let moveCursor = L.icon({
+
+delete L.Icon.Default.prototype._getIconUrl;
+L.Icon.Default.mergeOptions({
+    iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
+    iconUrl: require('leaflet/dist/images/marker-icon.png'),
+    shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
+});
+
+require('leaflet-easybutton');
+require('@ansur/leaflet-pulse-icon');
+
+const moveCursor = L.icon({
     iconUrl: '/uploads/images/cursors/cursor-Cmove.png',
 
-    iconSize:     [40, 40], // size of the icon
-    iconAnchor:   [20, 40], // point of the icon which will correspond to marker's location
-    popupAnchor:  [0, -20] // point from which the popup should open relative to the iconAnchor
+    iconSize: [40, 40],
+    iconAnchor: [20, 40],
+    popupAnchor: [0, -20],
 });
-let visuCursor = L.icon({
+const visuCursor = L.icon({
     iconUrl: '/uploads/images/cursors/cursor-Cvisu.png',
 
-    iconSize:     [40, 40], // size of the icon
-    iconAnchor:   [20, 40], // point of the icon which will correspond to marker's location
-    popupAnchor:  [0, -20] // point from which the popup should open relative to the iconAnchor
+    iconSize: [40, 40],
+    iconAnchor: [20, 40],
+    popupAnchor: [0, -20],
 });
-let lettersCursor = L.icon({
+const lettersCursor = L.icon({
     iconUrl: '/uploads/images/cursors/cursor-Cletters.png',
 
-    iconSize:     [40, 40], // size of the icon
-    iconAnchor:   [20, 40], // point of the icon which will correspond to marker's location
-    popupAnchor:  [0, -20] // point from which the popup should open relative to the iconAnchor
+    iconSize: [40, 40],
+    iconAnchor: [20, 40],
+    popupAnchor: [0, -20],
 });
-let musicCursor = L.icon({
+const musicCursor = L.icon({
     iconUrl: '/uploads/images/cursors/cursor-Cmusic.png',
 
-    iconSize:     [40, 40], // size of the icon
-    iconAnchor:   [20, 40], // point of the icon which will correspond to marker's location
-    popupAnchor:  [0, -20] // point from which the popup should open relative to the iconAnchor
+    iconSize: [40, 40],
+    iconAnchor: [20, 40],
+    popupAnchor: [0, -20],
 });
-let CCursor = L.icon({
+const CCursor = L.icon({
     iconUrl: '/uploads/images/cursors/cursor-C.png',
 
-    iconSize:     [40, 40], // size of the icon
-    iconAnchor:   [20, 40], // point of the icon which will correspond to marker's location
-    popupAnchor:  [0, -20] // point from which the popup should open relative to the iconAnchor
+    iconSize: [40, 40],
+    iconAnchor: [20, 40],
+    popupAnchor: [0, -20],
 });
-let map = L.map('map').setView([46, -0.57918], 7);
+const map = L.map('map').setView([46, -0.57918], 7);
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
 }).addTo(map);
 for (const artistCard of artistCards) {
     switch (artistCard.dataset.color) {
-        case 'move':
-            L.marker([artistCard.dataset.latitude, artistCard.dataset.longitude],{icon:moveCursor}).addTo(map).bindPopup(artistCard.innerHTML);
+    case 'move':
+        L.marker([artistCard.dataset.latitude, artistCard.dataset.longitude], { icon: moveCursor }).addTo(map).bindPopup(artistCard.innerHTML);
         break;
-        case 'visu':
-            L.marker([artistCard.dataset.latitude, artistCard.dataset.longitude],{icon:visuCursor}).addTo(map).bindPopup(artistCard.innerHTML);
+    case 'visu':
+        L.marker([artistCard.dataset.latitude, artistCard.dataset.longitude], { icon: visuCursor }).addTo(map).bindPopup(artistCard.innerHTML);
         break;
-        case 'letters':
-            L.marker([artistCard.dataset.latitude, artistCard.dataset.longitude],{icon:lettersCursor}).addTo(map).bindPopup(artistCard.innerHTML);
+    case 'letters':
+        L.marker([artistCard.dataset.latitude, artistCard.dataset.longitude], { icon: lettersCursor }).addTo(map).bindPopup(artistCard.innerHTML);
         break;
-        case 'music':
-            L.marker([artistCard.dataset.latitude, artistCard.dataset.longitude],{icon:musicCursor}).addTo(map).bindPopup(artistCard.innerHTML);
+    case 'music':
+        L.marker([artistCard.dataset.latitude, artistCard.dataset.longitude], { icon: musicCursor }).addTo(map).bindPopup(artistCard.innerHTML);
         break;
-        default :
-            L.marker([artistCard.dataset.latitude, artistCard.dataset.longitude],{icon:CCursor}).addTo(map).bindPopup(artistCard.innerHTML);
+    default:
+        L.marker([artistCard.dataset.latitude, artistCard.dataset.longitude], { icon: CCursor }).addTo(map).bindPopup(artistCard.innerHTML);
         break;
-
     }
 }

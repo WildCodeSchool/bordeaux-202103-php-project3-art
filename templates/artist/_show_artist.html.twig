@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 {% block javascripts %}
-	{{ encore_entry_script_tags('friend') }}
+	{{ parent() }}
+    {{ encore_entry_script_tags('friend') }}
 {% endblock %}
 {% block title %}
 	{% if artist.pseudo is not null %}
@@ -20,7 +21,7 @@
 		</h2>
 		<div class="row col-12 mt-5">
 			<div class="card border-0 bg-transparent col-xl-4 col-xs-8 d-flex flex-column align-items-end mb-5">
-				{% if artist.avatar.image is not null %}
+				{% if artist.avatar %}
 					<img class="avatar-picture" src="/uploads/images/users/{{ artist.avatar.image }}" alt="image profil">
 				{% else %}
 					<img class="avatar-picture" src="{{ asset('build/default-profile.png') }}">
