@@ -1,38 +1,54 @@
+'use strict';
+import L from 'leaflet';
+console.log("Propiétés de L",L);
+import 'devbridge-autocomplete';
 const artistCards = document.getElementsByClassName('artist-card');
+
+delete L.Icon.Default.prototype._getIconUrl;
+L.Icon.Default.mergeOptions({
+    iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
+    iconUrl: require('leaflet/dist/images/marker-icon.png'),
+    shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
+});
+
+require('leaflet-easybutton');
+require('@ansur/leaflet-pulse-icon');
+
+
 let moveCursor = L.icon({
     iconUrl: '/uploads/images/cursors/cursor-Cmove.png',
 
-    iconSize:     [40, 40], // size of the icon
-    iconAnchor:   [20, 40], // point of the icon which will correspond to marker's location
-    popupAnchor:  [0, -20] // point from which the popup should open relative to the iconAnchor
+    iconSize:     [40, 40],
+    iconAnchor:   [20, 40],
+    popupAnchor:  [0, -20]
 });
 let visuCursor = L.icon({
     iconUrl: '/uploads/images/cursors/cursor-Cvisu.png',
 
-    iconSize:     [40, 40], // size of the icon
-    iconAnchor:   [20, 40], // point of the icon which will correspond to marker's location
-    popupAnchor:  [0, -20] // point from which the popup should open relative to the iconAnchor
+    iconSize:     [40, 40],
+    iconAnchor:   [20, 40],
+    popupAnchor:  [0, -20]
 });
 let lettersCursor = L.icon({
     iconUrl: '/uploads/images/cursors/cursor-Cletters.png',
 
-    iconSize:     [40, 40], // size of the icon
-    iconAnchor:   [20, 40], // point of the icon which will correspond to marker's location
-    popupAnchor:  [0, -20] // point from which the popup should open relative to the iconAnchor
+    iconSize:     [40, 40],
+    iconAnchor:   [20, 40],
+    popupAnchor:  [0, -20]
 });
 let musicCursor = L.icon({
     iconUrl: '/uploads/images/cursors/cursor-Cmusic.png',
 
-    iconSize:     [40, 40], // size of the icon
-    iconAnchor:   [20, 40], // point of the icon which will correspond to marker's location
-    popupAnchor:  [0, -20] // point from which the popup should open relative to the iconAnchor
+    iconSize:     [40, 40],
+    iconAnchor:   [20, 40],
+    popupAnchor:  [0, -20]
 });
 let CCursor = L.icon({
     iconUrl: '/uploads/images/cursors/cursor-C.png',
 
-    iconSize:     [40, 40], // size of the icon
-    iconAnchor:   [20, 40], // point of the icon which will correspond to marker's location
-    popupAnchor:  [0, -20] // point from which the popup should open relative to the iconAnchor
+    iconSize:     [40, 40],
+    iconAnchor:   [20, 40],
+    popupAnchor:  [0, -20]
 });
 let map = L.map('map').setView([46, -0.57918], 7);
 
