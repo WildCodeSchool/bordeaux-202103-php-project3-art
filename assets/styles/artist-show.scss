@@ -9,6 +9,27 @@
   border-radius: 50%;
 }
 
+.img-wrap{
+  position: relative;
+  width: 150px;
+  height: 150px;
+}
+
+.img-description {
+  position: absolute;
+  bottom: 0;
+  right: 75px;
+  color: $text-light;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity .2s, visibility .2s;
+}
+
+.img-wrap:hover .img-description {
+  visibility: visible;
+  opacity: 1;
+}
+
 .icon-localisation{
   font-size: 2em;
 }
