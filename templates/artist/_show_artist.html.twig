@@ -21,7 +21,8 @@
 			</h2>
 			<div class="d-flex mt-5">
 				<div class="d-flex flex-column align-items-end pr-5">
-					{% if artist.avatar.image is not null %}
+{#					{% if artist.avatar.image is not null %}#}
+					{% if artist.avatar %}
 						<img class="avatar-picture" src="/uploads/images/users/{{ artist.avatar.image }}" alt="image profil">
 					{% else %}
 						<img class="avatar-picture" src="{{ asset('build/default-profile.png') }}">
