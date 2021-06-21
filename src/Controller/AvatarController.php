@@ -24,7 +24,6 @@ class AvatarController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $user = $this->getUser();
             $avatar->setUser($user);
-            $avatar->setUrl("url ok");
             $entityManager->persist($avatar);
             $entityManager->flush();
             return $this->redirect('home_page');
