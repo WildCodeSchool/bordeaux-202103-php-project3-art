@@ -1,7 +1,6 @@
 import L from 'leaflet';
 import 'devbridge-autocomplete';
 
-console.log('Propiétés de L', L);
 
 const artistCards = document.getElementsByClassName('artist-card');
 
@@ -73,4 +72,12 @@ for (const artistCard of artistCards) {
         L.marker([artistCard.dataset.latitude, artistCard.dataset.longitude], { icon: CCursor }).addTo(map).bindPopup(artistCard.innerHTML);
         break;
     }
+}
+console.log(map);
+console.log(L);
+map.on('click', onMapClick);
+function onMapClick(e) {
+    let lat  = e.latlng.lat;
+    let lon  = e.latlng.lng;
+    console.log(lat, lon);
 }

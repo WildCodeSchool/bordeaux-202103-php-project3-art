@@ -37,6 +37,7 @@ Encore
     .addEntry('clickable-line','/assets/clickable-line.js')
     .addEntry('inputFileValue', './assets/inputFileValue.js')
     .addEntry('friend', './assets/friend.js')
+    .addEntry('location', './assets/preciseLocation.js')
 
 
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
