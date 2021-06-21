@@ -8,39 +8,38 @@
 	{{ parent() }}
 	{{ encore_entry_script_tags('inputFileValue') }}
 {% endblock %}
+
 {% block body %}
-	<div class="memphis-background">
-		<div class="container pt-5 mb-5">
-			<h2 class="ml-3 mb-5 card-title title-shadow text-uppercase font-weight-bold">
-				<span class="title-content">Modifier
-					<br>
-					mon profil</span>
-			</h2>
-			<div class=" row col-12 mt-5">
-				<div class=" col-4 pr-5">
-					{% if artist.avatar %}
-						<img class="avatar-picture " src="/uploads/images/users/{{ artist.avatar.image }}" alt="image profil" >
-					{% else %}
-						<img class="avatar-picture " src="{{ asset('build/default-profile.png') }}">
-					{% endif %}
-					{{ form_start(form) }}
-					{{ form_row(form.avatar) }}
-				</div>
-				<div class="col-4 d-flex flex-column ">
-					{{ form_row(form.pseudo) }}
-					{{ form_row(form.firstname) }}
-                    {{ form_row(form.lastname) }}
-                    {{ form_row(form.city) }}
-					{{ form_row(form.disciplines) }}
-				</div>
-				<div class="col-4 d-flex flex-column">
-					{{ form_row(form.expertise) }}
-					{{ form_row(form.description) }}
-					{{ form_row(form.facebookUrl) }}
-					{{ form_row(form.instagramUrl) }}
-					<button type="submit" class="btn btn-primary text-uppercase">Modifier profil</button>
-					{{ form_end(form) }}
-				</div>
+	<div class="container pt-5 pb-5">
+		<h2 class="ml-3 mb-5 card-title title-shadow text-uppercase font-weight-bold">
+			<span class="title-content">Modifier
+				<br>
+				mon profil</span>
+		</h2>
+		<div class="row col-12 mt-5">
+			<div class="card border-0 bg-transparent col-xl-4 col-xs-8 d-flex flex-column">
+				{% if artist.avatar %}
+					<img class="avatar-picture " src="/uploads/images/users/{{ artist.avatar.image }}" alt="image profil">
+				{% else %}
+					<img class="avatar-picture " src="{{ asset('build/default-profile.png') }}">
+				{% endif %}
+				{{ form_start(form) }}
+				{{ form_row(form.avatar) }}
+			</div>
+			<div class="card border-0 bg-transparent col-xl-4 col-xs-8 d-flex flex-column">
+				{{ form_row(form.pseudo) }}
+				{{ form_row(form.firstname) }}
+				{{ form_row(form.lastname) }}
+				{{ form_row(form.city) }}
+				{{ form_row(form.disciplines) }}
+			</div>
+			<div class="card border-0 bg-transparent col-xl-4 col-xs-8 d-flex flex-column">
+				{{ form_row(form.expertise) }}
+				{{ form_row(form.description) }}
+				{{ form_row(form.facebookUrl) }}
+				{{ form_row(form.instagramUrl) }}
+				<button type="submit" class="btn btn-outline-secondary text-uppercase">Modifier profil</button>
+				{{ form_end(form) }}
 			</div>
 		</div>
 	</div>
