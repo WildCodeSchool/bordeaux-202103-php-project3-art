@@ -48,17 +48,18 @@
 						{{ (artist.city.zipcode is null) ? "Ville" : artist.city.name }}
 					{% endif %}
 				</p>
-				<p class="font-regular">{{ (artist.description is null) ? 'Description du profil' : artist.description }}</p>
-				<div class="d-flex">
-					{% block icon %}
-						{% if app.user and app.user.id != artist.id  %}
-							<p class="font-light">
-								<a id="friend" href="{{ path('artist_add_friends', {friend_id: artist.id}) }}">
-									<i class="{{ app.user.isFriend(artist) ? 'fas fa-heart' : 'far fa-heart' }} fa-2x mr-2 icon color-{{ (artist.disciplines is empty) ? 'move' : artist.disciplines[0].color }} icon-secondary"></i>
-								</a>Ajouter cet.te artiste à mes contacts favoris
-							</p>
-						{% endif %}
+					<p class="font-regular">{{ (artist.description is null) ? 'Description du profil' : artist.description }}</p>
+					<div class="d-flex">
+
+						{% block icon %}
+							{% if app.user and app.user.id != artist.id  %}
+								<p class="font-light">
+									<a id="friend" href="{{ path('artist_add_friends', {friend_id: artist.id}) }}">
+										<i class="{{ app.user.isFriend(artist) ? 'fas fa-heart' : 'far fa-heart' }} fa-2x mr-2 icon color-{{ (artist.disciplines is empty) ? 'move' : artist.disciplines[0].color }} icon-secondary"></i></a>
+						{{ app.user.isFriend(artist) ? 'Ajouté.e à mes contacts favoris !' : 'Ajouter cet.te artiste à mes contacts favoris' }}
+                        {% endif %}
 					{% endblock %}
+
 					<p class="ml-4">
 						{% if artist.facebookUrl is not null %}
 							<a href="#">
@@ -85,8 +86,13 @@
 					</h2>
 					<div class="d-flex flex-column">
 						<div class="container pt-5 d-flex flex-wrap">
-							{% for friend in artist.friends %}
-								<a href="{{ path('artist_show', {id: friend.id}) }}" target="_blank"><img src="/uploads/images/users/{{ friend.avatar.image }}" class="img-friend p-1"></a>
+
+					{% for friend in artist.friends %}
+						<div class="img-wrap">
+					   <a href="{{ path('artist_show', {id: friend.id}) }}" target="_blank"><img src="/uploads/images/users/{{ friend.avatar.image }}" class="img-friend p-1"></a>
+						<p class="img-description font-light">{{ friend.pseudo }}</p>
+						</div>
+
 							{% else %}
 								<p>Pas de favoris pour le moment</p>
 							{% endfor %}
