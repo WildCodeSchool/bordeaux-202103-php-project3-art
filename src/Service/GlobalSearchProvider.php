@@ -12,22 +12,19 @@ class GlobalSearchProvider
 {
     private UserRepository $userRepository;
     private HappeningRepository $happeningRepository;
-    private CityRepository $cityRepository;
     public function __construct(
         UserRepository $userRepository,
-        HappeningRepository $happeningRepository,
-        CityRepository $cityRepository
+        HappeningRepository $happeningRepository
     ) {
         $this->userRepository = $userRepository;
         $this->happeningRepository = $happeningRepository;
-        $this->cityRepository = $cityRepository;
     }
 
     public function initSearch(GlobalSearch $globalSearch): void
     {
         $allResults = [];
-        $users = $this->userRepository->findBy([],['createdAt' => 'DESC']);
-        $happenings = $this->happeningRepository->findBy([],['createdAt' => 'DESC']);
+        $users = $this->userRepository->findBy([], ['createdAt' => 'DESC']);
+        $happenings = $this->happeningRepository->findBy([], ['createdAt' => 'DESC']);
         $allResults['users'] = $users;
         $allResults['happenings'] = $happenings;
         $globalSearch->setResults($allResults);
