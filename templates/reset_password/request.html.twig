@@ -4,10 +4,11 @@
 {% endblock %}
 
 {% block body %}
+<div class="container">
 	<h1 class="mb-5 mt-5 font-weight-bold text-center text-uppercase">Réinitialisez
 		<br>votre mot de passe
 	</h1>
-	<div class="col-4 card mx-auto mb-5 mt-5">
+	<div class="col-xl-6 col-xs-8 card mx-auto mt-5">
 		{% for flash_error in app.flashes('reset_password_error') %}
 			<div class="alert alert-danger" role="alert">{{ flash_error }}</div>
 		{% endfor %}
@@ -21,4 +22,5 @@
 		<button class="btn btn-outline-secondary text-uppercase mt-5 mb-5 mx-auto">ENVOYER</button>
 		{{ form_end(requestForm) }}
 	</div>
+</div>
 {% endblock %}

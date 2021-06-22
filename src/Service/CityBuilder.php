@@ -11,26 +11,27 @@ use App\Entity\City;
 
 class CityBuilder
 {
-    const URLREQUESTCITYNAME = 'https://geo.api.gouv.fr/communes?fields=nom,centre&format=json&geometry=centre';
+    const DEFAULT_ZIPCODE = '33000';
+//    const DEFAULT_COORDINATES = [' 	-0.57918','44.837789'];
+    const DEFAULT_COORDINATES = ['44.837789','-0.57918'];
     public function fetchCity(string $zipCode): array
     {
         $client = HttpClient::create();
-        $response = $client->request('GET',self::URLREQUESTCITYNAME . '&codePostal=' . $zipCode);
+        $response = $client->request('GET','https://geo.api.gouv.fr/communes?fields=nom,centre&format=json&geometry=centre&codePostal=' . $zipCode);
         $content = $response->toArray();
+        if(empty($content)) {
+            return $this->fetchCity(self::DEFAULT_ZIPCODE);
+        }
         return $content[0];
     }
-    public function buildCityForUser(User $user, string $zipCode)
+    public function fetchCityByCoordinates(string $latitude, string $longitude ): array
     {
-        $cityFound = $this->fetchCity($zipCode);
-        $user->getCity()->setName($cityFound['nom']);
-        $user->getCity()->setLongitude($cityFound['centre']['coordinates'][0]);
-        $user->getCity()->setLatitude($cityFound['centre']['coordinates'][1]);
-    }
-    public function buildCityAlone(City $city)
-    {
-        $cityFound = $this->fetchCity($city->getZipCode());
-        $city->setName($cityFound['nom']);
-        $city->setLongitude($cityFound['centre']['coordinates'][0]);
-        $city->setLatitude($cityFound['centre']['coordinates'][1]);
+        $client = HttpClient::create();
+        $response = $client->request('GET','https://geo.api.gouv.fr/communes?lat=' . $latitude . '&lon=' . $longitude . '&fields=nom,code,codesPostaux,codeDepartement,codeRegion,population&format=json&geometry=centre');
+        $content = $response->toArray();
+        if(empty($content)) {
+            return $this->fetchCityByCoordinates(self::DEFAULT_COORDINATES[0],self::DEFAULT_COORDINATES[1]);
+        }
+        return $content[0];
     }
 }

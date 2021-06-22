@@ -4,11 +4,13 @@
 {% endblock %}
 
 {% block body %}
-	<h1 class="mb-5 mt-5 font-weight-bold text-center">Réinitialisez votre mot de passe</h1>
-	<div class="col-4 card mx-auto mt-5">
+	<div class="container">
+		<h1 class="mb-5 mt-5 font-weight-bold text-center">Réinitialisez votre mot de passe</h1>
+		<div class="col-xl-6 col-xs-8 card mx-auto mt-5">
 			{{ form_start(resetForm) }}
 			{{ form_row(resetForm.plainPassword) }}
 			<button class="btn btn-outline-secondary text-uppercase mb-5 mt-3">Réinitialisez</button>
 			{{ form_end(resetForm) }}
+		</div>
 	</div>
 {% endblock %}
