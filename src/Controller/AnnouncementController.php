@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Announcement;
 use App\Entity\Message;
+use App\Entity\User;
+use App\Entity\Response as EntityResponse;
 use App\Form\AnnouncementType;
 use App\Form\MessageType;
 use App\Repository\AnnouncementRepository;
@@ -95,13 +97,35 @@ class AnnouncementController extends AbstractController
         return $this->redirectToRoute('announcement_index');
     }
 
-    public function response(Request $request, EntityManagerInterface $entityManager): Response
-    {
+    /**
+     * @Route("/response/{id}", name="annoucement_response")
+     */
+    public function response(
+        Request $request,
+        EntityManagerInterface $entityManager,
+        Announcement $announcement
+    ): Response {
         $message = new Message();
+        $poster = $announcement->getUser();
+        $respondant = $this->getUser();
         $form = $this->createForm(MessageType::class, $message);
         $form->handleRequest($request);
-        return $this->render('announcement/edit.html.twig', [
+        if ($form->isSubmitted() && $form->isValid()) {
+            if ($respondant) {
+                $response = new EntityResponse();
+                $response->setRespondant($respondant);
+                $response->setAnnouncement($announcement);
+                $entityManager->persist($response);
+            }
+            $message->setIsRead(false);
+            $message->setUser($poster);
+            $entityManager->persist($message);
+            $entityManager->flush();
+            return $this->redirectToRoute('announcement_index');
+        }
+        return $this->render('announcement/response.html.twig', [
             'form' => $form->createView(),
+            'announcement' => $announcement,
         ]);
     }
 }
