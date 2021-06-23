@@ -19,7 +19,8 @@ class GlobalSearchType extends AbstractType
                     'catégories' => 'category',
                     'artistes' => 'artist',
                     'événements' => 'event',
-                    'lieux' => 'location'
+                    'lieux' => 'location',
+                    'annonces' => 'announcement'
                 ],
                 'expanded' => true,
                 'multiple' => false,
