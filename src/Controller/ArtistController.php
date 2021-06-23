@@ -73,7 +73,6 @@ class ArtistController extends AbstractController
             $this->getUser()->getCity()->setLatitude($city['centre']['coordinates'][1]);
             $manager-> flush();
             return $this->redirectToRoute('artist_profil');
-
         };
         return $this->render('artist/edit.html.twig', [
             'formUpdate' => $formUpdate->createView(),
@@ -86,10 +85,12 @@ class ArtistController extends AbstractController
      * @Route("/profil", name="profil",methods={"GET"})
      */
     public function profile(MessageRepository $messageRepository): Response
-    {   
+    {
         $userId = $this->getUser()->getId();
+        $totalUnreadMessage = $messageRepository->countUnreadMessage($this->getUser());
         return $this->render('artist/profil.html.twig', [
             'messages' => $messageRepository->findBy(["user" => $userId]),
+            'totalUnreadMessage' => $totalUnreadMessage,
         ]);
     }
 
@@ -124,7 +125,6 @@ class ArtistController extends AbstractController
         $artists = $repository->findAll();
         foreach ($artists as $artist) {
             $dicipline = $artist->getDisciplines()->get(0);
-
         }
         return $this->render('artist/artist_show_all.html.twig', [
             'artists' => $artists,
@@ -151,5 +151,21 @@ class ArtistController extends AbstractController
             'isFriend' => $connectedUser->isFriend($friend),
 
         ]);
+    }
+
+    /**
+     * @Route("/profil/isRead/{id}", name="message_is_read", methods={"GET", "POST"})
+     */
+    public function mailIsRead(Message $mail, EntityManagerInterface $entityManager, MessageRepository $messageRepository): Response
+    {
+        $userId = $this->getUser()->getId();
+        $mail->setIsRead(true);
+        $entityManager->flush();
+        $totalUnreadMessage = $messageRepository->countUnreadMessage($this->getUser());
+        return $this->render('artist/profil.html.twig', [
+            'messages' => $messageRepository->findBy(["user" => $userId]),
+            'totalUnreadMessage' => $totalUnreadMessage,
+        ]);
+        // dd($totalUnreadMessage);
     }
 }
