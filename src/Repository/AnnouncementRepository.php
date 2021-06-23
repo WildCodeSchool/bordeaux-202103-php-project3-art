@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Announcement;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -28,9 +29,20 @@ class AnnouncementRepository extends ServiceEntityRepository
                 ->setParameter('keyword' . $key, '%' . $keyword . '%');
         }
         $qb
-            ->andWhere('a.date > CURRENT_DATE()')
+            ->andWhere('a.date >= CURRENT_DATE()')
             ->orderBy('a.date', 'DESC');
         return $qb->getQuery()->getResult();
+    }
+
+    public function getAnnouncementsByDate()
+    {
+        $qb = $this->createQueryBuilder('a')
+            ->select('a')
+            ->where('a.date >= CURRENT_DATE()')
+            ->orWhere('a.date is NULL')
+            ->orderBy('a.createdAt', 'DESC')
+            ->getQuery();
+        return $qb->getResult();
     }
     // /**
     //  * @return Announcement[] Returns an array of Announcement objects

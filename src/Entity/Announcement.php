@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=AnnouncementRepository::class)
+ * @ORM\HasLifecycleCallbacks
  */
 class Announcement
 {
@@ -233,5 +234,15 @@ class Announcement
         $this->discipline = $discipline;
 
         return $this;
+    }
+
+    /**
+     * Gets triggered only on insert
+     * @ORM\PrePersist
+     */
+    public function onPrePersist()
+    {
+        $this->createdAt = new \DateTime();
+        $this->updatedAt = new \DateTime();
     }
 }
