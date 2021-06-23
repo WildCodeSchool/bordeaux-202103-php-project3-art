@@ -76,6 +76,7 @@ class HomeController extends AbstractController
             $globalSearchProvider->initSearch($globalSearch);
             $results = $globalSearch->getResults();
         }
+      //  dd($results);
         return $this->render('home/searchBar.html.twig', [
             'form' => $form->createView(),
             'results' => $results,

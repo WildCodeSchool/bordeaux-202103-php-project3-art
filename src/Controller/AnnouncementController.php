@@ -3,8 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Announcement;
+use App\Entity\Message;
 use App\Form\AnnouncementType;
+use App\Form\MessageType;
 use App\Repository\AnnouncementRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -83,12 +86,22 @@ class AnnouncementController extends AbstractController
      */
     public function delete(Request $request, Announcement $announcement): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$announcement->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $announcement->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($announcement);
             $entityManager->flush();
         }
 
         return $this->redirectToRoute('announcement_index');
+    }
+
+    public function response(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $message = new Message();
+        $form = $this->createForm(MessageType::class, $message);
+        $form->handleRequest($request);
+        return $this->render('announcement/edit.html.twig', [
+            'form' => $form->createView(),
+        ]);
     }
 }
