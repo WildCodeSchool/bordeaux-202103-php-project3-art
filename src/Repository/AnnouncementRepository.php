@@ -18,6 +18,13 @@ class AnnouncementRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Announcement::class);
     }
+    public function getRespondedAnnouncements($user)
+    {
+        return $this->createQueryBuilder('a')
+            ->where('r.respondant=:user')
+            ->getQuery()
+            ->getResult();
+    }
 
     // /**
     //  * @return Announcement[] Returns an array of Announcement objects

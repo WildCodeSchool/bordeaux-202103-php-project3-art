@@ -91,3 +91,29 @@
 		</table>
 	</div>
 </div>{% endblock %}
+{% block announcements %}
+	<div class="container">
+		<div class="row col-12 mt-5">
+			<h2 class="ml-3 mb-5 card-title title-shadow text-uppercase">
+				<span class="title-content font-medium">Ma sélection d' annonces</span>
+			</h2>
+		</div>
+
+
+			<div class="row">
+		{% for response in app.user.responses%}
+				<div class="col-4">
+					<div class="card" style="width: 18rem;">
+						<div class="card-body">
+							<h5 class="card-title">{{ response.announcement.title }}</h5>
+							<h6 class="card-subtitle mb-2 text-muted">{{ response.announcement.date|date('d/m/Y') }}</h6>
+							<p class="card-text text-justify">{{ response.announcement.content }}</p>
+							<a href="#" class="card-link"><i class="far fa-edit"></i> Modifier</a>
+							<a href="#" class="card-link"><i class="far fa-trash-alt"></i> Supprimer</a>
+						</div>
+					</div>
+				</div>
+		{% endfor %}
+			</div>
+	</div>
+{% endblock %}

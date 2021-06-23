@@ -7,8 +7,10 @@ use App\Entity\Message;
 use App\Entity\User;
 use App\Form\LocalisationType;
 use App\Form\MessageType;
+use App\Repository\AnnouncementRepository;
 use App\Repository\MessageRepository;
 use App\Form\UserType;
+use App\Repository\ResponseRepository;
 use App\Repository\UserRepository;
 use App\Service\CityBuilder;
 use DateTime;
@@ -84,12 +86,12 @@ class ArtistController extends AbstractController
     /**
      * @Route("/profil", name="profil",methods={"GET"})
      */
-    public function profile(MessageRepository $messageRepository): Response
+    public function profile(MessageRepository $messageRepository, ResponseRepository $responseRepository, AnnouncementRepository $announcementRepository): Response
     {
-        $userId = $this->getUser()->getId();
+        $user = $this->getUser();
         $totalUnreadMessage = $messageRepository->countUnreadMessage($this->getUser());
         return $this->render('artist/profil.html.twig', [
-            'messages' => $messageRepository->findBy(["user" => $userId]),
+            'messages' => $messageRepository->findBy(["user" => $user]),
             'totalUnreadMessage' => $totalUnreadMessage,
         ]);
     }
@@ -166,6 +168,5 @@ class ArtistController extends AbstractController
             'messages' => $messageRepository->findBy(["user" => $userId]),
             'totalUnreadMessage' => $totalUnreadMessage,
         ]);
-        // dd($totalUnreadMessage);
     }
 }
