@@ -70,6 +70,8 @@ class AnnouncementFixtures extends Fixture implements DependentFixtureInterface
             $this->getReference('discipline_3'),
             $this->getReference('discipline_3'),
             $this->getReference('discipline_4'),
+            $this->getReference('discipline_2'),
+            $this->getReference('discipline_1'),
 
         ];
         $userDispatch = [
@@ -83,6 +85,8 @@ class AnnouncementFixtures extends Fixture implements DependentFixtureInterface
             $this->getReference('user_1'),
             $this->getReference('user_1'),
             $this->getReference('user_4'),
+            $this->getReference('user_3'),
+            $this->getReference('user_3'),
         ];
 
 
@@ -90,7 +94,7 @@ class AnnouncementFixtures extends Fixture implements DependentFixtureInterface
         for ($i = 1; $i <=10 ;$i++) {
             $announcement = new Announcement();
             $announcement->setTitle("Titre annonce n°" . $i);
-            $announcement->setContent('Contenu de l\'annonce n°' . $i . '<br/> Haec igitur lex in amicitia sanciatur, ut neque rogemus res turpes nec faciamus rogati. Turpis enim excusatio est et minime accipienda cum in ceteris peccatis, tum si quis contra rem publicam se amici causa fecisse fateatur. Etenim eo loco, Fanni et Scaevola, locati sumus ut nos longe prospicere oporteat futuros casus rei publicae. Deflexit iam aliquantum de spatio curriculoque consuetudo maiorum.');
+            $announcement->setContent('Contenu de l\'annonce n°' . $i . ' Haec igitur lex in amicitia sanciatur, ut neque rogemus res turpes nec faciamus rogati. Turpis enim excusatio est et minime accipienda cum in ceteris peccatis, tum si quis contra rem publicam se amici causa fecisse fateatur. Etenim eo loco, Fanni et Scaevola, locati sumus ut nos longe prospicere oporteat futuros casus rei publicae. Deflexit iam aliquantum de spatio curriculoque consuetudo maiorum.');
             $announcement-> setDate($dateDispatch[($i-1)]);
             $announcement->setTime( $timeDispatch[($i-1)]);
             $announcement->setCreatedAt(new \DateTime());
@@ -98,11 +102,32 @@ class AnnouncementFixtures extends Fixture implements DependentFixtureInterface
             $announcement->setUser($userDispatch[($i-1)]);
             $announcement->setDiscipline($discplineDispatch[($i-1)]);
             $manager->persist($announcement);
+            $this->addReference('announcement_' . $i,$announcement);
             $manager->flush();
-
-
-
         }
+        $announcement = new Announcement();
+        $announcement->setTitle("Titre annonce n°11");
+        $announcement->setContent('Contenu de l\'annonce n°11  Haec igitur lex in amicitia sanciatur, ut neque rogemus res turpes nec faciamus rogati. Turpis enim excusatio est et minime accipienda cum in ceteris peccatis, tum si quis contra rem publicam se amici causa fecisse fateatur. Etenim eo loco, Fanni et Scaevola, locati sumus ut nos longe prospicere oporteat futuros casus rei publicae. Deflexit iam aliquantum de spatio curriculoque consuetudo maiorum.');
+        $announcement->setCreatedAt(new \DateTime());
+        $announcement->setUpdatedAt(new \DateTime());
+        $announcement->setUser($userDispatch[($i-1)]);
+        $announcement->setDiscipline($discplineDispatch[($i-1)]);
+        $manager->persist($announcement);
+        $this->addReference('announcement_11' ,$announcement);
+        $manager->flush();
+
+        $announcement = new Announcement();
+        $announcement->setTitle("Titre annonce n°12");
+        $announcement->setContent('Contenu de l\'annonce n°12  Haec igitur lex in amicitia sanciatur, ut neque rogemus res turpes nec faciamus rogati. Turpis enim excusatio est et minime accipienda cum in ceteris peccatis, tum si quis contra rem publicam se amici causa fecisse fateatur. Etenim eo loco, Fanni et Scaevola, locati sumus ut nos longe prospicere oporteat futuros casus rei publicae. Deflexit iam aliquantum de spatio curriculoque consuetudo maiorum.');
+        $announcement->setCreatedAt(new \DateTime());
+        $announcement->setUpdatedAt(new \DateTime());
+        $announcement->setUser($userDispatch[($i-1)]);
+        $announcement->setDiscipline($discplineDispatch[($i-1)]);
+        $manager->persist($announcement);
+        $this->addReference('announcement_12' ,$announcement);
+        $manager->flush();
+
+
 
 
     }
