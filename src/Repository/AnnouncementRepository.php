@@ -19,6 +19,19 @@ class AnnouncementRepository extends ServiceEntityRepository
         parent::__construct($registry, Announcement::class);
     }
 
+    public function findByTitle(array $keywords)
+    {
+        $qb = $this->createQueryBuilder('a');
+        foreach ($keywords as $key => $keyword) {
+            $qb
+                ->orWhere('a.title LIKE :keyword' . $key)
+                ->setParameter('keyword' . $key, '%' . $keyword . '%');
+        }
+        $qb
+            ->andWhere('a.date > CURRENT_DATE()')
+            ->orderBy('a.date', 'DESC');
+        return $qb->getQuery()->getResult();
+    }
     // /**
     //  * @return Announcement[] Returns an array of Announcement objects
     //  */

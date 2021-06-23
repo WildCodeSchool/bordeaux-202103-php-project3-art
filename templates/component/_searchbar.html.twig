@@ -67,6 +67,22 @@
                     </div>
                 {% endif %}
             {% endif %}
+            {% if results.announcements is defined %}
+                {% for announcement in results.announcements %}
+                    <div class="card mr-5" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ announcement.title }}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">{{ announcement.date|date('d/m/Y') }}</h6>
+                            <p class="card-text text-justify">{{ announcement.content }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+            {% if results.announcements is empty %}
+                <div class=" offset-1 offset-md-4">
+                    <p class="ml-2 font-medium text-center">La recherche n'a rien donné, essayez d'autres mots.</p>
+                </div>
+            {% endif %}
         </div>
     </div>
 </div>
