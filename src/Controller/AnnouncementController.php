@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Announcement;
 use App\Entity\Message;
-use App\Entity\User;
 use App\Entity\Response as EntityResponse;
 use App\Form\AnnouncementType;
 use App\Form\MessageType;
@@ -16,31 +15,31 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/announcement")
+ * @Route("/announcement", name="announcement_")
  */
 class AnnouncementController extends AbstractController
 {
     /**
-     * @Route("/", name="announcement_index", methods={"GET"})
+     * @Route("/", name="index", methods={"GET"})
      */
     public function index(AnnouncementRepository $announcementRepository): Response
     {
         return $this->render('announcement/index.html.twig', [
-            'announcements' => $announcementRepository->findAll(),
-        ]);
+            'announcements' => $announcementRepository->getAnnouncementsByDate()
+            ]);
     }
 
     /**
-     * @Route("/new", name="announcement_new", methods={"GET","POST"})
+     * @Route("/new", name="new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $announcement = new Announcement();
         $form = $this->createForm(AnnouncementType::class, $announcement);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
+            $announcement->setUser($this->getUser());
             $entityManager->persist($announcement);
             $entityManager->flush();
 
@@ -54,7 +53,7 @@ class AnnouncementController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="announcement_show", methods={"GET"})
+     * @Route("/{id}", name="show", methods={"GET"})
      */
     public function show(Announcement $announcement): Response
     {
@@ -64,7 +63,7 @@ class AnnouncementController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="announcement_edit", methods={"GET","POST"})
+     * @Route("/{id}/edit", name="edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Announcement $announcement): Response
     {
@@ -84,16 +83,18 @@ class AnnouncementController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="announcement_delete", methods={"POST"})
+     * @Route("/{id}", name="delete", methods={"POST"})
      */
-    public function delete(Request $request, Announcement $announcement): Response
-    {
+    public function delete(
+        Request $request,
+        Announcement $announcement,
+        EntityManagerInterface $entityManager
+    ): Response {
         if ($this->isCsrfTokenValid('delete' . $announcement->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($announcement);
             $entityManager->flush();
         }
-
         return $this->redirectToRoute('announcement_index');
     }
 

@@ -4,6 +4,10 @@ namespace App\Form;
 
 use App\Entity\Announcement;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -12,15 +16,22 @@ class AnnouncementType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title')
-            ->add('content')
-            ->add('date')
-            ->add('time')
-            ->add('createdAt')
-            ->add('updatedAt')
-            ->add('tags')
-            ->add('user', null, ['choice_label' => 'id'])
-            ->add('discipline', null, ['choice_label' => 'name'])
+            ->add('title', TextType::class, [
+                'label' => 'Titre de l\'annonce'
+            ])
+            ->add('content', TextareaType::class, [
+                'label' => 'Description de l\'annonce'
+            ])
+            ->add('date', DateType::class, [
+                'label' => 'Annonce disponible jusqu\'au'
+            ])
+            ->add('time', TimeType::class, [
+                'label' => ''
+            ])
+            ->add('discipline', null, [
+                'choice_label' => 'name'
+
+            ])
         ;
     }
 
