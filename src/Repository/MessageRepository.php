@@ -23,26 +23,18 @@ class MessageRepository extends ServiceEntityRepository
      * @return Message[] Returns an array of Message objects
      */
 
-    public function countTotalMessage($userId)
-    {
-        $result = $this->createQueryBuilder('m')
-            ->select('count(m.id)')
-            ->getQuery()
-            ->getResult();
-        return $result[0][1];
-    }
-
-    public function countUnreadMessage()
+    public function countUnreadMessage($user)
     {
         $result = $this->createQueryBuilder('m')
             ->select('count(m.id)')
             ->where('m.isRead=0')
+            ->andWhere('m.user = :user')
+            ->setParameter('user', $user)
             ->getQuery()
-            ->getResult();
+            ->getSingleScalarResult();
 
-        return $result[0][1];
+        return $result;
     }
-
 
     /*
     public function findOneBySomeField($value): ?Message

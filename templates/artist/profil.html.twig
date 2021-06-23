@@ -17,14 +17,15 @@
 
 {% block icon %}
 	<p class="font-regular">
-		{{ artist.friends|length }} <i class="fas fa-user-friends ml-2 mr-2 icon color-{{ (artist.disciplines is empty) ? 'move' : artist.disciplines[0].color }} icon-secondary"></i>
-		{{ artist.messages|length }} <i id="mailbox" class="cursor-pointer fas fa-envelope ml-2 icon color-{{ (artist.disciplines is empty) ? 'move' : artist.disciplines[0].color }} icon-secondary"></i>
+		{{ artist.friends|length }}
+		<i class="fas fa-user-friends ml-2 mr-2 icon color-{{ (artist.disciplines is empty) ? 'move' : artist.disciplines[0].color }} icon-secondary"></i>
+		{{ totalUnreadMessage }}
+		<i id="mailbox" class="cursor-pointer fas fa-envelope ml-2 icon color-{{ (artist.disciplines is empty) ? 'move' : artist.disciplines[0].color }} icon-secondary"></i>
 	</p>
 {% endblock %}
 
 {% block link_edit_profil %}
-	<a href="{{ path('artist_edit', {user_id: artist.id}) }}" class="link-{{ (artist.disciplines is empty) ? 'move' : artist.disciplines[0].color }}
-						    profil-link mt-1 font-light profil-link-border-{{ (artist.disciplines is empty) ? 'move' : artist.disciplines[0].color }}">
+	<a href="{{ path('artist_edit', {user_id: artist.id}) }}" class="link-{{ (artist.disciplines is empty) ? 'move' : artist.disciplines[0].color }} profil-link mt-1 font-light profil-link-border-{{ (artist.disciplines is empty) ? 'move' : artist.disciplines[0].color }}">
 		Modifier mon profil</a>
 {% endblock %}
 
@@ -37,7 +38,7 @@
 {% endblock %}
 
 {% block message %}
-<div id="block-message" class="d-none container mt-5">
+	<div id="block-message" class="d-none container mt-5">
 		<h2 class="mb-5 card-title title-shadow font-weight-bold text-uppercase">
 			<span class="title-content font-medium">
 				Messages
@@ -47,6 +48,7 @@
 			<table class="table">
 				<thead>
 					<tr class="font-weight-bold text-uppercase">
+						<td></td>
 						<td>Mail</td>
 						<td>Message</td>
 						<td class="d-none d-md-block"></td>
@@ -54,41 +56,38 @@
 					</tr>
 				</thead>
 				{% for message in messages %}
-					<tbody>
-						<tr class="cursor-pointer title-message">
-							<td>{{ message.mail }}</td>
-							<td>{{ message.content|length > 50 ? message.content|slice(0, 50) ~ ' ... ' : message.content }}</td>
-							<td class="d-none d-md-block">{{ message.sendAt ? message.sendAt|date('d-M') : '' }}</td>
-							<td>
-								<form method="post" action="{{ path('message_delete', {'id': message.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet élément?');">
-									<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ message.id) }}">
-									<button class="btn">
-										<i class="far fa-trash-alt"></i>
-									</button>
-								</form>
-							</td>
-						</tr>
-						<tr>
-							<td class="content d-none" colspan="4">
-								<h5>
-									{{ message.object }}
-								</h5>
-								<p>{{ message.content }}</p>
-								<a class="btn btn-outline-secondary text-uppercase" href="mailto:">Répondre</a>
-							</td>
-						</tr>
-						<tr>
-							<td class="d-block d-md-none">{{ message.sendAt ? message.sendAt|date('Y-m-d H:i') : '' }}</td>
-						</tr>
-					</tbody>
-				{% else %}
-					<tr>
-						<td colspan="7">no records found</td>
+					<tr class="cursor-pointer title-message">
+						<td class="{{ (message.isRead) ? '' : "font-weight-bold" }}">{{ message.mail }}</td>
+						<td class="{{ (message.isRead) ? '' : "font-weight-bold" }}">{{ message.content|length > 50 ? message.content|slice(0, 50) ~ ' ... ' : message.content }}</td>
+						<td class="{{ (message.isRead) ? '' : "font-weight-bold" }} d-none d-md-block">{{ message.sendAt ? message.sendAt|date('d-M') : '' }}</td>
+						<td>
+							<form method="post" action="{{ path('message_delete', {'id': message.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet élément?');">
+								<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ message.id) }}">
+								<button class="btn">
+									<i class="far fa-trash-alt"></i>
+								</button>
+							</form>
+						</td>
 					</tr>
-				{% endfor %}
-			</table>
-		</div>
+					<tr>
+						<td class="content d-none" colspan="4">
+							<h5>
+								{{ message.object }}
+							</h5>
+							<p>{{ message.content }}</p>
+							<a class="btn btn-outline-secondary text-uppercase" href="{{ path("artist_message_is_read",{id:message.id}) }}">marqué comme lu</a>
+							<a class="btn btn-outline-secondary text-uppercase" href="mailto:">Répondre</a>
+						</td>
+					</tr>
+					<tr>
+						<td class="d-block d-md-none">{{ message.sendAt ? message.sendAt|date('Y-m-d H:i') : '' }}</td>
+					</tr>
+				</tbody>
+			{% else %}
+				<tr>
+					<td colspan="7">no records found</td>
+				</tr>
+			{% endfor %}
+		</table>
 	</div>
-{% endblock %}
-
-
+</div>{% endblock %}
