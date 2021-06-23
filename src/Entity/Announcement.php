@@ -65,6 +65,12 @@ class Announcement
      */
     private $responses;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Discipline::class, inversedBy="announcements")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $discipline;
+
     public function __construct()
     {
         $this->tags = new ArrayCollection();
@@ -213,6 +219,18 @@ class Announcement
                 $response->setAnnouncement(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getDiscipline(): ?Discipline
+    {
+        return $this->discipline;
+    }
+
+    public function setDiscipline(?Discipline $discipline): self
+    {
+        $this->discipline = $discipline;
 
         return $this;
     }
