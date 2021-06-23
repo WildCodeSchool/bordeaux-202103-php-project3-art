@@ -1,45 +1,32 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Announcement index{% endblock %}
+{% block title %}
+{{ parent() }} - Le coin des petites annonces
+{% endblock %}
 
 {% block body %}
-    <h1>Announcement index</h1>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Title</th>
-                <th>Content</th>
-                <th>Date</th>
-                <th>Time</th>
-                <th>CreatedAt</th>
-                <th>UpdatedAt</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for announcement in announcements %}
-            <tr>
-                <td>{{ announcement.id }}</td>
-                <td>{{ announcement.title }}</td>
-                <td>{{ announcement.content }}</td>
-                <td>{{ announcement.date ? announcement.date|date('Y-m-d') : '' }}</td>
-                <td>{{ announcement.time ? announcement.time|date('H:i:s') : '' }}</td>
-                <td>{{ announcement.createdAt ? announcement.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ announcement.updatedAt ? announcement.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>
-                    <a href="{{ path('announcement_show', {'id': announcement.id}) }}">show</a>
-                    <a href="{{ path('announcement_edit', {'id': announcement.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="8">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('announcement_new') }}">Create new</a>
+<div class="container pt-5 pb-5">
+    <h2 class="ml-3 mt-5 card-title title-shadow font-medium text-uppercase">
+			<span class="title-content">
+				{% block head_title %}Le coin des petites annonces{% endblock %}
+			</span>
+    </h2>
+        <div class="row pt-5 pb-5">
+{% for announcement in announcements %}
+    <div class="col-sm-4 d-flex justify-content-center">
+    <div class="card bg-light mb-5" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title text-uppercase">{{ announcement.title }}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">Catégorie : {{ announcement.discipline.name }}</h6>
+            {% if announcement.date is not null %}
+            <h6 class="card-subtitle mb-2 text-muted">{{ announcement.date|date('d/m/Y') }}</h6>
+            {% endif %}
+            <p class="card-text text-justify">{{ announcement.content }}</p>
+            <p class="text-uppercase text-right"><a href="{{ path('artist_contact', {user_id: announcement.user.id}) }}" class="card-link"><i class="far fa-envelope"></i> Contacter</p></a>
+        </div>
+    </div>
+    </div>
+    {% endfor %}
+        </div>
+    </div>
 {% endblock %}
