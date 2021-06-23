@@ -56,7 +56,7 @@
 								<p class="font-light">
 									<a id="friend" href="{{ path('artist_add_friends', {friend_id: artist.id}) }}">
 										<i class="{{ app.user.isFriend(artist) ? 'fas fa-heart' : 'far fa-heart' }} fa-2x mr-2 icon color-{{ (artist.disciplines is empty) ? 'move' : artist.disciplines[0].color }} icon-secondary"></i></a>
-								<p id="text-friend">{{ app.user.isFriend(artist) ? 'Ajouté.e à mes contacts favoris !' : 'Ajouter à mes contacts favoris'}}</p>
+								<p id="text-friend">{{ app.user.isFriend(artist) ? 'Ajouté.e à mes contacts favoris !' : 'Ajouter à mes contacts favoris' }}</p>
                         {% endif %}
 					{% endblock %}
 
