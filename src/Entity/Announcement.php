@@ -60,9 +60,15 @@ class Announcement
      */
     private $user;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Response::class, mappedBy="announcement")
+     */
+    private $responses;
+
     public function __construct()
     {
         $this->tags = new ArrayCollection();
+        $this->responses = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -177,6 +183,36 @@ class Announcement
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Response[]
+     */
+    public function getResponses(): Collection
+    {
+        return $this->responses;
+    }
+
+    public function addResponse(Response $response): self
+    {
+        if (!$this->responses->contains($response)) {
+            $this->responses[] = $response;
+            $response->setAnnouncement($this);
+        }
+
+        return $this;
+    }
+
+    public function removeResponse(Response $response): self
+    {
+        if ($this->responses->removeElement($response)) {
+            // set the owning side to null (unless already changed)
+            if ($response->getAnnouncement() === $this) {
+                $response->setAnnouncement(null);
+            }
+        }
 
         return $this;
     }

@@ -21,7 +21,10 @@ class CityFixtures extends Fixture
         for ($i = 0; $i < 6; $i++) {
             $city = new City();
             $city->setZipCode(self::ZIP_CODE_DISPATCH[$i]);
-            $this->cityBuilder->buildCityAlone($city);
+            $cityFound = $this->cityBuilder->fetchCity(self::ZIP_CODE_DISPATCH[$i]);
+            $city->setName($cityFound['nom']);
+            $city->setLongitude($cityFound['centre']['coordinates'][0]);
+            $city->setLatitude($cityFound['centre']['coordinates'][1]);
             $manager->persist($city);
             $this->addReference('city_' . ($i + 1), $city);
             $manager->flush();

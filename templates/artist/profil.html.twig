@@ -1,6 +1,7 @@
 {% set artist = app.user %}
 {% extends "artist/_show_artist.html.twig" %}
 {% block javascripts %}
+	{{ parent() }};
 	{{ encore_entry_script_tags('clickable-line') }}
 {% endblock %}
 {% block title %}

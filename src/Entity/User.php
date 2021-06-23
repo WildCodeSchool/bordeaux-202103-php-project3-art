@@ -137,6 +137,11 @@ class User implements UserInterface
      */
     private $friends;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Response::class, mappedBy="respondant")
+     */
+    private $responses;
+
 
     public function __construct()
     {
@@ -147,6 +152,7 @@ class User implements UserInterface
         $this->announcements = new ArrayCollection();
         $this->articles = new ArrayCollection();
         $this->friends = new ArrayCollection();
+        $this->responses = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -613,5 +619,35 @@ class User implements UserInterface
     public function isFriend(self $friend): bool
     {
         return $this->friends->contains($friend);
+    }
+
+    /**
+     * @return Collection|Response[]
+     */
+    public function getResponses(): Collection
+    {
+        return $this->responses;
+    }
+
+    public function addResponse(Response $response): self
+    {
+        if (!$this->responses->contains($response)) {
+            $this->responses[] = $response;
+            $response->setRespondant($this);
+        }
+
+        return $this;
+    }
+
+    public function removeResponse(Response $response): self
+    {
+        if ($this->responses->removeElement($response)) {
+            // set the owning side to null (unless already changed)
+            if ($response->getRespondant() === $this) {
+                $response->setRespondant(null);
+            }
+        }
+
+        return $this;
     }
 }

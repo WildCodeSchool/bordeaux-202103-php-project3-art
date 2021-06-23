@@ -40,7 +40,6 @@ class CityController extends AbstractController
             $city->addUser($this->getUser());
             $entityManager->persist($city);
             $entityManager->flush();
-            dd($city);
         }
         return $this->render('city/index.html.twig', [
             'city' => $city,

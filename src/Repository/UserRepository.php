@@ -30,7 +30,6 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         if (!$user instanceof User) {
             throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', \get_class($user)));
         }
-
         $user->setPassword($newEncodedPassword);
         $this->_em->persist($user);
         $this->_em->flush();
@@ -38,36 +37,45 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 
     public function findByFirstnameAndLastname(array $keywords)
     {
-        $queryBuilder = $this->createQueryBuilder('u')
-            ->where('u.firstname IN (:keywords)')
-            ->orWhere('u.lastname IN (:keywords)')
-            ->orWhere('u.pseudo IN (:keywords)')
-            ->setParameter('keywords', $keywords)
-            ->orderBy('u.firstname', 'ASC')
-            ->getQuery();
-        return $queryBuilder->getResult();
+        $qb = $this->createQueryBuilder('u');
+        foreach ($keywords as $key => $keyword) {
+            $qb
+                ->orWhere('u.firstname LIKE :keyword' . $key)
+                ->orWhere('u.lastname LIKE :keyword' . $key)
+                ->orWhere('u.pseudo LIKE :keyword' . $key)
+                ->setParameter('keyword' . $key, '%' . $keyword . '%');
+        }
+        $qb
+            ->orderBy('u.updatedAt', 'DESC');
+        return $qb->getQuery()->getResult();
     }
 
     public function findByExpertise(array $keywords)
     {
-        $queryBuilder = $this->createQueryBuilder('u')
-            ->where('u.expertise IN (:keywords)')
-            ->setParameter('keywords', $keywords)
-            ->orderBy('u.firstname', 'ASC')
-            ->getQuery();
-        return $queryBuilder->getResult();
+        $qb = $this->createQueryBuilder('u');
+        foreach ($keywords as $key => $keyword) {
+            $qb
+                ->orWhere('u.expertise LIKE :keyword' . $key)
+                ->setParameter('keyword' . $key, '%' . $keyword . '%');
+        }
+            $qb
+             ->orderBy('u.updatedAt', 'DESC');
+        return $qb->getQuery()->getResult();
     }
 
     public function findByCitiesNameAndZipcode(array $keywords)
     {
-        $queryBuilder = $this->createQueryBuilder('u')
-            ->where('c.name IN (:keywords)')
-            ->orWhere('c.zipCode in (:keywords)')
+        $qb = $this->createQueryBuilder('u');
+        foreach ($keywords as $key => $keyword) {
+            $qb
+                ->orWhere('c.name LIKE :keyword' . $key)
+                ->orWhere('c.zipCode LIKE :keyword' . $key)
+                ->setParameter('keyword' . $key, '%' . $keyword . '%');
+        }
+        $qb
             ->leftJoin('u.city', 'c')
-            ->setParameter('keywords', $keywords)
-            ->orderBy('u.firstname', 'ASC')
-            ->getQuery();
-        return $queryBuilder->getResult();
+            ->orderBy('u.updatedAt', 'DESC');
+        return $qb->getQuery()->getResult();
     }
 
     // /**

@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\City;
 use App\Entity\Message;
 use App\Entity\User;
+use App\Form\LocalisationType;
 use App\Form\MessageType;
 use App\Repository\MessageRepository;
 use App\Form\UserType;
@@ -48,17 +49,35 @@ class ArtistController extends AbstractController
      */
     public function edit(User $user, Request $request, EntityManagerInterface $manager): Response
     {
-        $form = $this->createForm(UserType::class, $user);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $zipCode = $form->getData()->getCity()->getZipCode();
-            $this->cityBuilder->buildCityForUser($this->getUser(), $zipCode);
-            $manager->flush();
+        $formLocalisation = $this->createForm(LocalisationType::class);
+        $formLocalisation->handleRequest($request);
+        if ($formLocalisation->isSubmitted() && $formLocalisation->isValid()) {
+            $coordinates = $formLocalisation->getData();
+            $this->getUser()->getCity()->setLatitude($coordinates['latitude']);
+            $this->getUser()->getCity()->setLongitude($coordinates['longitude']);
+            $city = $this->cityBuilder->fetchCityByCoordinates($coordinates['latitude'],$coordinates['longitude']);
+            $this->getUser()->getCity()->setZipcode($city['codesPostaux'][0]);
+            $this->getUser()->getCity()->setName($city['nom']);
+            $manager-> flush();
+            return $this->redirectToRoute('artist_edit',['user_id'=>$this->getUser()->getId()]);
+
+        }
+        $formUpdate = $this->createForm(UserType::class, $user);
+        $formUpdate->handleRequest($request);
+        if ($formUpdate->isSubmitted() && $formUpdate->isValid()) {
+
+            $zipCode = $formUpdate->getData()->getCity()->getZipCode();
+            $city = $this->cityBuilder->fetchCity($zipCode);
+            $this->getUser()->getCity()->setName($city['nom']);
+            $this->getUser()->getCity()->setLongitude($city['centre']['coordinates'][0]);
+            $this->getUser()->getCity()->setLatitude($city['centre']['coordinates'][1]);
+            $manager-> flush();
             return $this->redirectToRoute('artist_profil');
         };
         return $this->render('artist/edit.html.twig', [
-            'form' => $form->createView(),
+            'formUpdate' => $formUpdate->createView(),
             'artist' => $user,
+            'form_localisation' => $formLocalisation->createView(),
         ]);
     }
 

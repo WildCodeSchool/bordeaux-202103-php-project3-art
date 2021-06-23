@@ -1,0 +1,24 @@
+.background-grey{
+  background-color: $contact;
+}
+
+.navbar-label {
+  font-size: x-large;
+  border: 1px solid $button-grey;
+  background-color: transparent;
+  width: 150px;
+}
+.navbar-radio {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  .form-check-input {
+    display: none;
+    &.form-check-input[type='radio']:checked + .navbar-label {
+      color: $contact;
+      background-color: $button-grey;
+      font-size: x-large;
+    }
+  }
+}
+
