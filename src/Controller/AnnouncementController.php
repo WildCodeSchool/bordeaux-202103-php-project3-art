@@ -99,7 +99,7 @@ class AnnouncementController extends AbstractController
     }
 
     /**
-     * @Route("/response/{id}", name="annoucement_response")
+     * @Route("/response/{id}", name="response")
      */
     public function response(
         Request $request,
