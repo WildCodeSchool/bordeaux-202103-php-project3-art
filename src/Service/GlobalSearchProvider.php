@@ -30,7 +30,6 @@ class GlobalSearchProvider
         $happenings = $this->happeningRepository->findBy([], ['createdAt' => 'DESC']);
         $allResults['users'] = $users;
         $allResults['happenings'] = $happenings;
-      //  $allResults['announcements'] = '';
         $globalSearch->setResults($allResults);
     }
 
