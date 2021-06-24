@@ -11,6 +11,11 @@
 				{% block head_title %}Le coin des petites annonces{% endblock %}
 			</span>
     </h2>
+    <div class="row pt-5 pb-5 justify-content-center">
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+    </div>
         <div class="row pt-5 pb-5">
 {% for announcement in announcements %}
     <div class="col-sm-4 d-flex justify-content-center">
