@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Répondre à l'annonce - Arts d'Eko{% endblock %}
+
+{% block body %}
+    <div class="bloc-contact py-5">
+        <div class="container">
+            <h2 class="font-weight-bold mb-4 title-shadow text-uppercase">
+            <span class="title-content">Répondre à l'annonce de
+                 {% if announcement.user.pseudo is not null %}
+                     {{ announcement.user.pseudo }}
+                 {% elseif announcement.user.firstname is not null %}
+                     {{ announcement.user.firstname }}
+                 {% else %}
+                     {{ "cet.te artiste :" }}
+                 {% endif %}
+            </span>
+            </h2>
+            <div class="mt-5">
+                {% form_theme form 'bootstrap_4_layout.html.twig' %}
+                {{ form_start(form) }}
+                {{ form_widget(form) }}
+                {{ form_errors(form) }}
+                <input type='submit' value='ENVOYER'>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
