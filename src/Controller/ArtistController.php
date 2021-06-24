@@ -136,10 +136,7 @@ class ArtistController extends AbstractController
      */
     public function showAll(UserRepository $repository)
     {
-        $artists = $repository->findBy([], ['id' => 'desc']);
-        foreach ($artists as $artist) {
-            $dicipline = $artist->getDisciplines()->get(0);
-        }
+        $artists = $repository->findAll();
         return $this->render('artist/artist_show_all.html.twig', [
             'artists' => $artists,
         ]);
