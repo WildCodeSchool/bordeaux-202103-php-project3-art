@@ -4,7 +4,7 @@
 {% endblock %}
 
 {% block body %}
-	<div class="container">
+	<div class="container pb-5">
 		<h1 class="mb-5 mt-5 font-weight-bold text-center text-uppercase">Créer un compte</h1>
 		<div class="col-xl-6 col-xs-8 card mx-auto mt-5">
 			{% for flash_error in app.flashes('verify_email_error') %}
@@ -12,7 +12,7 @@
 			{% endfor %}
 			{{ form_start(registrationForm) }}
 			<div class="container">
-				<div class="mt-5 mb-5 d-inline-block">
+				<div class="mt-2 mb-4 d-inline-block">
 					<small>Déjà inscrit?
 						<a href="{{ path('app_login') }}" class="btn text-uppercase text-secondary">connexion</a>
 					</small>
