@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Avatar;
 use App\Entity\User;
 use DateTimeInterface;
 use App\Form\RegistrationFormType;
@@ -18,12 +19,15 @@ class RegistrationController extends AbstractController
     /**
      * @Route("/register", name="app_register")
      */
-    public function register(Request $request, GuardAuthenticatorHandler $guardHandler, Authenticator $authenticator, UserPasswordEncoderInterface $passwordEncoder): Response
-    {
+    public function register(
+        Request $request,
+        GuardAuthenticatorHandler $guardHandler,
+        Authenticator $authenticator,
+        UserPasswordEncoderInterface $passwordEncoder
+    ): Response {
         $user = new User();
-        $form = $this->createForm(RegistrationFormType::class,  $user);
+        $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             // encode the plain password
             $user->setPassword(
@@ -32,7 +36,9 @@ class RegistrationController extends AbstractController
                     $form->get('plainPassword')->getData()
                 )
             );
+            $avatar = new Avatar();
             $user->setRoles(['ROLE_USER']);
+            $user->setAvatar($avatar);
             $user->setCreatedAt(new \DateTime());
             $user->setUpdatedAt(new \DateTime());
             $entityManager = $this->getDoctrine()->getManager();

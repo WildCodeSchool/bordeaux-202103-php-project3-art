@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=AnnouncementRepository::class)
+ * @ORM\HasLifecycleCallbacks
  */
 class Announcement
 {
@@ -64,6 +65,12 @@ class Announcement
      * @ORM\OneToMany(targetEntity=Response::class, mappedBy="announcement")
      */
     private $responses;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Discipline::class, inversedBy="announcements")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $discipline;
 
     public function __construct()
     {
@@ -215,5 +222,27 @@ class Announcement
         }
 
         return $this;
+    }
+
+    public function getDiscipline(): ?Discipline
+    {
+        return $this->discipline;
+    }
+
+    public function setDiscipline(?Discipline $discipline): self
+    {
+        $this->discipline = $discipline;
+
+        return $this;
+    }
+
+    /**
+     * Gets triggered only on insert
+     * @ORM\PrePersist
+     */
+    public function onPrePersist()
+    {
+        $this->createdAt = new \DateTime();
+        $this->updatedAt = new \DateTime();
     }
 }

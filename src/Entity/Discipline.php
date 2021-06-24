@@ -44,6 +44,11 @@ class Discipline
      */
     private $artworks;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Announcement::class, mappedBy="discipline")
+     */
+    private $announcements;
+
     public const DISCIPLINES = ['Arts visuels','Arts du mouvement', 'Arts Littéraires', 'Arts Musicaux' ];
     public const COLORS = ['visu','move','letters','music'];
 
@@ -56,6 +61,7 @@ class Discipline
     {
         $this->users = new ArrayCollection();
         $this->artworks = new ArrayCollection();
+        $this->announcements = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -152,6 +158,36 @@ class Discipline
             // set the owning side to null (unless already changed)
             if ($artwork->getDiscipline() === $this) {
                 $artwork->setDiscipline(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Announcement[]
+     */
+    public function getAnnouncements(): Collection
+    {
+        return $this->announcements;
+    }
+
+    public function addAnnouncement(Announcement $announcement): self
+    {
+        if (!$this->announcements->contains($announcement)) {
+            $this->announcements[] = $announcement;
+            $announcement->setDiscipline($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAnnouncement(Announcement $announcement): self
+    {
+        if ($this->announcements->removeElement($announcement)) {
+            // set the owning side to null (unless already changed)
+            if ($announcement->getDiscipline() === $this) {
+                $announcement->setDiscipline(null);
             }
         }
 
