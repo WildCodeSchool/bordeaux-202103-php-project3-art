@@ -77,7 +77,8 @@
 								{{ message.object }}
 							</h5>
 							<p>{{ message.content }}</p>
-							<a class="btn btn-outline-secondary text-uppercase" href="{{ path("artist_message_is_read", {id: message.id}) }}">marqué comme lu</a>
+{#							<a class="btn btn-outline-secondary text-uppercase" href="{{ path("artist_message_is_read", {id: message.id}) }}">marqué comme lu</a>#}
+							<a class="btn btn-outline-secondary text-uppercase" href="{{ path("artist_profil") }}#block-message">marqué comme lu</a>
 							<a class="btn btn-outline-secondary text-uppercase" href="mailto:">Répondre</a>
 						</td>
 					</tr>
@@ -140,7 +141,7 @@
 								<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ announcement.id) }}">
 								<button class="btn btn-outline-secondary card-link font-weight-bold text-dark"><i class="far fa-trash-alt"></i> Supprimer</button>
 							</form>
-								<a href="{{ path('announcement_edit',{'id':announcement.id}) }}" class="btn btn-outline-secondary card-link font-weight-bold text-dark" ><i class="far fa-edit"></i> Modifier</a>
+								<a href="{{ path('announcement_edit', {'id': announcement.id}) }}" class="btn btn-outline-secondary card-link font-weight-bold text-dark" ><i class="far fa-edit"></i> Modifier</a>
 							</p>
 						</div>
 					</div>
