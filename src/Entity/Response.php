@@ -24,6 +24,7 @@ class Response
 
     /**
      * @ORM\ManyToOne(targetEntity=Announcement::class, inversedBy="responses")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $announcement;
 

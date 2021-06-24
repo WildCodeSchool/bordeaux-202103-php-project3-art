@@ -1,13 +1,16 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Edit Announcement{% endblock %}
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+
 
 {% block body %}
-    <h1>Edit Announcement</h1>
+    <div class="container">
 
-    {{ include('announcement/_form.html.twig', {'button_label': 'Update'}) }}
+        <h1>Edit Announcement</h1>
 
-    <a href="{{ path('announcement_index') }}">back to list</a>
+        {{ include('announcement/_form.html.twig', {'button_label': 'Modifier'}) }}
 
-    {{ include('announcement/_delete_form.html.twig') }}
+
+    </div>
 {% endblock %}

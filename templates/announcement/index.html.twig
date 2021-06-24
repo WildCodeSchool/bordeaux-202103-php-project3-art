@@ -14,17 +14,17 @@
         <div class="row pt-5 pb-5">
 {% for announcement in announcements %}
     <div class="col-sm-4 d-flex justify-content-center">
-    <div class="card bg-light mb-5" style="width: 18rem;">
-        <div class="card-body">
-            <h5 class="card-title text-uppercase">{{ announcement.title }}</h5>
-            <h6 class="card-subtitle mb-2 text-muted">Catégorie : {{ announcement.discipline.name }}</h6>
-            {% if announcement.date is not null %}
-            <h6 class="card-subtitle mb-2 text-muted">{{ announcement.date|date('d/m/Y') }}</h6>
-            {% endif %}
-            <p class="card-text text-justify">{{ announcement.content }}</p>
-            <p class="text-uppercase text-right"><a href="{{ path('announcement_response', {id: announcement.id}) }}" class="card-link"><i class="far fa-envelope"></i> Contacter</p></a>
+        <div class="card bg-light mb-5 card-announcement card-{{ announcement.discipline.color }}" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title text-uppercase">{{ announcement.title }}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">Catégorie : {{ announcement.discipline.name }}</h6>
+                {% if announcement.date is not null %}
+                <h6 class="card-subtitle mb-2 text-muted">{{ announcement.date|date('d/m/Y') }}</h6>
+                {% endif %}
+                <p class="card-text text-justify">{{ announcement.content }}</p>
+                <p class="text-uppercase text-right"><a href="{{ path('artist_contact', {user_id: announcement.user.id}) }}" class="card-link"><i class="far fa-envelope"></i> Contacter</p></a>
+            </div>
         </div>
-    </div>
     </div>
     {% endfor %}
         </div>

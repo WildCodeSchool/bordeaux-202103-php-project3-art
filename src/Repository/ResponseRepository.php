@@ -19,6 +19,17 @@ class ResponseRepository extends ServiceEntityRepository
         parent::__construct($registry, Response::class);
     }
 
+    public function getRespondedAnnouncements($user)
+    {
+        return $this->createQueryBuilder('r')
+            ->where('r.respondant = :user')
+            ->setParameter('user', $user)
+            ->join()
+
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return Response[] Returns an array of Response objects
     //  */
