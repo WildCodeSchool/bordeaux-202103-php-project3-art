@@ -7,6 +7,7 @@ use App\Entity\Message;
 use App\Entity\Response as EntityResponse;
 use App\Form\AnnouncementType;
 use App\Form\MessageType;
+use App\Form\EntitySearchType;
 use App\Repository\AnnouncementRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,17 +21,25 @@ use Symfony\Component\Routing\Annotation\Route;
 class AnnouncementController extends AbstractController
 {
     /**
-     * @Route("/", name="index", methods={"GET"})
+     * @Route("/", name="index", methods={"GET","POST"})
      */
-    public function index(AnnouncementRepository $announcementRepository): Response
+    public function index(Request $request, AnnouncementRepository $announcementRepository): Response
     {
+        $form = $this->createForm(EntitySearchType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $search = $form->getData();
+            $announcements = $announcementRepository->findByTitleOrDiscipline($search);
+        } else {
+            $announcements = $announcementRepository->getAnnouncementsByDate();
+        }
+
         return $this->render('announcement/index.html.twig', [
-            'announcements' => $announcementRepository->getAnnouncementsByDate()
+            'announcements' => $announcements,
+            'form' =>$form->createView()
             ]);
     }
-
-
-
 
     /**
      * @Route("/{id}/edit", name="edit", methods={"GET","POST"})
@@ -62,7 +71,6 @@ class AnnouncementController extends AbstractController
         EntityManagerInterface $entityManager
     ): Response {
         if ($this->isCsrfTokenValid('delete' . $announcement->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($announcement);
             $entityManager->flush();
         }

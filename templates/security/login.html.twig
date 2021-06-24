@@ -6,7 +6,7 @@
 {% block body %}
 	<div class="container">
 		<h1 class="mb-5 mt-5 font-weight-bold text-center text-uppercase">Connexion</h1>
-		<div class="col-xl-6 col-xs-8 card mx-auto mt-5">
+		<div class="col-xl-6 col-xs-8 card mx-auto mt-5 mb-5">
 			<form method="post">
 				{% if error %}
 					<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>

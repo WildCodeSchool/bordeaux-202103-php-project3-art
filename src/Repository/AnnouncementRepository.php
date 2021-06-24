@@ -4,7 +4,6 @@ namespace App\Repository;
 
 use App\Entity\Announcement;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -27,18 +26,19 @@ class AnnouncementRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findByTitle(array $keywords)
+    public function findByTitleOrDiscipline(array $keywords)
     {
         $qb = $this->createQueryBuilder('a');
         foreach ($keywords as $key => $keyword) {
             $qb
-                ->where('a.title LIKE :keyword' . $key)
-                ->orWhere('a.date is NULL')
-                ->setParameter('keyword' . $key, '%' . $keyword . '%');
+                ->where('d.name LIKE :keyword' . $key)
+                ->orWhere('a.title LIKE :keyword' . $key)
+                ->andWhere('a.date >= CURRENT_DATE() or a.date is NULL')
+                ->setParameter('keyword' . $key, '%' . $keyword . '%')
+                ->leftJoin('a.discipline', 'd');
         }
-        $qb
-            ->andWhere('a.date >= CURRENT_DATE()')
-            ->orderBy('a.date', 'DESC');
+           $qb
+            ->orderBy('a.createdAt', 'DESC');
         return $qb->getQuery()->getResult();
     }
 
