@@ -26,7 +26,7 @@ class AnnouncementType extends AbstractType
                 'label' => 'Annonce disponible jusqu\'au'
             ])
             ->add('time', TimeType::class, [
-                'label' => ''
+                'label' => 'Heure de l\'évenement'
             ])
             ->add('discipline', null, [
                 'choice_label' => 'name'

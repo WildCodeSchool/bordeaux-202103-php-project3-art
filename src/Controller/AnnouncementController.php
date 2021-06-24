@@ -29,38 +29,8 @@ class AnnouncementController extends AbstractController
             ]);
     }
 
-    /**
-     * @Route("/new", name="new", methods={"GET","POST"})
-     */
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
-    {
-        $announcement = new Announcement();
-        $form = $this->createForm(AnnouncementType::class, $announcement);
-        $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $announcement->setUser($this->getUser());
-            $entityManager->persist($announcement);
-            $entityManager->flush();
 
-            return $this->redirectToRoute('announcement_index');
-        }
-
-        return $this->render('announcement/new.html.twig', [
-            'announcement' => $announcement,
-            'form' => $form->createView(),
-        ]);
-    }
-
-    /**
-     * @Route("/{id}", name="show", methods={"GET"})
-     */
-    public function show(Announcement $announcement): Response
-    {
-        return $this->render('announcement/show.html.twig', [
-            'announcement' => $announcement,
-        ]);
-    }
 
     /**
      * @Route("/{id}/edit", name="edit", methods={"GET","POST"})
@@ -73,7 +43,8 @@ class AnnouncementController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('announcement_index');
+            return $this->redirectToRoute('artist_profil', ['_fragment' => 'myAnnouncements']);
+
         }
 
         return $this->render('announcement/edit.html.twig', [
@@ -83,7 +54,7 @@ class AnnouncementController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="delete", methods={"POST"})
+     * @Route("/{id}", name="delete", methods={"GET","POST"})
      */
     public function delete(
         Request $request,
@@ -95,7 +66,7 @@ class AnnouncementController extends AbstractController
             $entityManager->remove($announcement);
             $entityManager->flush();
         }
-        return $this->redirectToRoute('announcement_index');
+        return $this->redirectToRoute('artist_profil', ['_fragment' => 'myAnnouncements']);
     }
 
     /**

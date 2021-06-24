@@ -64,6 +64,22 @@
     color: $littery-arts;
   }
 }
+.card-visu{
+  box-shadow: -20px -20px $visual-arts;
+  border-radius: 0!important;
+}
+.card-letters{
+  box-shadow: -20px -20px $littery-arts;
+  border-radius: 0!important;
+}
+.card-music{
+  box-shadow: -20px -20px $musical-arts;
+  border-radius: 0!important;
+}
+.card-move{
+  box-shadow: -20px -20px $movement-arts;
+  border-radius: 0!important;
+}
 .text-move {
  color: white !important;
 }

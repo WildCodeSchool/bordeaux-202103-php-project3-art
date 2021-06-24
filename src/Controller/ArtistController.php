@@ -2,13 +2,17 @@
 
 namespace App\Controller;
 
+use App\Entity\Announcement;
 use App\Entity\City;
 use App\Entity\Message;
 use App\Entity\User;
+use App\Form\AnnouncementType;
 use App\Form\LocalisationType;
 use App\Form\MessageType;
+use App\Repository\AnnouncementRepository;
 use App\Repository\MessageRepository;
 use App\Form\UserType;
+use App\Repository\ResponseRepository;
 use App\Repository\UserRepository;
 use App\Service\CityBuilder;
 use DateTime;
@@ -82,16 +86,28 @@ class ArtistController extends AbstractController
     }
 
     /**
-     * @Route("/profil", name="profil",methods={"GET"})
+     * @Route("/profil", name="profil",methods={"GET","POST"})
      */
-    public function profile(MessageRepository $messageRepository): Response
+    public function profile(MessageRepository $messageRepository, Request $request, EntityManagerInterface $entityManager ): Response
     {
-        $userId = $this->getUser()->getId();
-        $totalUnreadMessage = $messageRepository->countUnreadMessage($this->getUser());
+        $user = $this->getUser();
+         $announcement = new Announcement();
+        $newForm = $this->createForm(AnnouncementType::class, $announcement);
+        $newForm->handleRequest($request);
+        if ($newForm->isSubmitted() && $newForm->isValid()) {
+            $announcement->setUser($this->getUser());
+            $entityManager->persist($announcement);
+            $entityManager->flush();
+            return $this->redirectToRoute('artist_profil', ['_fragment' => 'myAnnouncements']);
+
+        }
+        $totalUnreadMessage = $messageRepository->countUnreadMessage($user);
         return $this->render('artist/profil.html.twig', [
-            'messages' => $messageRepository->findBy(["user" => $userId]),
+            'messages' => $messageRepository->findBy(["user" => $user]),
             'totalUnreadMessage' => $totalUnreadMessage,
+            'announcementForm' => $newForm->createView(),
         ]);
+
     }
 
     /**
@@ -166,6 +182,6 @@ class ArtistController extends AbstractController
             'messages' => $messageRepository->findBy(["user" => $userId]),
             'totalUnreadMessage' => $totalUnreadMessage,
         ]);
-        // dd($totalUnreadMessage);
     }
+
 }
