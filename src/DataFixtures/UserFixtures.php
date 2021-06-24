@@ -31,7 +31,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
         'chanteur'
     ];
     public const DISCIPLINES = [
-      'discipline_2',
+      'discipline_1',
       'discipline_2',
       'discipline_3',
       'discipline_3',
