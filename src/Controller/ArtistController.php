@@ -86,7 +86,7 @@ class ArtistController extends AbstractController
     /**
      * @Route("/profil", name="profil",methods={"GET","POST"})
      */
-    public function profile(MessageRepository $messageRepository, Request $request, EntityManagerInterface $entityManager ): Response
+    public function profile(MessageRepository $messageRepository, Request $request, EntityManagerInterface $entityManager): Response
     {
         $user = $this->getUser();
          $announcement = new Announcement();
@@ -97,7 +97,6 @@ class ArtistController extends AbstractController
             $entityManager->persist($announcement);
             $entityManager->flush();
             return $this->redirectToRoute('artist_profil', ['_fragment' => 'myAnnouncements']);
-
         }
         $totalUnreadMessage = $messageRepository->countUnreadMessage($user);
         return $this->render('artist/profil.html.twig', [
@@ -105,7 +104,6 @@ class ArtistController extends AbstractController
             'totalUnreadMessage' => $totalUnreadMessage,
             'announcementForm' => $newForm->createView(),
         ]);
-
     }
 
     /**
@@ -167,17 +165,10 @@ class ArtistController extends AbstractController
      */
     public function mailIsRead(
         Message $mail,
-        EntityManagerInterface $entityManager,
-        MessageRepository $messageRepository
+        EntityManagerInterface $entityManager
     ): Response {
-        $userId = $this->getUser()->getId();
         $mail->setIsRead(true);
         $entityManager->flush();
-        $totalUnreadMessage = $messageRepository->countUnreadMessage($this->getUser());
-        return $this->render('artist/profil.html.twig', [
-            'messages' => $messageRepository->findBy(["user" => $userId]),
-            'totalUnreadMessage' => $totalUnreadMessage,
-        ]);
+        return $this->redirectToRoute('artist_profil', ['_fragment' => '#block-message']);
     }
-
 }
