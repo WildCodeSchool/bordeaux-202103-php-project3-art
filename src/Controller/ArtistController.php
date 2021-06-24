@@ -2,9 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Announcement;
 use App\Entity\City;
 use App\Entity\Message;
 use App\Entity\User;
+use App\Form\AnnouncementType;
 use App\Form\LocalisationType;
 use App\Form\MessageType;
 use App\Repository\AnnouncementRepository;
@@ -84,16 +86,28 @@ class ArtistController extends AbstractController
     }
 
     /**
-     * @Route("/profil", name="profil",methods={"GET"})
+     * @Route("/profil", name="profil",methods={"GET","POST"})
      */
-    public function profile(MessageRepository $messageRepository, ResponseRepository $responseRepository, AnnouncementRepository $announcementRepository): Response
+    public function profile(MessageRepository $messageRepository, Request $request, EntityManagerInterface $entityManager): Response
     {
         $user = $this->getUser();
-        $totalUnreadMessage = $messageRepository->countUnreadMessage($this->getUser());
+        $announcement = new Announcement();
+        $form = $this->createForm(AnnouncementType::class, $announcement);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $announcement->setUser($this->getUser());
+            $entityManager->persist($announcement);
+            $entityManager->flush();
+            return $this->redirectToRoute('artist_profil', ['_fragment' => 'myAnnouncements']);
+
+        }
+        $totalUnreadMessage = $messageRepository->countUnreadMessage($user);
         return $this->render('artist/profil.html.twig', [
             'messages' => $messageRepository->findBy(["user" => $user]),
             'totalUnreadMessage' => $totalUnreadMessage,
+            'announcementForm' => $form->createView(),
         ]);
+
     }
 
     /**

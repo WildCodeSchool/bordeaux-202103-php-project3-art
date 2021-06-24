@@ -68,7 +68,7 @@ class Announcement
 
     /**
      * @ORM\ManyToOne(targetEntity=Discipline::class, inversedBy="announcements")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
     private $discipline;
 

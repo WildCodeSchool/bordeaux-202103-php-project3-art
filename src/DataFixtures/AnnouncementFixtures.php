@@ -63,15 +63,15 @@ class AnnouncementFixtures extends Fixture implements DependentFixtureInterface
             $this->getReference('discipline_1'),
             $this->getReference('discipline_2'),
             $this->getReference('discipline_3'),
-            $this->getReference('discipline_4'),
-            $this->getReference('discipline_1'),
-            $this->getReference('discipline_2'),
-            $this->getReference('discipline_2'),
-            $this->getReference('discipline_3'),
             $this->getReference('discipline_3'),
             $this->getReference('discipline_4'),
-            $this->getReference('discipline_2'),
+            $this->getReference('discipline_4'),
             $this->getReference('discipline_1'),
+            $this->getReference('discipline_1'),
+            $this->getReference('discipline_1'),
+            $this->getReference('discipline_3'),
+            $this->getReference('discipline_3'),
+            $this->getReference('discipline_3'),
 
         ];
         $userDispatch = [
