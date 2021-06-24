@@ -41,7 +41,8 @@ class AnnouncementController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('announcement_index');
+            return $this->redirectToRoute('artist_profil', ['_fragment' => 'myAnnouncements']);
+
         }
 
         return $this->render('announcement/edit.html.twig', [

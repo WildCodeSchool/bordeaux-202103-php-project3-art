@@ -88,13 +88,13 @@ class ArtistController extends AbstractController
     /**
      * @Route("/profil", name="profil",methods={"GET","POST"})
      */
-    public function profile(MessageRepository $messageRepository, Request $request, EntityManagerInterface $entityManager): Response
+    public function profile(MessageRepository $messageRepository, Request $request, EntityManagerInterface $entityManager ): Response
     {
         $user = $this->getUser();
-        $announcement = new Announcement();
-        $form = $this->createForm(AnnouncementType::class, $announcement);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
+         $announcement = new Announcement();
+        $newForm = $this->createForm(AnnouncementType::class, $announcement);
+        $newForm->handleRequest($request);
+        if ($newForm->isSubmitted() && $newForm->isValid()) {
             $announcement->setUser($this->getUser());
             $entityManager->persist($announcement);
             $entityManager->flush();
@@ -105,7 +105,7 @@ class ArtistController extends AbstractController
         return $this->render('artist/profil.html.twig', [
             'messages' => $messageRepository->findBy(["user" => $user]),
             'totalUnreadMessage' => $totalUnreadMessage,
-            'announcementForm' => $form->createView(),
+            'announcementForm' => $newForm->createView(),
         ]);
 
     }
@@ -183,4 +183,5 @@ class ArtistController extends AbstractController
             'totalUnreadMessage' => $totalUnreadMessage,
         ]);
     }
+
 }
