@@ -22,7 +22,7 @@
                 <h6 class="card-subtitle mb-2 text-muted">{{ announcement.date|date('d/m/Y') }}</h6>
                 {% endif %}
                 <p class="card-text text-justify">{{ announcement.content }}</p>
-                <p class="text-uppercase text-right"><a href="{{ path('artist_contact', {user_id: announcement.user.id}) }}" class="card-link font-weight-bold text-dark"><i class="far fa-envelope"></i> Contacter</p></a>
+                <p class="text-uppercase text-right"><a href="{{ path('announcement_response', {id: announcement.id}) }}" class="card-link font-weight-bold text-dark"><i class="far fa-envelope"></i> Contacter</p></a>
             </div>
         </div>
     </div>
