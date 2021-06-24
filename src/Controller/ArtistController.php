@@ -55,23 +55,21 @@ class ArtistController extends AbstractController
             $coordinates = $formLocalisation->getData();
             $this->getUser()->getCity()->setLatitude($coordinates['latitude']);
             $this->getUser()->getCity()->setLongitude($coordinates['longitude']);
-            $city = $this->cityBuilder->fetchCityByCoordinates($coordinates['latitude'],$coordinates['longitude']);
+            $city = $this->cityBuilder->fetchCityByCoordinates($coordinates['latitude'], $coordinates['longitude']);
             $this->getUser()->getCity()->setZipcode($city['codesPostaux'][0]);
             $this->getUser()->getCity()->setName($city['nom']);
-            $manager-> flush();
-            return $this->redirectToRoute('artist_edit',['user_id'=>$this->getUser()->getId()]);
-
+            $manager->flush();
+            return $this->redirectToRoute('artist_edit', ['user_id' => $this->getUser()->getId()]);
         }
         $formUpdate = $this->createForm(UserType::class, $user);
         $formUpdate->handleRequest($request);
         if ($formUpdate->isSubmitted() && $formUpdate->isValid()) {
-
             $zipCode = $formUpdate->getData()->getCity()->getZipCode();
             $city = $this->cityBuilder->fetchCity($zipCode);
             $this->getUser()->getCity()->setName($city['nom']);
             $this->getUser()->getCity()->setLongitude($city['centre']['coordinates'][0]);
             $this->getUser()->getCity()->setLatitude($city['centre']['coordinates'][1]);
-            $manager-> flush();
+            $manager->flush();
             return $this->redirectToRoute('artist_profil');
         };
         return $this->render('artist/edit.html.twig', [
@@ -122,7 +120,7 @@ class ArtistController extends AbstractController
      */
     public function showAll(UserRepository $repository)
     {
-        $artists = $repository->findAll();
+        $artists = $repository->findBy([], ['id' => 'desc']);
         foreach ($artists as $artist) {
             $dicipline = $artist->getDisciplines()->get(0);
         }
@@ -130,7 +128,6 @@ class ArtistController extends AbstractController
             'artists' => $artists,
         ]);
     }
-
 
     /**
      * @Route("/{friend_id}/add_friends", name="add_friends", methods={"GET", "POST"})
@@ -149,15 +146,17 @@ class ArtistController extends AbstractController
 
         return $this->json([
             'isFriend' => $connectedUser->isFriend($friend),
-
         ]);
     }
 
     /**
      * @Route("/profil/isRead/{id}", name="message_is_read", methods={"GET", "POST"})
      */
-    public function mailIsRead(Message $mail, EntityManagerInterface $entityManager, MessageRepository $messageRepository): Response
-    {
+    public function mailIsRead(
+        Message $mail,
+        EntityManagerInterface $entityManager,
+        MessageRepository $messageRepository
+    ): Response {
         $userId = $this->getUser()->getId();
         $mail->setIsRead(true);
         $entityManager->flush();
@@ -166,6 +165,5 @@ class ArtistController extends AbstractController
             'messages' => $messageRepository->findBy(["user" => $userId]),
             'totalUnreadMessage' => $totalUnreadMessage,
         ]);
-        // dd($totalUnreadMessage);
     }
 }
