@@ -21,6 +21,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -86,8 +87,10 @@ class ArtistController extends AbstractController
     /**
      * @Route("/profil", name="profil",methods={"GET","POST"})
      */
-    public function profile(MessageRepository $messageRepository, Request $request, EntityManagerInterface $entityManager): Response
+    public function profile(MessageRepository $messageRepository, Request $request, EntityManagerInterface $entityManager, SessionInterface $session): Response
     {
+//        dd($session->get('isMailBoxOpen'));
+
         $user = $this->getUser();
          $announcement = new Announcement();
         $newForm = $this->createForm(AnnouncementType::class, $announcement);
@@ -96,13 +99,17 @@ class ArtistController extends AbstractController
             $announcement->setUser($this->getUser());
             $entityManager->persist($announcement);
             $entityManager->flush();
-            return $this->redirectToRoute('artist_profil', ['_fragment' => 'myAnnouncements']);
+            return $this->redirectToRoute('artist_profil', [
+                '_fragment' => 'myAnnouncements',
+            ]);
         }
         $totalUnreadMessage = $messageRepository->countUnreadMessage($user);
         return $this->render('artist/profil.html.twig', [
             'messages' => $messageRepository->findBy(["user" => $user]),
             'totalUnreadMessage' => $totalUnreadMessage,
             'announcementForm' => $newForm->createView(),
+
+
         ]);
     }
 
@@ -169,6 +176,14 @@ class ArtistController extends AbstractController
     ): Response {
         $mail->setIsRead(true);
         $entityManager->flush();
-        return $this->redirectToRoute('artist_profil', ['_fragment' => '#block-message']);
+        return $this->redirectToRoute('artist_profil');
+    }
+    /**
+     * @Route("/toggleMailBox", name="toggle", methods={"GET"})
+     */
+    public function toggle(SessionInterface $session)
+    {
+        $session->set('isMailBoxOpen', !$session->get('isMailBoxOpen'));
+        $this->json(['isMailBoxOpen' => $session->get('isMailBoxOpen')]);
     }
 }

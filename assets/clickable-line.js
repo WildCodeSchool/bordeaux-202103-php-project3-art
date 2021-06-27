@@ -7,6 +7,11 @@ const oldmail = document.getElementsByClassName('old');
 
 mailbox.addEventListener('click', () => {
     block.classList.toggle('d-none');
+    fetch('/artist/toggleMailBox')
+        .then(res=>res.json())
+        .then(res=>{
+           console.log(res);
+        });
 });
 
 for (let i = 0; i < titles.length; i++) {

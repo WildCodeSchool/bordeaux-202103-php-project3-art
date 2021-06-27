@@ -40,7 +40,7 @@
 {% endblock %}
 
 {% block message %}
-	<div id="block-message" class="d-none container mt-5">
+	<div id="block-message" class="{{ app.session.get('isMailBoxOpen')?"":"d-none"}} container mt-5">
 		<h2 class="mb-5 card-title title-shadow font-weight-bold text-uppercase">
 			<span class="title-content font-medium">
 				Messages
