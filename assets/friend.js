@@ -1,5 +1,7 @@
 document.querySelector('#friend').addEventListener('click', addToFriends);
 
+const textFriend = document.getElementById('text-friend');
+
 function addToFriends(event) {
 
     event.preventDefault();
@@ -14,9 +16,11 @@ function addToFriends(event) {
         if (res.isFriend) {
             friendIcon.classList.remove('far');
             friendIcon.classList.add('fas');
+            textFriend.innerHTML = 'Ajouté.e à mes contacts favoris !';
         } else {
             friendIcon.classList.remove('fas');
             friendIcon.classList.add('far');
+            textFriend.innerHTML = "Ajouter à mes contacts favoris";
         }
     });
 }

@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=AnnouncementRepository::class)
+ * @ORM\HasLifecycleCallbacks
  */
 class Announcement
 {
@@ -60,9 +61,21 @@ class Announcement
      */
     private $user;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Response::class, mappedBy="announcement")
+     */
+    private $responses;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Discipline::class, inversedBy="announcements")
+     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
+     */
+    private $discipline;
+
     public function __construct()
     {
         $this->tags = new ArrayCollection();
+        $this->responses = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -179,5 +192,57 @@ class Announcement
         $this->user = $user;
 
         return $this;
+    }
+
+    /**
+     * @return Collection|Response[]
+     */
+    public function getResponses(): Collection
+    {
+        return $this->responses;
+    }
+
+    public function addResponse(Response $response): self
+    {
+        if (!$this->responses->contains($response)) {
+            $this->responses[] = $response;
+            $response->setAnnouncement($this);
+        }
+
+        return $this;
+    }
+
+    public function removeResponse(Response $response): self
+    {
+        if ($this->responses->removeElement($response)) {
+            // set the owning side to null (unless already changed)
+            if ($response->getAnnouncement() === $this) {
+                $response->setAnnouncement(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getDiscipline(): ?Discipline
+    {
+        return $this->discipline;
+    }
+
+    public function setDiscipline(?Discipline $discipline): self
+    {
+        $this->discipline = $discipline;
+
+        return $this;
+    }
+
+    /**
+     * Gets triggered only on insert
+     * @ORM\PrePersist
+     */
+    public function onPrePersist()
+    {
+        $this->createdAt = new \DateTime();
+        $this->updatedAt = new \DateTime();
     }
 }

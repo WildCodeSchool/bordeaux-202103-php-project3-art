@@ -3,11 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\Message;
-use App\Form\Message1Type;
+use App\Form\MessageType;
 use App\Repository\MessageRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -31,7 +33,7 @@ class MessageController extends AbstractController
     public function new(Request $request): Response
     {
         $message = new Message();
-        $form = $this->createForm(Message1Type::class, $message);
+        $form = $this->createForm(MessageType::class, $message);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -63,7 +65,7 @@ class MessageController extends AbstractController
      */
     public function edit(Request $request, Message $message): Response
     {
-        $form = $this->createForm(Message1Type::class, $message);
+        $form = $this->createForm(MessageType::class, $message);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -81,7 +83,7 @@ class MessageController extends AbstractController
     /**
      * @Route("/{id}", name="message_delete", methods={"POST"})
      */
-    public function delete(Request $request, Message $message): Response
+    public function delete(Message $message, EntityManagerInterface $entityManager, Request $request): Response
     {
         if ($this->isCsrfTokenValid('delete' . $message->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
@@ -89,6 +91,7 @@ class MessageController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('message_index');
+        return $this->redirectToRoute('artist_profil');
     }
+
 }

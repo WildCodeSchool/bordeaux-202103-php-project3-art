@@ -3,7 +3,7 @@
 namespace App\Service;
 
 use App\Entity\GlobalSearch;
-use App\Repository\CityRepository;
+use App\Repository\AnnouncementRepository;
 use App\Repository\HappeningRepository;
 use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -12,22 +12,22 @@ class GlobalSearchProvider
 {
     private UserRepository $userRepository;
     private HappeningRepository $happeningRepository;
-    private CityRepository $cityRepository;
+    private AnnouncementRepository $announcementRepository;
     public function __construct(
         UserRepository $userRepository,
         HappeningRepository $happeningRepository,
-        CityRepository $cityRepository
+        AnnouncementRepository $announcementRepository
     ) {
         $this->userRepository = $userRepository;
         $this->happeningRepository = $happeningRepository;
-        $this->cityRepository = $cityRepository;
+        $this->announcementRepository = $announcementRepository;
     }
 
     public function initSearch(GlobalSearch $globalSearch): void
     {
         $allResults = [];
-        $users = $this->userRepository->findBy([],['createdAt' => 'DESC']);
-        $happenings = $this->happeningRepository->findBy([],['createdAt' => 'DESC']);
+        $users = $this->userRepository->findBy([], ['createdAt' => 'DESC']);
+        $happenings = $this->happeningRepository->findBy([], ['createdAt' => 'DESC']);
         $allResults['users'] = $users;
         $allResults['happenings'] = $happenings;
         $globalSearch->setResults($allResults);
@@ -51,6 +51,8 @@ class GlobalSearchProvider
             case 'location':
                 $results['users'] = $this->userRepository->findByCitiesNameAndZipcode($keywords);
                 break;
+            case 'announcement':
+                $results['announcements'] = $this->announcementRepository->findByTitle($keywords);
         }
         $globalSearch->setResults($results);
     }

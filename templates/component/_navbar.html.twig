@@ -7,13 +7,14 @@
         <div class="navbar-nav container d-flex  flex-nowrap  justify-content-between">
             <div class="adjust-navbar d-flex flex-column flex-lg-row justify-content-around">
             <a class="nav-link navbar-white font-bold text-uppercase" href="{{ path('artist_show_all') }}">Les artistes</a>
-            <a class="nav-link navbar-white font-bold text-uppercase" href="#">L'asso</a>
-            <a class="nav-link navbar-white font-bold text-uppercase" href="#bloc-event">L'actualité</a>
+            <a class="nav-link navbar-white font-bold text-uppercase" href="{{ path('home_page', {'_fragment': 'presentation-homepage'}) }}">L'asso</a>
+            <a class="nav-link navbar-white font-bold text-uppercase" href="{{ path('home_page', {'_fragment': 'bloc-event'}) }}">L'actualité</a>
+            <a class="nav-link navbar-white font-bold text-uppercase" href="{{ path('announcement_index') }}">Annonces</a>
             <a class="nav-link navbar-white font-bold text-uppercase" href="{{ path('blog_index') }}">Blog</a>
             </div>
-            <a href="/"><img id='logo-navbar' class='' src="{{ asset('build/logo.png') }}" alt="logo arts d'eko" width="100px"></a>
+            <a href="{{ path("home_page") }}"><img id='logo-navbar' class='' src="{{ asset('build/logo.png') }}" alt="logo arts d'eko" width="100px"></a>
             <div class="adjust-navbar d-flex flex-column flex-lg-row justify-content-between">
-            <a class="nav-link navbar-white font-bold text-uppercase" href="#bloc-contact">Contact</a>
+            <a class="nav-link navbar-white font-bold text-uppercase" href="{{ path('home_page', {'_fragment': 'contact-homepage'}) }}">Contact</a>
             <a class="nav-link navbar-white font-bold text-uppercase" href="{{ (app.user) ? path('artist_profil') : path('app_login') }}">
                 {{ (app.user) ? "Profil" : "Connexion" }}</a>
             {% if app.user %}

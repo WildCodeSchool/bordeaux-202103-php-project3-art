@@ -4,6 +4,7 @@ namespace App\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SearchType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -15,22 +16,24 @@ class GlobalSearchType extends AbstractType
         $builder
             ->add('type', ChoiceType::class, [
                 'choices' => [
-                    'Catégories' => 'category',
-                    'Artistes' => 'artist',
-                    'Evénements' => 'event',
-                    'Lieux' => 'location'
+                    'catégories' => 'category',
+                    'artistes' => 'artist',
+                    'événements' => 'event',
+                    'lieux' => 'location',
+                    'annonces' => 'announcement'
                 ],
                 'expanded' => true,
                 'multiple' => false,
                 'label' => false,
                 'label_attr' => [
-                    'class' => 'radio-inline d-flex justify-content-center font-medium p-2'
+                    'class' => 'navbar-label d-flex justify-content-center font-medium 
+                    text-uppercase p-2 mt-1'
                 ],
                 'attr' => [
-                    'class' => ''
+                    'class' => 'navbar-radio'
                 ],
             ])
-            ->add('textTyped', TextType::class, [
+            ->add('textTyped', SearchType::class, [
                 'required' => false,
                 'label' => false,
                 'attr' => [

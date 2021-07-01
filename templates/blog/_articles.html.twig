@@ -1,21 +1,38 @@
 <div class="container pt-5 pb-5">
-<h2 class="font-weight-bold mb-4 title-shadow text-uppercase">
-    <span class="title-content">Le Blog</span>
+<h2 class="ml-3 mb-5 font-weight-bold mb-4 title-shadow text-uppercase">
+    <span class="title-content">Actualité</span>
 </h2>
+    <div class="col-sm-12">
 {% for happening in happenings %}
-    <div class="container pt-5 pb-5">
-        <div class="row justify-content-center">
-            <div class="col-lg-6 mb-4">
-        <div class="card">
-            <img class="card-img-top" src="{{ happening.media }}" alt="{{ happening.title }}">
-            <div class="card-body pb-5">
-                <h5 class="card-title font-weight-bold">{{ happening.title }}</h5>
-                <p class="card-text text-justify">{{ happening.content }}</p>
-                <p class="card-text"><small class="text-muted">Last updated</small></p>
+        {% if loop.index is divisible by (2) %}
+                <h3 class="card-title font-medium mt-5">{{ happening.title }}</h3>
+                Publié le {{ happening.createdAt|date('d/m/Y') }}
+                <div class="main-box mt-5 mb-5">
+                    <div class="row">
+                        <div class="col-sm-6 text-justify">
+                      {{ happening.content }}
+                            <a href="#" class="text-right">Lien vers l'évènement</a>
+                        </div>
+                            <div class="col-sm-6 text-center">
+                    <img src="{{ happening.media }}" alt="{{ happening.title }}" class="card-img" style="width: 300px">
+                    </div>
+                    </div>
+    </div>
+        {% else %}
+                <h3 class="card-title font-medium mt-5 text-right">{{ happening.title }}</h3>
+            <p class="text-right">Publié le {{ happening.createdAt|date('d/m/Y') }}</p>
+        <div class="main-box mt-5 mb-5">
+            <div class="row">
+                <div class="col-sm-6 text-center">
+                    <img src="{{ happening.media }}" alt="{{ happening.title }}" class="card-img" style="width: 300px">
+                </div>
+                <div class="col-sm-6 text-justify">
+                    {{ happening.content }}
+                    <a href="#" class="text-right">Lien vers l'évènement</a>
+                </div>
             </div>
         </div>
-    </div>
-        </div>
-    </div>
+            {% endif %}
 {% endfor %}
+</div>
 </div>

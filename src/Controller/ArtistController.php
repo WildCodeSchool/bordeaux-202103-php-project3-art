@@ -2,12 +2,17 @@
 
 namespace App\Controller;
 
+use App\Entity\Announcement;
 use App\Entity\City;
 use App\Entity\Message;
 use App\Entity\User;
+use App\Form\AnnouncementType;
+use App\Form\LocalisationType;
 use App\Form\MessageType;
+use App\Repository\AnnouncementRepository;
 use App\Repository\MessageRepository;
 use App\Form\UserType;
+use App\Repository\ResponseRepository;
 use App\Repository\UserRepository;
 use App\Service\CityBuilder;
 use DateTime;
@@ -16,6 +21,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -48,30 +54,62 @@ class ArtistController extends AbstractController
      */
     public function edit(User $user, Request $request, EntityManagerInterface $manager): Response
     {
-        $form = $this->createForm(UserType::class, $user);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-
-            $zipCode = $form->getData()->getCity()->getZipCode();
-            $this->cityBuilder->buildCityForUser($this->getUser(), $zipCode);
-            $manager-> flush();
+        $formLocalisation = $this->createForm(LocalisationType::class);
+        $formLocalisation->handleRequest($request);
+        if ($formLocalisation->isSubmitted() && $formLocalisation->isValid()) {
+            $coordinates = $formLocalisation->getData();
+            $this->getUser()->getCity()->setLatitude($coordinates['latitude']);
+            $this->getUser()->getCity()->setLongitude($coordinates['longitude']);
+            $city = $this->cityBuilder->fetchCityByCoordinates($coordinates['latitude'], $coordinates['longitude']);
+            $this->getUser()->getCity()->setZipcode($city['codesPostaux'][0]);
+            $this->getUser()->getCity()->setName($city['nom']);
+            $manager->flush();
+            return $this->redirectToRoute('artist_edit', ['user_id' => $this->getUser()->getId()]);
+        }
+        $formUpdate = $this->createForm(UserType::class, $user);
+        $formUpdate->handleRequest($request);
+        if ($formUpdate->isSubmitted() && $formUpdate->isValid()) {
+            $zipCode = $formUpdate->getData()->getCity()->getZipCode();
+            $city = $this->cityBuilder->fetchCity($zipCode);
+            $this->getUser()->getCity()->setName($city['nom']);
+            $this->getUser()->getCity()->setLongitude($city['centre']['coordinates'][0]);
+            $this->getUser()->getCity()->setLatitude($city['centre']['coordinates'][1]);
+            $manager->flush();
             return $this->redirectToRoute('artist_profil');
-
         };
         return $this->render('artist/edit.html.twig', [
-            'form' => $form->createView(),
+            'formUpdate' => $formUpdate->createView(),
             'artist' => $user,
+            'form_localisation' => $formLocalisation->createView(),
         ]);
     }
 
     /**
-     * @Route("/profil", name="profil",methods={"GET"})
+     * @Route("/profil", name="profil",methods={"GET","POST"})
      */
-    public function profile(MessageRepository $messageRepository): Response
-    {   
-        $userId = $this->getUser()->getId();
+    public function profile(MessageRepository $messageRepository, Request $request, EntityManagerInterface $entityManager, SessionInterface $session): Response
+    {
+//        dd($session->get('isMailBoxOpen'));
+
+        $user = $this->getUser();
+         $announcement = new Announcement();
+        $newForm = $this->createForm(AnnouncementType::class, $announcement);
+        $newForm->handleRequest($request);
+        if ($newForm->isSubmitted() && $newForm->isValid()) {
+            $announcement->setUser($this->getUser());
+            $entityManager->persist($announcement);
+            $entityManager->flush();
+            return $this->redirectToRoute('artist_profil', [
+                '_fragment' => 'myAnnouncements',
+            ]);
+        }
+        $totalUnreadMessage = $messageRepository->countUnreadMessage($user);
         return $this->render('artist/profil.html.twig', [
-            'messages' => $messageRepository->findBy(["user" => $userId]),
+            'messages' => $messageRepository->findBy(["user" => $user]),
+            'totalUnreadMessage' => $totalUnreadMessage,
+            'announcementForm' => $newForm->createView(),
+
+
         ]);
     }
 
@@ -104,15 +142,10 @@ class ArtistController extends AbstractController
     public function showAll(UserRepository $repository)
     {
         $artists = $repository->findAll();
-        foreach ($artists as $artist) {
-            $dicipline = $artist->getDisciplines()->get(0);
-
-        }
         return $this->render('artist/artist_show_all.html.twig', [
             'artists' => $artists,
         ]);
     }
-
 
     /**
      * @Route("/{friend_id}/add_friends", name="add_friends", methods={"GET", "POST"})
@@ -131,7 +164,26 @@ class ArtistController extends AbstractController
 
         return $this->json([
             'isFriend' => $connectedUser->isFriend($friend),
-
         ]);
+    }
+
+    /**
+     * @Route("/profil/isRead/{id}", name="message_is_read", methods={"GET", "POST"})
+     */
+    public function mailIsRead(
+        Message $mail,
+        EntityManagerInterface $entityManager
+    ): Response {
+        $mail->setIsRead(true);
+        $entityManager->flush();
+        return $this->redirectToRoute('artist_profil');
+    }
+    /**
+     * @Route("/toggleMailBox", name="toggle", methods={"GET"})
+     */
+    public function toggle(SessionInterface $session)
+    {
+        $session->set('isMailBoxOpen', !$session->get('isMailBoxOpen'));
+        $this->json(['isMailBoxOpen' => $session->get('isMailBoxOpen')]);
     }
 }

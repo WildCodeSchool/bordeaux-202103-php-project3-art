@@ -21,12 +21,15 @@ class HappeningRepository extends ServiceEntityRepository
 
     public function findByName(array $keywords)
     {
-        $queryBuilder = $this->createQueryBuilder('h')
-            ->where('h.title IN (:keywords)')
-            ->setParameter('keywords', $keywords)
-            ->orderBy('h.dateStart', 'ASC')
-            ->getQuery();
-        return $queryBuilder->getResult();
+        $qb = $this->createQueryBuilder('h');
+        foreach ($keywords as $key => $keyword) {
+            $qb
+                ->orwhere('h.title LIKE :keyword' . $key)
+                ->setParameter('keyword' . $key, '%' . $keyword . '%');
+        }
+            $qb
+            ->orderBy('h.dateStart', 'ASC');
+        return $qb->getQuery()->getResult();
     }
     // /**
     //  * @return Happening[] Returns an array of Happening objects
