@@ -31,7 +31,7 @@ class HomeController extends AbstractController
         UserRepository $userRepository,
         HappeningRepository $happeningRepository
     ): Response {
-        $users = $userRepository->findBy(['isAdmin' => false]);
+        $users = $userRepository->findByRoleUser();
         $happenings = $happeningRepository->findBy(
             [],
             ['id' => 'DESC'],

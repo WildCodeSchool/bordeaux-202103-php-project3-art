@@ -82,7 +82,6 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
         $admin->setEmail('admin@gmail.com');
         $admin->setPassword($this->encoder->encodePassword($admin, '123456'));
         $admin->setRoles(["ROLE_ADMIN"]);
-        $admin->setIsAdmin(true);
         $avatar = new Avatar();
         $admin->setAvatar($avatar);
         $manager->persist($admin);

@@ -142,12 +142,6 @@ class User implements UserInterface
      */
     private $responses;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $isAdmin = false;
-
-
     public function __construct()
     {
         $this->disciplines = new ArrayCollection();
@@ -656,20 +650,5 @@ class User implements UserInterface
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getIsAdmin()
-    {
-        return $this->isAdmin;
-    }
-
-    /**
-     * @param mixed $isAdmin
-     */
-    public function setIsAdmin($isAdmin): void
-    {
-        $this->isAdmin = $isAdmin;
-    }
 
 }

@@ -146,7 +146,7 @@ class ArtistController extends AbstractController
      */
     public function showAll(UserRepository $repository)
     {
-        $artists = $repository->findBy(['isAdmin' => false]);
+        $artists = $repository->findByRoleUser($order = 'DESC');
         return $this->render('artist/artist_show_all.html.twig', [
             'artists' => $artists,
         ]);
