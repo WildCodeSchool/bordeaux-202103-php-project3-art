@@ -3,12 +3,18 @@
     overflow-x: auto;
 }
 
-.cursor-pointer:hover{
+.cursor-pointer:hover {
     cursor: pointer;
 }
-.newModal-trigger:hover{
+.newModal-trigger:hover {
     cursor: pointer;
 }
 .card-announcement {
     min-height: 60vh;
+}
+
+.letter-circle {
+    height: 40px;
+    width: 40px;
+    object-fit: cover;
 }

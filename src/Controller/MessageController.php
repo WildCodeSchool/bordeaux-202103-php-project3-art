@@ -91,7 +91,6 @@ class MessageController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('artist_profil');
+        return $this->redirectToRoute('artist_profil', ["_fragment" => "mailbox"]);
     }
-
 }
