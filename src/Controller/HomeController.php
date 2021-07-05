@@ -31,7 +31,7 @@ class HomeController extends AbstractController
         UserRepository $userRepository,
         HappeningRepository $happeningRepository
     ): Response {
-        $users = $userRepository->findAll();
+        $users = $userRepository->findBy(['isAdmin' => false]);
         $happenings = $happeningRepository->findBy(
             [],
             ['id' => 'DESC'],
@@ -42,8 +42,7 @@ class HomeController extends AbstractController
         $form = $this->createForm(MessageType::class, $message);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            // TODO remplacer l'adresse par un mail admin généré par fixtures
-            $adminContact = $userRepository->findOneBy(['email' => 'artiste1@gmail.com']);
+            $adminContact = $userRepository->findOneBy(['email' => 'admin@gmail.com']);
             $message->setUser($adminContact);
             $message->onPrePersist();
             $message->setIsRead(false);
@@ -69,13 +68,11 @@ class HomeController extends AbstractController
         $globalSearch = new GlobalSearch();
         $form = $this->createForm(GlobalSearchType::class, $globalSearch);
         $form->handleRequest($request);
+        $globalSearchProvider->initSearch($globalSearch);
         if ($form->isSubmitted() && $form->isValid()) {
             $globalSearchProvider->createSearch($globalSearch);
-            $results = $globalSearch->getResults();
-        } else {
-            $globalSearchProvider->initSearch($globalSearch);
-            $results = $globalSearch->getResults();
         }
+        $results = $globalSearch->getResults();
         return $this->render('home/searchBar.html.twig', [
             'form' => $form->createView(),
             'results' => $results,

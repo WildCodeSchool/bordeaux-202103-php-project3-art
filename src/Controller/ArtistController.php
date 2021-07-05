@@ -25,6 +25,7 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
  * @Route ("/artist", name="artist_")
@@ -51,6 +52,7 @@ class ArtistController extends AbstractController
     /**
      * @Route("/edit/{user_id}", name="edit")
      * @ParamConverter("user", class="App\Entity\User", options={"mapping": {"user_id" : "id"}})
+     * @IsGranted("ROLE_USER")
      */
     public function edit(User $user, Request $request, EntityManagerInterface $manager): Response
     {
@@ -86,11 +88,14 @@ class ArtistController extends AbstractController
 
     /**
      * @Route("/profil", name="profil",methods={"GET","POST"})
+     * @IsGranted("ROLE_USER")
      */
-    public function profile(MessageRepository $messageRepository, Request $request, EntityManagerInterface $entityManager, SessionInterface $session): Response
-    {
-//        dd($session->get('isMailBoxOpen'));
-
+    public function profile(
+        MessageRepository $messageRepository,
+        Request $request,
+        EntityManagerInterface $entityManager,
+        SessionInterface $session
+    ): Response {
         $user = $this->getUser();
          $announcement = new Announcement();
         $newForm = $this->createForm(AnnouncementType::class, $announcement);
@@ -141,7 +146,7 @@ class ArtistController extends AbstractController
      */
     public function showAll(UserRepository $repository)
     {
-        $artists = $repository->findAll();
+        $artists = $repository->findBy(['isAdmin' => false]);
         return $this->render('artist/artist_show_all.html.twig', [
             'artists' => $artists,
         ]);
@@ -150,6 +155,7 @@ class ArtistController extends AbstractController
     /**
      * @Route("/{friend_id}/add_friends", name="add_friends", methods={"GET", "POST"})
      * @ParamConverter("friend", class="App\Entity\User", options={"mapping": {"friend_id" : "id"}})
+     * @IsGranted("ROLE_USER")
      */
     public function addToFriends(User $friend, EntityManagerInterface $entityManager): Response
     {
@@ -169,6 +175,7 @@ class ArtistController extends AbstractController
 
     /**
      * @Route("/profil/isRead/{id}", name="message_is_read", methods={"GET", "POST"})
+     * @IsGranted("ROLE_USER")
      */
     public function mailIsRead(
         Message $mail,
@@ -180,6 +187,7 @@ class ArtistController extends AbstractController
     }
     /**
      * @Route("/toggleMailBox", name="toggle", methods={"GET"})
+     * @IsGranted("ROLE_USER")
      */
     public function toggle(SessionInterface $session)
     {
