@@ -147,9 +147,12 @@ class ArtistController extends AbstractController
     public function showAll(UserRepository $repository)
     {
         $artists = $repository->findByRoleUser($order = 'DESC');
-        return $this->render('artist/artist_show_all.html.twig', [
-            'artists' => $artists,
-        ]);
+        foreach ($artists as $artist) {
+            $artist->getDisciplines()->get(0);
+            return $this->render('artist/artist_show_all.html.twig', [
+                'artists' => $artists,
+            ]);
+        }
     }
 
     /**
@@ -183,7 +186,7 @@ class ArtistController extends AbstractController
     ): Response {
         $mail->setIsRead(true);
         $entityManager->flush();
-        return $this->redirectToRoute('artist_profil');
+        return $this->redirectToRoute('artist_profil', ["_fragment" => "mailbox"]);
     }
     /**
      * @Route("/toggleMailBox", name="toggle", methods={"GET"})
