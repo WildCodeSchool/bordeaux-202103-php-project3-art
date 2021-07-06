@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\AnnouncementRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -22,21 +23,26 @@ class Announcement
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Merci de bien vouloir saisir un titre")
+     * @Assert\Length(max="255", maxMessage="Ce champs ne peut contenir que {{ limit }} caractères")
      */
     private $title;
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank(message="Merci de bien vouloir saisir un contenu")
      */
     private $content;
 
     /**
      * @ORM\Column(type="date", nullable=true)
+     * @Assert\Date()
      */
     private $date;
 
     /**
      * @ORM\Column(type="time", nullable=true)
+     * @Assert\Time()
      */
     private $time;
 
@@ -69,6 +75,7 @@ class Announcement
     /**
      * @ORM\ManyToOne(targetEntity=Discipline::class, inversedBy="announcements")
      * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
+     * @Assert\Choice(callback="getDiscipline")
      */
     private $discipline;
 
