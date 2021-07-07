@@ -27,7 +27,7 @@ class ArtworkController extends AbstractController
             $entityManager->remove($artwork);
             $entityManager->flush();
         }
-        return $this->redirectToRoute('artwork_index');
+        return $this->redirectToRoute('artist_profil');
     }
 
     /**
