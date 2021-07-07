@@ -75,7 +75,6 @@ class Announcement
     /**
      * @ORM\ManyToOne(targetEntity=Discipline::class, inversedBy="announcements")
      * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
-     * @Assert\Choice(callback="getDiscipline")
      */
     private $discipline;
 
@@ -250,6 +249,15 @@ class Announcement
     public function onPrePersist()
     {
         $this->createdAt = new \DateTime();
+        $this->updatedAt = new \DateTime();
+    }
+
+    /**
+     * Gets triggered only on update
+     * @ORM\PreUpdate()
+     */
+    public function onPreUpdate()
+    {
         $this->updatedAt = new \DateTime();
     }
 }
