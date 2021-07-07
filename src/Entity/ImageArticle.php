@@ -34,7 +34,6 @@ class ImageArticle
     /**
      * @ORM\Column(type="datetime", nullable=true)
     * @var \DateTime
-
      */
     private $updatedAt;
 
@@ -54,16 +53,41 @@ class ImageArticle
 
         return $this;
     }
+    /**
+     * @return File
+     */
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
 
+    /**
+     * @param File $imageFile
+     */
+    public function setImageFile(File $image = null)
+    {
+        $this->imageFile = $image;
+        if ($image) {
+            $this->updatedAt = new \DateTime('now');
+        }
+    }
+    /**
+     * @return \DateTime
+     */
     public function getUpdatedAt(): ?\DateTimeInterface
     {
         return $this->updatedAt;
     }
-
-    public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
+    /**
+     * @param \DateTime $updatedAt
+     */
+    public function setUpdatedAt(?\DateTime $updatedAt): void
     {
         $this->updatedAt = $updatedAt;
 
-        return $this;
+    }
+    public function serialize()
+    {
+        $this->imageFile = base64_encode($this->imageFile);
     }
 }
