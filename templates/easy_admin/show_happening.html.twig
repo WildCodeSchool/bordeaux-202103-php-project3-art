@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+    {{ parent() }} - Admin évenements
+{% endblock %}
+
+{% block body %}
+    <div class="container pt-5 pb-5">
+        <h2 class="ml-3 mb-5 font-weight-bold mb-4 title-shadow text-uppercase">
+            <span class="title-content">Gérer mes événements</span>
+        </h2>
+        <div>
+            <a href="" class="btn btn-outline-secondary card-link font-weight-bold text-dark mt-2">
+                <i class="far fa-edit"></i>
+                Ajouter un évenement</a>
+        </div>
+        <div class="col-sm-12">
+            {% for happening in happenings %}
+                {% if loop.index is divisible by (2) %}
+                    <h3 class="card-title font-medium mt-5">{{ happening.title }}</h3>
+                    Publié le {{ happening.createdAt|date('d/m/Y') }}
+                    <div class="main-box mt-5 mb-5">
+                        <div class="row">
+                            <div class="col-sm-6 text-justify">
+                                {{ happening.content|raw }}
+                            </div>
+                            <div class="col-sm-6 text-center">
+                                <img src="{{ happening.media }}" alt="{{ happening.title }}" class="card-img" style="width: 300px">
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    <h3 class="card-title font-medium mt-5 text-right">{{ happening.title }}</h3>
+                    <p class="text-right">Publié le {{ happening.createdAt|date('d/m/Y') }}</p>
+                    <div class="main-box mt-5 mb-5">
+                        <div class="row">
+                            <div class="col-sm-6 text-center">
+                                <img src="{{ happening.media }}" alt="{{ happening.title }}" class="card-img" style="width: 300px">
+                            </div>
+                            <div class="col-sm-6 text-justify">
+                                {{ happening.content|raw }}
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+                {{ include('easy_admin/_delete_form.html.twig') }}
+                <a href="{{ path('admin_happening_edit',{id:happening.id}) }}" class="btn btn-outline-secondary card-link font-weight-bold text-dark">
+                    <i class="far fa-edit"></i>
+                    Modifier</a>
+
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
