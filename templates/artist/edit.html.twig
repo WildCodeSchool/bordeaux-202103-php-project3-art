@@ -48,8 +48,6 @@
 				{{ form_end(formUpdate) }}
 			</div>
 
-
-			<!-- Modal -->
 			<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 				<div class="modal-dialog">
 					<div class="modal-content">
@@ -60,7 +58,7 @@
 							</button>
 						</div>
 						<div class="modal-body">
-							<div id="map" ></div>
+							<div id="map"></div>
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
@@ -68,13 +66,10 @@
 							{{ form_widget(form_localisation) }}
 							<button type="submit" class="btn btn-outline-secondary text-uppercase">Enregistrer coordonnées</button>
 							{{ form_end(form_localisation) }}
-							</form>
-						</div>
+						</form>
 					</div>
 				</div>
 			</div>
-
 		</div>
 	</div>
-
-{% endblock %}
+</div>{% endblock %}

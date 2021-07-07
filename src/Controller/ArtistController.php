@@ -3,10 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\Announcement;
+use App\Entity\Artwork;
 use App\Entity\City;
+use App\Entity\Discipline;
 use App\Entity\Message;
 use App\Entity\User;
 use App\Form\AnnouncementType;
+use App\Form\ArtworkType;
 use App\Form\LocalisationType;
 use App\Form\MessageType;
 use App\Repository\AnnouncementRepository;
@@ -97,7 +100,7 @@ class ArtistController extends AbstractController
         SessionInterface $session
     ): Response {
         $user = $this->getUser();
-         $announcement = new Announcement();
+        $announcement = new Announcement();
         $newForm = $this->createForm(AnnouncementType::class, $announcement);
         $newForm->handleRequest($request);
         if ($newForm->isSubmitted() && $newForm->isValid()) {
@@ -113,8 +116,6 @@ class ArtistController extends AbstractController
             'messages' => $messageRepository->findBy(["user" => $user]),
             'totalUnreadMessage' => $totalUnreadMessage,
             'announcementForm' => $newForm->createView(),
-
-
         ]);
     }
 
