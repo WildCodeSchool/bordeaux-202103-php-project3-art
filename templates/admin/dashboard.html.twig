@@ -1,18 +1,53 @@
-{% extends 'base.html.twig' %}
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" type="image/png" href="{{ asset('build/favicon.png') }}"/>
+    <title>
+            {% block title %}Arts d'Éko - Admin Dashboard{% endblock %}
+    </title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;700&display=swap" rel="stylesheet">
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
+    {% endblock %}
+    {% block javascripts %}
+        {{ encore_entry_script_tags('app') }}
+    {% endblock %}
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2 dashboard d-md-block sidebar">
+            <div class="left-sidebar text-white">
+                <p class="mt-5 font-bold">Bienvenue sur votre Admin Dashboard</p>
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active font-bold text-uppercase" href="#"><i class="fas fa-envelope"></i> Messagerie</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link font-bold text-uppercase" href="#"><i class="fas fa-paint-brush"></i> Artistes</a>
+                        <ul>
+                            <li><i class="fas fa-angle-right"></i> Gestion des utilisateurs</li>
+                            <li><i class="fas fa-angle-right"></i> Gestion des annonces</li>
+                            <li><i class="fas fa-angle-right"></i> Mise en avant des artistes</li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link font-bold text-uppercase" href="#"><i class="fas fa-edit"></i> Contenu</a>
+                        <ul>
+                            <li><i class="fas fa-angle-right"></i> Gestion des articles</li>
+                            <li><i class="fas fa-angle-right"></i> Gestion des évènements</li>
+                            <li><i class="fas fa-angle-right"></i> Mise en avant des articles externes</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
 {% block body %}
-    <h1>Dashboard</h1>
-    <ul>
-        <li>Utilisat.eurs.rices</li>
-            <ul>
-                <li>Gestion des utilisateurs</li>
-                <li><a href="{{ path('admin_show_announcements') }}">Gestion des annonces</a></li>
-                <li>Mise en avant des artistes</li>
-            </ul>
-        <li>Contenu</li>
-        <ul>
-            <li>Gestion des articles</li>
-            <li>Gestion des événements</li>
-            <li>Mise en avant des articles externes</li>
-        </ul>
-    </ul>
 {% endblock %}
+</body>
+</html>
