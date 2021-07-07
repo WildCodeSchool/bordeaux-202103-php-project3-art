@@ -14,10 +14,10 @@
 			</span>
     </h2>
     <div class="row pt-5 pb-5">
-        <table>
+        <table class="container">
             <thead>
-            <tr>
-                <th>Titre</th>
+            <tr class="border border-dark">
+                <th class="ml-2">Titre</th>
                 <th>Catégorie</th>
                 <th>Posté le</th>
                 <th>Posté par</th>
@@ -26,14 +26,14 @@
             </thead>
             <tbody>
             {% for announcement in announcements %}
-                <tr>
-                    <td>{{ announcement.title }}</td>
+                <tr class="border border-dark">
+                    <td class="ml-2">{{ announcement.title }}</td>
                     <td>{{ announcement.discipline.name }}</td>
                     <td>{{ announcement.date|date('d/m/Y') }}</td>
                     <td>{{ announcement.user.getFirstname }}</td>
-                    <td>
+                    <td class="d-flex flex-column align-items-start">
                         <a href="{{ path('admin_edit_announcement', {id: announcement.id}) }}"
-                           class="card-link font-weight-bold text-dark"><i class="far fa-envelope"></i>Modifier</a>
+                           class="card-link text-dark"><i class="far fa-edit"></i> Modifier</a>
                         {{ include('admin/_delete_announcement.html.twig') }}
                     </td>
                 </tr>
