@@ -6,6 +6,7 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 use Exception;
 use App\Entity\City;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -28,6 +29,9 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Assert\NotBlank(message="merci de bien vouloir saisir une adresse mail")
+     * @Assert\Email(message="{{ value }} n'est pas une adresse mail valide")
+     * @Assert\Length(max="180", maxMessage="Ce champs ne peut contenir que {{ limit }} caractères")
      */
     private $email;
 
@@ -44,16 +48,19 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Length(max="255", maxMessage="Ce champs ne peut contenir que {{ limit }} caractères")
      */
     private $pseudo;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Length(max="255", maxMessage="Ce champs ne peut contenir que {{ limit }} caractères")
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Length(max="255", maxMessage="Ce champs ne peut contenir que {{ limit }} caractères")
      */
     private $lastname;
 
@@ -114,16 +121,21 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Length(max="255", maxMessage="Ce champs ne peut contenir que {{ limit }} caractères")
      */
     private $expertise;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Length(max="255", maxMessage="Ce champs ne peut contenir que {{ limit }} caractères")
+     * @Assert\Url(message="{{ value }} n'est pas une Url valide")
      */
     private $facebookUrl;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Length(max="255", maxMessage="Ce champs ne peut contenir que {{ limit }} caractères")
+     * @Assert\Url(message="{{ value }} n'est pas une Url valide")
      */
     private $instagramUrl;
 
