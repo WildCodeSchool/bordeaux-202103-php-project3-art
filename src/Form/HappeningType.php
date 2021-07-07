@@ -25,7 +25,7 @@ class HappeningType extends AbstractType
             ])
             ->add('content', CKEditorType::class, [
                 'config' => [
-                    'uiColor' => '#8c08f5',
+                    'uiColor' => '#c1baba',
                 ],
                 'label' => 'Contenu',
             ])
