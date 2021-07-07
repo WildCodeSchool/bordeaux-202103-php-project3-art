@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <h1>Dashboard</h1>
+    <ul>
+        <li>Utilisat.eurs.rices</li>
+            <ul>
+                <li>Gestion des utilisateurs</li>
+                <li><a href="{{ path('admin_show_announcements') }}">Gestion des annonces</a></li>
+                <li>Mise en avant des artistes</li>
+            </ul>
+        <li>Contenu</li>
+        <ul>
+            <li>Gestion des articles</li>
+            <li>Gestion des événements</li>
+            <li>Mise en avant des articles externes</li>
+        </ul>
+    </ul>
+{% endblock %}

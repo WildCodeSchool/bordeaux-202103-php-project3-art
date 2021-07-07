@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Announcement{% endblock %}
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+
+
+{% block body %}
+    <div class="container">
+
+        <h1>Edit Announcement</h1>
+
+        {{ include('announcement/_form.html.twig', {'button_label': 'Modifier'}) }}
+
+
+    </div>
+{% endblock %}
