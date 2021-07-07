@@ -252,4 +252,13 @@ class Announcement
         $this->createdAt = new \DateTime();
         $this->updatedAt = new \DateTime();
     }
+
+    /**
+     * Gets triggered only on update
+     * @ORM\PreUpdate()
+     */
+    public function onPreUpdate()
+    {
+        $this->updatedAt = new \DateTime();
+    }
 }
