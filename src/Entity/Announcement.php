@@ -75,7 +75,6 @@ class Announcement
     /**
      * @ORM\ManyToOne(targetEntity=Discipline::class, inversedBy="announcements")
      * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
-     * @Assert\Choice(callback="getDiscipline")
      */
     private $discipline;
 
