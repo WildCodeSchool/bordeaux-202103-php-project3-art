@@ -36,13 +36,11 @@ class Announcement
 
     /**
      * @ORM\Column(type="date", nullable=true)
-     * @Assert\Date()
      */
     private $date;
 
     /**
      * @ORM\Column(type="time", nullable=true)
-     * @Assert\Time()
      */
     private $time;
 
