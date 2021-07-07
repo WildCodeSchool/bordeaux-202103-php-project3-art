@@ -16,7 +16,7 @@
             <div class="adjust-navbar d-flex flex-column flex-lg-row justify-content-between">
             <a class="nav-link navbar-white font-bold text-uppercase" href="{{ path('home_page', {'_fragment': 'contact-homepage'}) }}">Contact</a>
             {% if is_granted("ROLE_ADMIN") %}
-                <a class="nav-link navbar-white font-bold text-uppercase" href="{{ path('home_page') }}"> Admin</a>
+                <a class="nav-link navbar-white font-bold text-uppercase" href="{{ path('admin_dashboard') }}"> Admin</a>
             {% else %}
                 <a class="nav-link navbar-white font-bold text-uppercase" href="{{ (app.user) ? path('artist_profil') : path('app_login') }}">
                    {{ (app.user) ? "Profil" : "Connexion" }} </a>
