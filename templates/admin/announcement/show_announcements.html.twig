@@ -6,11 +6,10 @@
 
 {% block body %}
 
-
 <div class="container pt-5 pb-5">
     <h2 class="ml-3 mt-5 card-title title-shadow font-medium text-uppercase">
 			<span class="title-content">
-                {% block head_title %}Gestion des annonces{% endblock %}
+               Gestion des annonces
 			</span>
     </h2>
     <div class="row pt-5 pb-5">
@@ -34,7 +33,7 @@
                     <td class="d-flex flex-column align-items-start">
                         <a href="{{ path('admin_edit_announcement', {id: announcement.id}) }}"
                            class="card-link text-dark"><i class="far fa-edit"></i> Modifier</a>
-                        {{ include('admin/_delete_announcement.html.twig') }}
+                        {{ include('admin/announcement/_delete_announcement.html.twig') }}
                     </td>
                 </tr>
             {% endfor %}

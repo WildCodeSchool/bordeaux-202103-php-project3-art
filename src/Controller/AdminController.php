@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
-use App\Entity\Happening;
+use App\Entity\article;
+use App\Form\ArticleType;
 use App\Form\HappeningType;
+use App\Repository\ArticleRepository;
 use App\Repository\HappeningRepository;
 use App\Entity\Announcement;
 use App\Entity\User;
@@ -38,7 +40,7 @@ class AdminController extends AbstractController
     public function happeningShow(HappeningRepository $happeningRepository): Response
     {
         $happenings = $happeningRepository->findAll();
-        return $this->render('admin/happening/show_happening.html.twig', [
+        return $this->render('admin/happening/show_article.html.twig', [
             'happenings' => $happenings
         ]);
     }
@@ -97,7 +99,7 @@ class AdminController extends AbstractController
     public function showAnnouncements(AnnouncementRepository $announcementRepository): Response
     {
         $announcements =  $announcementRepository->findAll();
-        return $this->render('admin/show_announcements.html.twig', [
+        return $this->render('admin/announcement/show_announcements.html.twig', [
             'announcements' => $announcements,
         ]);
     }
@@ -130,11 +132,12 @@ class AdminController extends AbstractController
 
             return $this->redirectToRoute('admin_show_announcements');
         }
-        return $this->render('admin/edit_announcement.html.twig', [
+        return $this->render('admin/announcement/edit_announcement.html.twig', [
             'announcement' => $announcement,
             'form' => $form->createView(),
         ]);
     }
+
 
     /**
      * @Route("/showArtists", name="show_artists")
@@ -142,7 +145,7 @@ class AdminController extends AbstractController
     public function showUsers(UserRepository $userRepository): Response
     {
         $users =  $userRepository->findByRoleUser($order = 'DESC');
-        return $this->render('admin/show_artists.html.twig', [
+        return $this->render('admin/user/show_artists.html.twig', [
             'users' => $users,
         ]);
     }
@@ -154,7 +157,8 @@ class AdminController extends AbstractController
         Request $request,
         User $user,
         EntityManagerInterface $entityManager
-    ): Response {
+    ): Response
+    {
         if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
             if ($user->isActive()) {
                 $user->setIsActive(false);
@@ -164,5 +168,66 @@ class AdminController extends AbstractController
             $entityManager->flush();
         }
         return $this->redirectToRoute('admin_show_artists');
+    }
+
+    /**
+     * @Route("/article/show", name="article_show")
+     */
+    public function articleShow(ArticleRepository $articleRepository): Response
+    {
+        $articles = $articleRepository->findAll();
+        return $this->render('admin/article/show_article.html.twig', [
+            'articles' => $articles
+        ]);
+    }
+    /**
+     * @Route("/article/new", name="article_new")
+     */
+    public function articleNew(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $article = new article();
+        $form = $this->createForm(ArticleType::class, $article);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $article->setUser($this->getUser());
+            $entityManager->persist($article);
+            $entityManager->flush();
+            return $this->redirectToRoute('admin_article_show');
+        }
+        return $this->render('admin/article/new_article.html.twig', [
+            'form' => $form->createView(),
+
+        ]);
+    }
+
+    /**
+     * @Route("/article/edit/{id}", name="article_edit")
+     */
+    public function articleEdit(Request $request, EntityManagerInterface $entityManager, article $article): Response
+    {
+        $form = $this->createForm(articleType::class, $article);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $article->setUser($this->getUser());
+            $entityManager->flush();
+            return $this->redirectToRoute('admin_article_show');
+        }
+        return $this->render('admin/article/edit_article.html.twig', [
+            'form' => $form->createView(),
+
+        ]);
+    }
+
+    /**
+     * @Route("/article/delete/{id}", name="article_delete", methods={"POST"})
+     */
+    public function articleDelete(article $article, EntityManagerInterface $entityManager, Request $request): Response
+    {
+        if ($this->isCsrfTokenValid('delete' . $article->getId(), $request->request->get('_token'))) {
+            $entityManager->remove($article);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('admin_article_show');
     }
 }
