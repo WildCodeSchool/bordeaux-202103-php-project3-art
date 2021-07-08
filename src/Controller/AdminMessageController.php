@@ -59,11 +59,11 @@ class AdminMessageController extends AbstractController
     ): Response {
         $mail->setIsRead(true);
         $entityManager->flush();
-        return $this->redirectToRoute('admin_message', ["_fragment" => "mailbox"]);
+        return $this->redirectToRoute('admin_message_index');
     }
 
     /**
-     * @Route("/{id}", name="admin_delete", methods={"POST"})
+     * @Route("/{id}", name="delete", methods={"POST"})
      */
     public function delete(Message $message, EntityManagerInterface $entityManager, Request $request): Response
     {
@@ -73,7 +73,7 @@ class AdminMessageController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('admin_message', ["_fragment" => "mailbox"]);
+        return $this->redirectToRoute('admin_message_index');
     }
 
     /**

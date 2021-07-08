@@ -24,7 +24,7 @@
 						<td class="{{ (message.isRead) ? '' : "font-weight-bold" }}">{{ message.object|length > 50 ? message.object|slice(0, 50) ~ ' ... ' : message.object }}</td>
 						<td class="{{ (message.isRead) ? '' : "font-weight-bold" }} mt-2 d-none d-md-block">{{ message.sendAt ? message.sendAt|date('d-M') : '' }}</td>
 						<td>
-							<form method="post" action="{{ path('message_delete', {'id': message.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet élément?');">
+							<form method="post" action="{{ path('admin_message_delete', {'id': message.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet élément?');">
 								<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ message.id) }}">
 								<button class="btn">
 									<i class="far fa-trash-alt"></i>
@@ -48,7 +48,7 @@
 								{{ message.object }}
 							</h5>
 							<p>{{ message.content }}</p>
-							<a class="btn btn-outline-secondary" data-toggle="tooltip" data-placement="top" title="Marquer comme lu" href="{{ path("artist_message_is_read", {id: message.id}) }}">
+							<a class="btn btn-outline-secondary" data-toggle="tooltip" data-placement="top" title="Marquer comme lu" href="{{ path("admin_message_is_read", {id: message.id}) }}">
 								<i class="far fa-envelope-open"></i>
 							</a>
 							<a class="btn btn-outline-secondary text-uppercase " href="mailto:">Répondre</a>
