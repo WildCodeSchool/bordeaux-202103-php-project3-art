@@ -85,6 +85,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
         $avatar = new Avatar();
         $admin->setAvatar($avatar);
         $manager->persist($admin);
+        $this->addReference('admin', $admin);
 
         $manager->flush();
     }

@@ -9,6 +9,8 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=ArticleRepository::class)
+ * @ORM\HasLifecycleCallbacks
+
  */
 class Article
 {
@@ -49,6 +51,11 @@ class Article
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
+
+    /**
+     * @ORM\OneToOne(targetEntity=ImageArticle::class, cascade={"persist", "remove"})
+     */
+    private $imageArticle;
 
     public function __construct()
     {
@@ -145,5 +152,35 @@ class Article
         $this->user = $user;
 
         return $this;
+    }
+
+    public function getImageArticle(): ?ImageArticle
+    {
+        return $this->imageArticle;
+    }
+
+    public function setImageArticle(?ImageArticle $imageArticle): self
+    {
+        $this->imageArticle = $imageArticle;
+
+        return $this;
+    }
+    /**
+     * Gets triggered only on insert
+     * @ORM\PrePersist
+     */
+    public function onPrePersist()
+    {
+        $this->createdAt = new \DateTime();
+        $this->updatedAt = new \DateTime();
+    }
+
+    /**
+     * Gets triggered only on update
+     * @ORM\PreUpdate()
+     */
+    public function onPreUpdate()
+    {
+        $this->updatedAt = new \DateTime();
     }
 }

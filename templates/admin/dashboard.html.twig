@@ -1,18 +1,31 @@
-{% extends 'base.html.twig' %}
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" type="image/png" href="{{ asset('build/favicon.png') }}"/>
+    <title>
+            {% block title %}Arts d'Éko - Admin Dashboard{% endblock %}
+    </title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;700&display=swap" rel="stylesheet">
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
+    {% endblock %}
+    {% block javascripts %}
+        {{ encore_entry_script_tags('app') }}
+    {% endblock %}
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        {% include 'admin/_left_sidebar.html.twig' %}
+        <div class="col-md-10 mt-5">
 {% block body %}
-    <h1>Dashboard</h1>
-    <ul>
-        <li>Utilisat.eurs.rices</li>
-            <ul>
-                <li>Gestion des utilisateurs</li>
-                <li><a href="{{ path('admin_show_announcements') }}">Gestion des annonces</a></li>
-                <li>Mise en avant des artistes</li>
-            </ul>
-        <li>Contenu</li>
-        <ul>
-            <li>Gestion des articles</li>
-            <li>Gestion des événements</li>
-            <li>Mise en avant des articles externes</li>
-        </ul>
-    </ul>
+
 {% endblock %}
+        </div>
+    </div>
+</div>
+</body>
+</html>

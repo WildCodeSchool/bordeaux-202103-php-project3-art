@@ -241,8 +241,6 @@ class Happening
     {
         $this->createdAt = new \DateTime();
         $this->updatedAt = new \DateTime();
-        $this->dateStart = new \DateTime();
-        $this->dateEnd = new \DateTime();
     }
 
     /**
