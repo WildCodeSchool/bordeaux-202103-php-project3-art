@@ -158,8 +158,7 @@ class AdminController extends AbstractController
         Request $request,
         User $user,
         EntityManagerInterface $entityManager
-    ): Response
-    {
+    ): Response {
         if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
             if ($user->isActive()) {
                 $user->setIsActive(false);

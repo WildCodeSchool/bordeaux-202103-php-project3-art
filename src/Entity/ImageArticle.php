@@ -84,7 +84,6 @@ class ImageArticle
     public function setUpdatedAt(?\DateTime $updatedAt): void
     {
         $this->updatedAt = $updatedAt;
-
     }
     public function serialize()
     {

@@ -32,14 +32,14 @@ class HappeningType extends AbstractType
             ->add('dateStart', DateType::class, [
                 'label' => 'Date de commencement de l\'évenement',
             ])
-            ->add('dateEnd', DateType::class,[
+            ->add('dateEnd', DateType::class, [
                 'label' => 'Date de fin de l\'évenement',
 
             ])
-            ->add('timeStart', TimeType::class,[
+            ->add('timeStart', TimeType::class, [
                 'label' => 'Heure de début  de l\'évenement',
             ])
-            ->add('timeEnd', TimeType::class,[
+            ->add('timeEnd', TimeType::class, [
                 'label' => 'Heure de fin  de l\'évenement',
             ])
 

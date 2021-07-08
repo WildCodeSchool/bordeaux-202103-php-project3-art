@@ -55,6 +55,8 @@ class Message
      */
     private $user;
 
+    private $adminMailMessenger = 'admin@gmail.com';
+
     public function getId(): ?int
     {
         return $this->id;
@@ -139,5 +141,17 @@ class Message
     public function onPrePersist()
     {
         $this->sendAt = new \DateTime();
+    }
+
+    public function getAdminMailMessenger()
+    {
+        return $this->adminMailMessenger;
+    }
+
+    public function setAdminMailMessenger($adminMailMessenger)
+    {
+        $this->adminMailMessenger = $adminMailMessenger;
+
+        return $this;
     }
 }
