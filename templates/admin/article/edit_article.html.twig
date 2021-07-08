@@ -1,8 +1,10 @@
+{% extends 'admin/dashboard.html.twig' %}
+
 {% form_theme form 'bootstrap_4_layout.html.twig' %}
 
 {% block title %}
 {% endblock %}
 {% block body %}
-{{  include ('admin/article/_edit_new_article_edit_new_article.html.twig',{'button_label': 'Modifier'} )}}
+{{  include ('admin/article/_edit_new_article.html.twig',{'button_label': 'Modifier'} )}}
 
 {% endblock %}
