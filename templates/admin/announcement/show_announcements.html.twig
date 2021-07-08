@@ -16,21 +16,21 @@
         <table class="container">
             <thead>
             <tr class="border border-dark">
-                <th class="ml-2">Titre</th>
-                <th>Catégorie</th>
-                <th>Posté le</th>
-                <th>Posté par</th>
-                <th>Actions</th>
+                <th class="text-center">Titre</th>
+                <th class="text-center">Catégorie</th>
+                <th class="text-center">Posté le</th>
+                <th class="text-center">Posté par</th>
+                <th class="text-center">Actions</th>
             </tr>
             </thead>
             <tbody>
             {% for announcement in announcements %}
                 <tr class="border border-dark">
-                    <td class="ml-2">{{ announcement.title }}</td>
-                    <td>{{ announcement.discipline.name }}</td>
-                    <td>{{ announcement.date|date('d/m/Y') }}</td>
-                    <td>{{ announcement.user.getFirstname }}</td>
-                    <td class="d-flex flex-column align-items-start">
+                    <td class="text-center">{{ announcement.title }}</td>
+                    <td class="text-center">{{ announcement.discipline.name }}</td>
+                    <td class="text-center">{{ announcement.date|date('d/m/Y') }}</td>
+                    <td class="text-center">{{ announcement.user.getFirstname }}</td>
+                    <td class="text-center">
                         <a href="{{ path('admin_edit_announcement', {id: announcement.id}) }}"
                            class="card-link text-dark"><i class="far fa-edit"></i> Modifier</a>
                         {{ include('admin/announcement/_delete_announcement.html.twig') }}

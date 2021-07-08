@@ -13,25 +13,25 @@
             <table class="container">
                 <thead>
                 <tr class="border border-dark">
-                    <th class="ml-2">Mail</th>
-                    <th>Pseudo</th>
-                    <th>Prénom</th>
-                    <th>Nom</th>
-                    <th>Compte crée le</th>
-                    <th>Statut compte</th>
-                    <th>Actions</th>
+                    <th class="text-center">Mail</th>
+                    <th class="text-center">Pseudo</th>
+                    <th class="text-center">Prénom</th>
+                    <th class="text-center">Nom</th>
+                    <th class="text-center">Compte crée le</th>
+                    <th class="text-center">Statut compte</th>
+                    <th class="text-center">Actions</th>
                 </tr>
                 </thead>
                 <tbody>
                 {% for user in users %}
                     <tr class="border border-dark py-2">
-                        <td class="ml-2">{{ user.email }}</td>
-                        <td>{{ (user.pseudo is not null) ? user.pseudo : 'Non-renseigné' }}</td>
-                        <td>{{ (user.firstname is not null) ? user.firstname : 'Non-renseigné' }}</td>
-                        <td>{{ (user.lastname is not null) ? user.lastname : 'Non-renseigné' }}</td>
-                        <td>{{ user.createdAt|date('d/m/Y') }}</td>
-                        <td>{{ (user.isActive) ? 'Activé' : 'Désactivé'  }}</td>
-                        <td class="d-flex flex-column align-items-start">
+                        <td class="text-center">{{ user.email }}</td>
+                        <td class="text-center">{{ (user.pseudo is not null) ? user.pseudo : 'Non-renseigné' }}</td>
+                        <td class="text-center">{{ (user.firstname is not null) ? user.firstname : 'Non-renseigné' }}</td>
+                        <td class="text-center">{{ (user.lastname is not null) ? user.lastname : 'Non-renseigné' }}</td>
+                        <td class="text-center">{{ user.createdAt|date('d/m/Y') }}</td>
+                        <td class="text-center">{{ (user.isActive) ? 'Activé' : 'Désactivé'  }}</td>
+                        <td class="text-center">
                             {{ include('admin/user/_delete_artist.html.twig') }}
                         </td>
                     </tr>
