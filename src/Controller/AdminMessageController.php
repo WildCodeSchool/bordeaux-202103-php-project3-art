@@ -51,29 +51,6 @@ class AdminMessageController extends AbstractController
     }
 
     /**
-     * @Route("/contact/{user_id}", name="contact")
-     * @ParamConverter("user", class="App\Entity\User", options={"mapping": {"user_id" : "id"}})
-     */
-    public function contactArtist(User $user, Request $request, EntityManagerInterface $entityManager): Response
-    {
-        $message = new Message();
-        $form = $this->createForm(MessageType::class, $message);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $message->setIsRead(false);
-            $message->setUser($user);
-            $entityManager->persist($message);
-            $entityManager->flush();
-            $this->addFlash('success', 'Message envoyé !');
-            return $this->redirectToRoute('home_page');
-        }
-        return $this->render('artist/artist_contact.html.twig', [
-            'form' => $form->createView(),
-            'artist' => $user,
-        ]);
-    }
-
-    /**
      * @Route("/isRead/{id}", name="is_read", methods={"GET", "POST"})
      */
     public function mailIsRead(
