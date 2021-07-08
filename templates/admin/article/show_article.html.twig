@@ -1,21 +1,42 @@
+{% extends 'admin/dashboard.html.twig' %}
+
 {% block title %}
-    Admin évenements
+    Admin aticles
 {% endblock %}
 
 {% block body %}
-    <a href="{{ path('admin_article_new') }}" class="btn btn-outline-secondary card-link font-weight-bold text-dark">Ajouter</a>
-        <table>
-            {% for article in articles %}
-
-             <tr>
-                 <td>{{ article.title }}</td>
-                <td>{{ include('admin/article/_delete_form.html.twig') }}</td>
-                <td><a href="{{ path('admin_article_edit',{id:article.id}) }}" class="btn btn-outline-secondary card-link font-weight-bold text-dark">
-                    <i class="far fa-edit"></i>
-                    Modifier</a>
-                </td>
-              </tr>
-
-            {% endfor %}
-    </table>
+    <div class="container pt-5 pb-5">
+        <h2 class="ml-3 mt-5 card-title title-shadow font-medium text-uppercase">
+			<span class="title-content">
+                {% block head_title %}Gestion des évenements{% endblock %}
+			</span>
+        </h2>
+        <a class=" btn btn-outline-secondary " href="{{ path('admin_article_new') }}">Ajouter un article</a>
+        <div class="row pt-5 pb-5">
+            <table>
+                <thead>
+                <tr>
+                    <th>Titre</th>
+                    <th>Image</th>
+                    <th>Posté le</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for article in articles %}
+                    <tr>
+                        <td>{{ article.title }}</td>
+                        <td>{{ article.imageArticle.image }}</td>
+                        <td>{{ article.createdAt|date('d/m/Y') }}</td>
+                        <td>
+                            <a href="{{ path('admin_article_edit', {id: article.id}) }}"
+                               class="card-link font-weight-bold text-dark"><i class="far fa-envelope"></i>Modifier</a>
+                            {{ include('admin/article/_delete_form.html.twig') }}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 {% endblock %}
