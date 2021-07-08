@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\article;
 use App\Form\ArticleType;
 use App\Form\HappeningType;
+use App\Entity\Happening;
 use App\Repository\ArticleRepository;
 use App\Repository\HappeningRepository;
 use App\Entity\Announcement;
@@ -40,7 +41,7 @@ class AdminController extends AbstractController
     public function happeningShow(HappeningRepository $happeningRepository): Response
     {
         $happenings = $happeningRepository->findAll();
-        return $this->render('admin/happening/show_article.html.twig', [
+        return $this->render('admin/happening/show_happening.html.twig', [
             'happenings' => $happenings
         ]);
     }
