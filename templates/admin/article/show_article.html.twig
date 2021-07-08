@@ -1,36 +1,44 @@
 {% extends 'admin/dashboard.html.twig' %}
 
 {% block title %}
-    Admin aticles
+    Admin articles
 {% endblock %}
 
 {% block body %}
     <div class="container pt-5 pb-5">
-        <h2 class="ml-3 mt-5 card-title title-shadow font-medium text-uppercase">
+        <div class="d-flex justify-content-between">
+        <h2 class="card-title title-shadow font-medium text-uppercase">
 			<span class="title-content">
-                {% block head_title %}Gestion des évenements{% endblock %}
+                {% block head_title %}Gestion des articles{% endblock %}
 			</span>
         </h2>
-        <a class=" btn btn-outline-secondary " href="{{ path('admin_article_new') }}">Ajouter un article</a>
+        <a class=" d-flex align-items-center btn btn-outline-secondary " href="{{ path('admin_article_new') }}">Ajouter un article</a>
+        </div>
         <div class="row pt-5 pb-5">
-            <table>
+            <table class="container">
                 <thead>
-                <tr>
-                    <th>Titre</th>
-                    <th>Image</th>
-                    <th>Posté le</th>
-                    <th>Actions</th>
+                <tr class="border border-dark">
+                    <th class="ml-2 text-center">Titre</th>
+                    <th class="text-center">Image</th>
+                    <th class="text-center">Posté le</th>
+                    <th class="text-center">Actions</th>
                 </tr>
                 </thead>
                 <tbody>
                 {% for article in articles %}
-                    <tr>
-                        <td>{{ article.title }}</td>
-                        <td>{{ article.imageArticle.image }}</td>
-                        <td>{{ article.createdAt|date('d/m/Y') }}</td>
-                        <td>
+                    <tr class=" border border-dark">
+                        <td class="text-center">{{ article.title }}</td>
+                        <td class="text-center">
+                            {% if article.imageArticle.image is not null %}
+                            <img style="width: 120px; height: 80px" src="/uploads/images/users/{{ article.imageArticle.image }}">
+                            {% else %}
+                                Pas d'image
+                            {% endif%}
+                        </td>
+                        <td class="text-center">{{ article.createdAt|date('d/m/Y') }}</td>
+                        <td class="text-center">
                             <a href="{{ path('admin_article_edit', {id: article.id}) }}"
-                               class="card-link font-weight-bold text-dark"><i class="far fa-envelope"></i>Modifier</a>
+                               class="card-link text-dark"><i class="far fa-edit"></i>Modifier</a>
                             {{ include('admin/article/_delete_form.html.twig') }}
                         </td>
                     </tr>

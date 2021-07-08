@@ -1,0 +1,44 @@
+{% extends 'admin/dashboard.html.twig' %}
+
+{% block title %}
+    Gestion des annonces - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+
+<div class="container pt-5 pb-5">
+    <h2 class="ml-3 mt-5 card-title title-shadow font-medium text-uppercase">
+			<span class="title-content">
+               Gestion des annonces
+			</span>
+    </h2>
+    <div class="row pt-5 pb-5">
+        <table class="container">
+            <thead>
+            <tr class="border border-dark">
+                <th class="text-center">Titre</th>
+                <th class="text-center">Catégorie</th>
+                <th class="text-center">Posté le</th>
+                <th class="text-center">Posté par</th>
+                <th class="text-center">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for announcement in announcements %}
+                <tr class="border border-dark">
+                    <td class="text-center">{{ announcement.title }}</td>
+                    <td class="text-center">{{ announcement.discipline.name }}</td>
+                    <td class="text-center">{{ announcement.date|date('d/m/Y') }}</td>
+                    <td class="text-center">{{ announcement.user.getFirstname }}</td>
+                    <td class="text-center">
+                        <a href="{{ path('admin_edit_announcement', {id: announcement.id}) }}"
+                           class="card-link text-dark"><i class="far fa-edit"></i> Modifier</a>
+                        {{ include('admin/announcement/_delete_announcement.html.twig') }}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

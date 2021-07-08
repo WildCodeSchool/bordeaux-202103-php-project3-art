@@ -9,8 +9,10 @@ use App\Entity\Happening;
 use App\Repository\ArticleRepository;
 use App\Repository\HappeningRepository;
 use App\Entity\Announcement;
+use App\Entity\User;
 use App\Form\AnnouncementType;
 use App\Repository\AnnouncementRepository;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -98,13 +100,13 @@ class AdminController extends AbstractController
     public function showAnnouncements(AnnouncementRepository $announcementRepository): Response
     {
         $announcements =  $announcementRepository->findAll();
-        return $this->render('admin/show_announcements.html.twig', [
+        return $this->render('admin/announcement/show_announcements.html.twig', [
             'announcements' => $announcements,
         ]);
     }
 
     /**
-     * @Route("/announcement/{id}", name="delete_announcement", methods={"GET","POST"})
+     * @Route("/announcement/delete/{id}", name="delete_announcement", methods={"GET","POST"})
      */
     public function deleteAnnouncement(
         Request $request,
@@ -121,7 +123,7 @@ class AdminController extends AbstractController
     /**
      * @Route("/announcement/edit/{id}", name="edit_announcement", methods={"GET","POST"})
      */
-    public function edit(Request $request, Announcement $announcement): Response
+    public function editAnnouncement(Request $request, Announcement $announcement): Response
     {
         $form = $this->createForm(AnnouncementType::class, $announcement);
         $form->handleRequest($request);
@@ -131,11 +133,44 @@ class AdminController extends AbstractController
 
             return $this->redirectToRoute('admin_show_announcements');
         }
-        return $this->render('admin/edit_announcement.html.twig', [
+        return $this->render('admin/announcement/edit_announcement.html.twig', [
             'announcement' => $announcement,
             'form' => $form->createView(),
         ]);
     }
+
+
+    /**
+     * @Route("/showArtists", name="show_artists")
+     */
+    public function showUsers(UserRepository $userRepository): Response
+    {
+        $users =  $userRepository->findByRoleUser($order = 'DESC');
+        return $this->render('admin/user/show_artists.html.twig', [
+            'users' => $users,
+        ]);
+    }
+
+    /**
+     * @Route("user/delete/{id}", name="delete_user",  methods={"GET","POST"})
+     */
+    public function changeIsActiveArtist(
+        Request $request,
+        User $user,
+        EntityManagerInterface $entityManager
+    ): Response
+    {
+        if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
+            if ($user->isActive()) {
+                $user->setIsActive(false);
+            } else {
+                $user->setIsActive(true);
+            }
+            $entityManager->flush();
+        }
+        return $this->redirectToRoute('admin_show_artists');
+    }
+
     /**
      * @Route("/article/show", name="article_show")
      */
@@ -165,6 +200,7 @@ class AdminController extends AbstractController
 
         ]);
     }
+
     /**
      * @Route("/article/edit/{id}", name="article_edit")
      */
@@ -182,6 +218,7 @@ class AdminController extends AbstractController
 
         ]);
     }
+
     /**
      * @Route("/article/delete/{id}", name="article_delete", methods={"POST"})
      */

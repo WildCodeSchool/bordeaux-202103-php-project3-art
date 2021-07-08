@@ -6,30 +6,34 @@
 
 {% block body %}
     <div class="container pt-5 pb-5">
-        <h2 class="ml-3 mt-5 card-title title-shadow font-medium text-uppercase">
+        <div class="d-flex justify-content-between">
+        <h2 class="card-title title-shadow font-medium text-uppercase">
 			<span class="title-content">
                 {% block head_title %}Gestion des évenements{% endblock %}
 			</span>
         </h2>
+        <a class=" d-flex align-items-center btn btn-outline-secondary " href="{{ path('admin_happening_new') }}">Ajouter un article</a>
+        </div>
         <div class="row pt-5 pb-5">
-            <table>
+            <table class="container">
                 <thead>
-                <tr>
-                    <th>Titre</th>
-                    <th>Image</th>
-                    <th>Posté le</th>
-                    <th>Actions</th>
+                <tr class="border border-dark">
+                    <th class="text-center">Titre</th>
+                    <th class="text-center">Image</th>
+                    <th class="text-center">Posté le</th>
+                    <th class="text-center">Actions</th>
                 </tr>
                 </thead>
                 <tbody>
                 {% for happening in happenings %}
-                    <tr>
-                        <td>{{ happening.title }}</td>
-                        <td>{{ happening.media }}</td>
-                        <td>{{ happening.createdAt|date('d/m/Y') }}</td>
-                        <td>
+                    <tr class="border border-dark">
+                        <td class="text-center">{{ happening.title }}</td>
+                        <td class="text-center"><img style="width: 120px; height: 100px" src="{{ happening.media }}"></td>
+
+                        <td class="text-center">{{ happening.createdAt|date('d/m/Y') }}</td>
+                        <td class="text-center">
                             <a href="{{ path('admin_happening_edit', {id: happening.id}) }}"
-                               class="card-link font-weight-bold text-dark"><i class="far fa-envelope"></i>Modifier</a>
+                               class="card-link text-dark"><i class="far fa-edit"></i>Modifier</a>
                             {{ include('admin/happening/_delete_form.html.twig') }}
                         </td>
                     </tr>

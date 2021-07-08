@@ -8,16 +8,16 @@
                     <li class="nav-item">
                         <a class="nav-link font-bold text-uppercase" href="#"><i class="fas fa-paint-brush"></i> Artistes</a>
                         <ul>
-                            <li><i class="fas fa-angle-right"></i> Gestion des utilisateurs</li>
-                            <li><i class="fas fa-angle-right"></i> Gestion des annonces</li>
+                            <li><a href="{{ path('admin_show_artists') }}"><i class="fas fa-angle-right"></i> Gestion des utilisateurs</a></li>
+                            <li><a href="{{ path('admin_show_announcements') }}"><i class="fas fa-angle-right"></i> Gestion des annonces</a></li>
                             <li><i class="fas fa-angle-right"></i> Mise en avant des artistes</li>
                         </ul>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link font-bold text-uppercase" href="#"><i class="fas fa-edit"></i> Contenu</a>
                         <ul>
-                            <li><i class="fas fa-angle-right"></i> Gestion des articles</li>
-                            <li><i class="fas fa-angle-right"></i> Gestion des évènements</li>
+                            <li><a href="{{ path('admin_article_show') }}"><i class="fas fa-angle-right"></i> Gestion des articles</a></li>
+                            <li><a href="{{ path('admin_happening_show') }}"><i class="fas fa-angle-right"></i></i> Gestion des évènements</a></li>
                             <li><i class="fas fa-angle-right"></i> Mise en avant des articles externes</li>
                         </ul>
                     </li>
