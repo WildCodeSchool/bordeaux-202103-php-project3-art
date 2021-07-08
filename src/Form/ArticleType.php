@@ -14,14 +14,14 @@ class ArticleType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title',TextType::class,[
-                'label'=>'Titre de l\'article'
+            ->add('title', TextType::class, [
+                'label' => 'Titre de l\'article'
             ])
-            ->add('content', CKEditorType::class,[
-                'label'=>'Contenu'
+            ->add('content', CKEditorType::class, [
+                'label' => 'Contenu'
             ])
-            ->add('imageArticle', ImageArticleType::class,[
-                'label'=>false,
+            ->add('imageArticle', ImageArticleType::class, [
+                'label' => false,
             ])
         ;
     }

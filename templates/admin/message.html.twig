@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+{% block javascripts %}
+{{ parent() }};
+	{{ encore_entry_script_tags('openMessaging') }}
+{% endblock %}
+
+{% block title %}Messaging
+{% endblock %}
+
+{% block body %}
+	<div class="container mt-5">
+		<h2 class="mb-5 card-title title-shadow font-medium text-uppercase">
+			<span class="title-content font-medium">
+				Messages
+			</span>
+		</h2>
+		<div class="block-mail card mt-5 mb-5">
+			<table class="table-light table-hover">
+				{% for message in messages %}
+					<tr class="cursor-pointer title-message border-top border-bottom">
+						<td align="center" class="text-uppercase {{ (message.isRead) ? '' : " font-weight-bold" }}">
+							<h2 class="rounded-circle letter-circle text-light mt-1 bg-secondary">{{ message.mail|length > 0 ? message.mail|slice(-0, 1) : message.mail }}</h2>
+						</td>
+						<td class="{{ (message.isRead) ? '' : "font-weight-bold" }}">{{ message.object|length > 50 ? message.object|slice(0, 50) ~ ' ... ' : message.object }}</td>
+						<td class="{{ (message.isRead) ? '' : "font-weight-bold" }} mt-2 d-none d-md-block">{{ message.sendAt ? message.sendAt|date('d-M') : '' }}</td>
+						<td>
+							<form method="post" action="{{ path('admin_message_delete', {'id': message.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet élément?');">
+								<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ message.id) }}">
+								<button class="btn">
+									<i class="far fa-trash-alt"></i>
+								</button>
+							</form>
+						</td>
+					</tr>
+					<tr>
+						<td class="content d-none p-4" colspan="4">
+							<div class="d-flex justify-content-between inline-block ml-1">
+								<div class="d-flex inline-block ml-1">
+									<i class="mr-3 mt-1 far fa-user"></i>
+									<p class="mr-5">{{ message.mail }}</p>
+								</div>
+								<div class="d-flex inline-block ml-1">
+									<p class="d-block d-md-none">{{ message.sendAt ? message.sendAt|date('d M') : '' }}</p>
+									<p class="row ml-1">{{ message.sendAt ? message.sendAt|date('H:i') : '' }}</p>
+								</div>
+							</div>
+							<h5 class="my-2">
+								{{ message.object }}
+							</h5>
+							<p>{{ message.content }}</p>
+							<a class="btn btn-outline-secondary" data-toggle="tooltip" data-placement="top" title="Marquer comme lu" href="{{ path("admin_message_is_read", {id: message.id}) }}">
+								<i class="far fa-envelope-open"></i>
+							</a>
+							<a class="btn btn-outline-secondary text-uppercase " href="mailto:">Répondre</a>
+						</td>
+					</tr>
+				</tbody>
+			{% else %}
+				<tr>
+					<td colspan="7">Aucun message</td>
+				</tr>
+			{% endfor %}
+		</table>
+	</div>
+</div>{% endblock %}

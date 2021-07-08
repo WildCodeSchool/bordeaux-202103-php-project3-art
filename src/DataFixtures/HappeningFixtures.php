@@ -8,9 +8,9 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
 class HappeningFixtures extends Fixture implements DependentFixtureInterface
-
 {
-    public function load(ObjectManager $manager) {
+    public function load(ObjectManager $manager)
+    {
 
         $happening1 = new Happening();
         $happening1->setTitle('Pool Party');

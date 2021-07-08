@@ -154,6 +154,16 @@ class User implements UserInterface
      */
     private $responses;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isActive = true;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $podium = null;
+
     public function __construct()
     {
         $this->disciplines = new ArrayCollection();
@@ -662,5 +672,23 @@ class User implements UserInterface
         return $this;
     }
 
+    public function isActive(): bool
+    {
+        return $this->isActive;
+    }
 
+    public function setIsActive(bool $isActive): void
+    {
+        $this->isActive = $isActive;
+    }
+
+    public function getPodium()
+    {
+        return $this->podium;
+    }
+
+    public function setPodium($podium): void
+    {
+        $this->podium = $podium;
+    }
 }

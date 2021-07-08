@@ -42,7 +42,7 @@ class HomeController extends AbstractController
         $form = $this->createForm(MessageType::class, $message);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $adminContact = $userRepository->findOneBy(['email' => 'admin@gmail.com']);
+            $adminContact = $userRepository->findOneBy(['email' => $message->getAdminMailMessenger()]);
             $message->setUser($adminContact);
             $message->onPrePersist();
             $message->setIsRead(false);
