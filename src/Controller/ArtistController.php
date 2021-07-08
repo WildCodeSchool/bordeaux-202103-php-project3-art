@@ -29,6 +29,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Knp\Component\Pager\PaginatorInterface;
 
 /**
  * @Route ("/artist", name="artist_")
@@ -97,7 +98,8 @@ class ArtistController extends AbstractController
         MessageRepository $messageRepository,
         Request $request,
         EntityManagerInterface $entityManager,
-        SessionInterface $session
+        SessionInterface $session,
+        PaginatorInterface $paginator
     ): Response {
         $user = $this->getUser();
         $announcement = new Announcement();
@@ -112,8 +114,17 @@ class ArtistController extends AbstractController
             ]);
         }
         $totalUnreadMessage = $messageRepository->countUnreadMessage($user);
+        $messagesData = $messageRepository->findBy(
+            [],
+            ['sendAt' => 'desc']
+        );
+        $messages = $paginator->paginate(
+            $messagesData,
+            $request->query->getInt('page', 1),
+            5
+        );
         return $this->render('artist/profil.html.twig', [
-            'messages' => $messageRepository->findBy(["user" => $user]),
+            'messages' => $messages,
             'totalUnreadMessage' => $totalUnreadMessage,
             'announcementForm' => $newForm->createView(),
         ]);
