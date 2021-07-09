@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Happening;
+use App\Repository\ArticleRepository;
 use App\Repository\HappeningRepository;
+use App\Service\Fusion;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,15 +20,21 @@ class BlogController extends AbstractController
     /**
      * @Route("/", name="index")
      */
-    public function index(HappeningRepository $happeningRepository, Request $request, PaginatorInterface $paginator): Response
+    public function index(HappeningRepository $happeningRepository,ArticleRepository $articleRepository, Request $request, PaginatorInterface $paginator, Fusion $fusion): Response
     {
         $happeningsData = $happeningRepository->findBy(
             [],
             ['createdAt' => 'desc']
         );
+        $articleData =$articleRepository->findBY(
+            [],
+            ['createdAt' => 'desc']
+        );
+        $orderedMixedTable = $fusion->goTenks($happeningsData, $articleData);
+
 
         $happenings = $paginator->paginate(
-            $happeningsData,
+            $orderedMixedTable,
             $request->query->getInt('page', 1),
             2
         );
