@@ -114,10 +114,7 @@ class ArtistController extends AbstractController
             ]);
         }
         $totalUnreadMessage = $messageRepository->countUnreadMessage($user);
-        $messagesData = $messageRepository->findBy(
-            [],
-            ['sendAt' => 'desc']
-        );
+        $messagesData = $messageRepository->findBy(['user' => $user]);
         $messages = $paginator->paginate(
             $messagesData,
             $request->query->getInt('page', 1),
