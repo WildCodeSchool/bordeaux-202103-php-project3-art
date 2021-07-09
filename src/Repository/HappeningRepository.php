@@ -31,22 +31,10 @@ class HappeningRepository extends ServiceEntityRepository
             ->orderBy('h.dateStart', 'ASC');
         return $qb->getQuery()->getResult();
     }
-    // /**
-    //  * @return Happening[] Returns an array of Happening objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('h')
-            ->andWhere('h.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('h.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+     /**
+      * @return Happening[] Returns an array of Happening objects
+      */
+
 
     /*
     public function findOneBySomeField($value): ?Happening

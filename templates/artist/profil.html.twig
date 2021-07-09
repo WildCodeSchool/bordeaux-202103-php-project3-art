@@ -40,28 +40,21 @@
 {% endblock %}
 
 {% block message %}
-	<div id="block-message" class="{{ app.session.get('isMailBoxOpen')?"":"d-none"}} container mt-5">
-		<h2 class="mb-5 card-title title-shadow font-weight-bold text-uppercase">
+	<div id="block-message" class="{{ app.session.get('isMailBoxOpen') ? "" : "d-none" }} container mt-5">
+		<h2 class="mb-5 card-title title-shadow font-medium text-uppercase">
 			<span class="title-content font-medium">
 				Messages
 			</span>
 		</h2>
 		<div class="block-mail card mt-5 mb-5">
-			<table class="table">
-				<thead>
-					<tr class="font-weight-bold text-uppercase">
-						<td></td>
-						<td>Mail</td>
-						<td>Message</td>
-						<td class="d-none d-md-block"></td>
-						<td></td>
-					</tr>
-				</thead>
+			<table class="table-light table-hover">
 				{% for message in messages %}
-					<tr class="cursor-pointer title-message">
-						<td class="{{ (message.isRead) ? '' : "font-weight-bold" }}">{{ message.mail }}</td>
-						<td class="{{ (message.isRead) ? '' : "font-weight-bold" }}">{{ message.content|length > 50 ? message.content|slice(0, 50) ~ ' ... ' : message.content }}</td>
-						<td class="{{ (message.isRead) ? '' : "font-weight-bold" }} d-none d-md-block">{{ message.sendAt ? message.sendAt|date('d-M') : '' }}</td>
+					<tr class="cursor-pointer title-message border-top border-bottom">
+						<td align="center" class="text-uppercase {{ (message.isRead) ? '' : " font-weight-bold" }}">
+							<h2 class="rounded-circle letter-circle text-light mt-1 bg-secondary">{{ message.mail|length > 0 ? message.mail|slice(-0, 1) : message.mail }}</h2>
+						</td>
+						<td class="{{ (message.isRead) ? '' : "font-weight-bold" }}">{{ message.object|length > 50 ? message.object|slice(0, 50) ~ ' ... ' : message.object }}</td>
+						<td class="{{ (message.isRead) ? '' : "font-weight-bold" }} mt-2 d-none d-md-block">{{ message.sendAt ? message.sendAt|date('d-M') : '' }}</td>
 						<td>
 							<form method="post" action="{{ path('message_delete', {'id': message.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet élément?');">
 								<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ message.id) }}">
@@ -72,110 +65,194 @@
 						</td>
 					</tr>
 					<tr>
-						<td class="content d-none" colspan="4">
-							<h5>
+						<td class="content d-none p-4" colspan="4">
+							<div class="d-flex justify-content-between inline-block ml-1">
+								<div class="d-flex inline-block ml-1">
+									<i class="mr-3 mt-1 far fa-user"></i>
+									<p class="mr-5">{{ message.mail }}</p>
+								</div>
+								<div class="d-flex inline-block ml-1">
+									<p class="d-block d-md-none">{{ message.sendAt ? message.sendAt|date('d M') : '' }}</p>
+									<p class="row ml-1">{{ message.sendAt ? message.sendAt|date('H:i') : '' }}</p>
+								</div>
+							</div>
+							<h5 class="my-2">
 								{{ message.object }}
 							</h5>
 							<p>{{ message.content }}</p>
-							<a class="btn btn-outline-secondary text-uppercase" href="{{ path("artist_message_is_read", {id: message.id}) }}">marqué comme lu</a>
-							<a class="btn btn-outline-secondary text-uppercase" href="mailto:">Répondre</a>
+							<a class="btn btn-outline-secondary" data-toggle="tooltip" data-placement="top" title="Marquer comme lu" href="{{ path("artist_message_is_read", {id: message.id}) }}">
+								<i class="far fa-envelope-open"></i>
+							</a>
+							<a class="btn btn-outline-secondary text-uppercase " href="mailto:">Répondre</a>
 						</td>
-					</tr>
-					<tr>
-						<td class="d-block d-md-none">{{ message.sendAt ? message.sendAt|date('Y-m-d H:i') : '' }}</td>
 					</tr>
 				</tbody>
 			{% else %}
 				<tr>
-					<td colspan="7">no records found</td>
+					<td colspan="7">Aucun message</td>
 				</tr>
 			{% endfor %}
 		</table>
 	</div>
-</div>{% endblock %}
-{% block announcements %}
-	<div class="container">
-		<div class="row col-12 mt-5">
-			<h2 class="ml-3 mb-5 card-title title-shadow text-uppercase">
-				<span class="title-content font-medium">Ma sélection d' annonces</span>
-			</h2>
-		</div>
-			<div class="row pt-5 pb-5">
-				{% for response in app.user.responses %}
-					<div class="col-sm-4 d-flex justify-content-center">
-						<div class="card card-announcement card-{{ response.announcement.discipline.color }} bg-light mb-5" style="width: 18rem;">
-							<div class="card-body">
-								<h5 class="card-title text-uppercase font-weight-bold">{{ response.announcement.title }}</h5>
-								<h6 class="card-subtitle mb-2 text-muted">Catégorie : {{ response.announcement.discipline.name }}</h6>
-								{% if response.announcement.date is not null %}
-									<h6 class="card-subtitle mb-2 text-muted">{{ response.announcement.date|date('d/m/Y') }}</h6>
-								{% endif %}
-								<p class="card-text text-justify">{{ response.announcement.content }}</p>
-								<p class="text-uppercase text-right "><a class="text-dark font-weight-bold " href="{{ path('artist_contact', {user_id: response.announcement.user.id}) }}" class="card-link"><i class="far fa-envelope"></i> Contacter</p></a>
-							</div>
-						</div>
-					</div>
-					{% else %}
-					Pas d'annonce sélectionnée pour le moment
-				{% endfor %}
-			</div>
-		<div id="myAnnouncements" class="row col-12 mt-5">
-			<h2 class="ml-3 mb-5 card-title title-shadow text-uppercase">
-				<span class="title-content font-medium">Mes annonces</span>
-			</h2>
-		</div>
-		<div class="row pt-5 pb-5">
-			{% for announcement in app.user.announcements %}
-				<div class="col-sm-4 d-flex justify-content-center">
-					<div class="card card-announcement card-{{ announcement.discipline.color }} bg-light mb-5" style="width: 18rem;">
+	{{ knp_pagination_render(messages) }}
+</div>{% endblock %}{% block artworks %}
+<div class="container">
+	<div class="row col-12 card-group mb-5">
+		{% for artwork in artist.artworks %}
+			{% if artwork.media.support == "photo" %}
+				<div class="col-12 col-md-6">
+					<div class="card bg-transparent border-light mt-3">
 						<div class="card-body">
-							<h5 class="card-title text-uppercase font-weight-bold">{{ announcement.title }}</h5>
-							<h6 class="card-subtitle mb-2 text-muted">Catégorie : {{ announcement.discipline.name }}</h6>
-							{% if announcement.date is not null %}
-								<h6 class="card-subtitle mb-2 text-muted">{{ announcement.date|date('d/m/Y') }}</h6>
-							{% endif %}
-							<p class="card-text text-justify">{{ announcement.content }}</p>
-							<p class="text-uppercase text-right ">
-							<form method="post" action="{{ path('announcement_delete', {'id': announcement.id}) }}" onsubmit="return confirm('Etes vous sûr.e de vouloir supprimer cette annonce?');">
-								<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ announcement.id) }}">
-								<button class="btn btn-outline-secondary card-link font-weight-bold text-dark"><i class="far fa-trash-alt"></i> Supprimer</button>
-							</form>
-								<a href="{{ path('announcement_edit', {'id': announcement.id}) }}" class="btn btn-outline-secondary card-link font-weight-bold text-dark" ><i class="far fa-edit"></i> Modifier</a>
-							</p>
-						</div>
-					</div>
-				</div>
-			{% endfor %}
-			<div class="col-sm-4 d-flex justify-content-center">
-				<div class="card card-announcement card-move bg-light mb-5 "  style="width: 18rem;">
-					<div class="card-body d-flex flex-column justify-content-center newModal-trigger" data-toggle="modal" data-target="#newModal">
-						<p class="card-text  text-uppercase font-weight-bold h1 text-center ">Déposer une annonce</p>
-					</div>
-					<!-- ModalNew -->
-					<div class="modal fade" id="newModal" tabindex="-1" aria-labelledby="newModalLabel" aria-hidden="true">
-						<div class="modal-dialog">
-							<div class="modal-content">
-								<div class="modal-header">
-									<h5 class="modal-title" id="newModalLabel">Nouvelle annonce</h5>
-									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-										<span aria-hidden="true">&times;</span>
+							<h4 class="ml-3 title-shadow-grey font-regular text-uppercase color-{{ artist.disciplines[0].color }}">
+								<span class="title-content">{{ artwork.name }}</span>
+							</h4>
+							<img class="mt-3 card-img-top media" width="400" src="{{ artwork.media.url }}" alt="{{ artwork.name }}">
+							<div class="row card-text ml-2 mt-3">
+								<form method="post" action="{{ path('artwork_delete', {'id': artwork.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+									<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ artwork.id) }}">
+									<button class="btn btn-outline-secondary text-uppercase">
+										<i class="far fa-trash-alt"></i>
 									</button>
-								</div>
-								<div class="modal-body">
-									{{ form_start(announcementForm) }}
-									{{ form_widget(announcementForm) }}
-								</div>
-								<div class="modal-footer">
-									<button type="button" class="btn btn-secondary text-uppercase" data-dismiss="modal">Fermer</button>
-									<button type="submit" class="btn btn-outline-secondary text-uppercase">Créer</button>
-									{{ form_end(announcementForm) }}
-								</div>
+								</form>
+								<p class="text-uppercase text-right ">
+									<a href="{{ path('artwork_edit', {'id': artwork.id}) }}" class="btn btn-outline-secondary">
+										<i class="far fa-edit"></i>
+										Modifier</a>
+								</p>
 							</div>
 						</div>
 					</div>
 				</div>
+			{% elseif artwork.media.support == "video" %}
+				<div class="col-12 col-md-6">
+					<div class="card mt-3 bg-transparent border-light">
+						<div class="card-body">
+							<h4 class="ml-3 title-shadow-grey font-regular text-uppercase color-{{ artist.disciplines[0].color }}">
+								<span class="title-content">{{ artwork.name }}</span>
+							</h4>
+							<iframe class="mt-3 card-img-top media-video " src="{{ artwork.media.url }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" alt="Card image cap" width="400" height="300"></iframe>
+							<div class="row card-text ml-2 mt-2">
+								<form method="post" action="{{ path('artwork_delete', {'id': artwork.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+									<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ artwork.id) }}">
+									<button class="btn btn-outline-secondary text-uppercase">
+										<i class="far fa-trash-alt"></i>
+									</button>
+								</form>
+								<p class="text-uppercase text-right ">
+									<a href="{{ path('artwork_edit', {'id': artwork.id}) }}" class="btn btn-outline-secondary">
+										<i class="far fa-edit"></i>
+										Modifier</a>
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			{% endif %}
+		{% else %}
+			<p class="font-regular">Pas de contenu pour l'instant
+			</p>
+		{% endfor %}
+		<div class="col-12 col-md-6 align-self-center">
+			<div class="card mt-3 bg-transparent border-light">
+				<div class="card-body mx-auto d-flex align-self-center">
+					<a class="btn btn-outline-secondary font-regular text-uppercase" href="{{ path('artwork_new') }}">
+						Ajouter une oeuvre:
+						<i class="my-5 ml-3 fas fa-plus"></i>
+					</a>
+				</div>
 			</div>
-			<!-- ModalUpdate -->
+		</div>
+		{% if not app.user is same as(artist) %}
+			<div class="mt-3">
+				<a href="{{ path('artist_contact', {user_id: artist.id}) }}" class="link-{{ (artist.disciplines is empty) ? 'move' : artist.disciplines[0].color }} font-light profil-link mt-1 profil-link-border-{{ (artist.disciplines is empty) ? 'move' : artist.disciplines[0].color }}">
+					Contacter l'artiste</a>
+			</div>
+		{% endif %}
+	</div>
+</div></div>{% endblock %}{% block announcements %}<div class="container">
+<div class="row col-12 mt-5">
+	<h2 class="ml-3 mb-5 card-title title-shadow font-medium text-uppercase">
+		<span class="title-content font-medium">Ma sélection</span>
+	</h2>
+</div>
+<div class="row pt-5 pb-5">
+	{% for response in app.user.responses %}
+		<div class="col-sm-4 d-flex justify-content-center">
+			<div class="card card-announcement card-{{ response.announcement.discipline.color }} bg-light mb-5" style="width: 18rem;">
+				<div class="card-body">
+					<h5 class="card-title text-uppercase font-weight-bold">{{ response.announcement.title }}</h5>
+					<h6 class="card-subtitle mb-2 text-muted">Catégorie :
+						{{ response.announcement.discipline.name }}</h6>
+					{% if response.announcement.date is not null %}
+						<h6 class="card-subtitle mb-2 text-muted">{{ response.announcement.date|date('d/m/Y') }}</h6>
+					{% endif %}
+					<p class="card-text text-justify">{{ response.announcement.content }}</p>
+					<p class="text-uppercase text-right ">
+						<a class="text-dark font-weight-bold " href="{{ path('artist_contact', {user_id: response.announcement.user.id}) }}" class="card-link">
+							<i class="far fa-envelope"></i>
+							Contacter</p>
+					</p>
+				</a>
+			</div>
 		</div>
 	</div>
-{% endblock %}
+{% else %}
+	Pas d'annonce sélectionnée pour le moment
+{% endfor %}</div><div id="myAnnouncements" class="row col-12 mt-5">
+<h2 class="ml-3 mb-5 card-title title-shadow font-medium text-uppercase">
+	<span class="title-content font-medium">Mes annonces</span>
+</h2></div><div class="row pt-5 pb-5">
+{% for announcement in app.user.announcements %}
+	<div class="col-sm-4 d-flex justify-content-center">
+		<div class="card card-announcement card-{{ announcement.discipline.color }} bg-light mb-5" style="width: 18rem;">
+			<div class="card-body">
+				<h5 class="card-title text-uppercase font-weight-bold">{{ announcement.title }}</h5>
+				<h6 class="card-subtitle mb-2 text-muted">Catégorie :
+					{{ announcement.discipline.name }}</h6>
+				{% if announcement.date is not null %}
+					<h6 class="card-subtitle mb-2 text-muted">{{ announcement.date|date('d/m/Y') }}</h6>
+				{% endif %}
+				<p class="card-text text-justify">{{ announcement.content }}</p>
+				<p class="text-uppercase text-right ">
+					<form method="post" action="{{ path('announcement_delete', {'id': announcement.id}) }}" onsubmit="return confirm('Etes vous sûr.e de vouloir supprimer cette annonce?');">
+						<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ announcement.id) }}">
+						<button class="btn btn-outline-secondary card-link font-weight-bold text-dark">
+							<i class="far fa-trash-alt"></i>
+							Supprimer</button>
+					</form>
+					<a href="{{ path('announcement_edit', {'id': announcement.id}) }}" class="btn btn-outline-secondary card-link font-weight-bold text-dark">
+						<i class="far fa-edit"></i>
+						Modifier</a>
+				</p>
+			</div>
+		</div>
+	</div>
+{% endfor %}
+<div class="col-sm-4 d-flex justify-content-center">
+	<div class="card card-announcement card-move bg-light mb-5 " style="width: 18rem;">
+		<div class="card-body d-flex flex-column justify-content-center newModal-trigger" data-toggle="modal" data-target="#newModal">
+			<p class="card-text  text-uppercase font-weight-bold h1 text-center ">Déposer une annonce</p>
+		</div>
+		<div class="modal fade" id="newModal" tabindex="-1" aria-labelledby="newModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="newModalLabel">Nouvelle annonce</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						{{ form_start(announcementForm) }}
+						{{ form_widget(announcementForm) }}
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary text-uppercase" data-dismiss="modal">Fermer</button>
+						<button type="submit" class="btn btn-outline-secondary text-uppercase">Créer</button>
+						{{ form_end(announcementForm) }}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div></div></div>{% endblock %}

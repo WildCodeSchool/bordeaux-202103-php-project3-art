@@ -14,6 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
  * @Route("/announcement", name="announcement_")
@@ -79,6 +80,7 @@ class AnnouncementController extends AbstractController
 
     /**
      * @Route("/response/{id}", name="response")
+     * @IsGranted("ROLE_USER")
      */
     public function response(
         Request $request,
@@ -86,17 +88,15 @@ class AnnouncementController extends AbstractController
         Announcement $announcement
     ): Response {
         $message = new Message();
-        $poster = $announcement->getUser();
-        $respondant = $this->getUser();
         $form = $this->createForm(MessageType::class, $message);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            if ($respondant) {
-                $response = new EntityResponse();
-                $response->setRespondant($respondant);
-                $response->setAnnouncement($announcement);
-                $entityManager->persist($response);
-            }
+            $poster = $announcement->getUser();
+            $respondant = $this->getUser();
+            $response = new EntityResponse();
+            $response->setRespondant($respondant);
+            $response->setAnnouncement($announcement);
+            $entityManager->persist($response);
             $message->setIsRead(false);
             $message->setUser($poster);
             $entityManager->persist($message);

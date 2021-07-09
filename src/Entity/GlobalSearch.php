@@ -2,9 +2,17 @@
 
 namespace App\Entity;
 
+use Symfony\Component\Validator\Constraints as Assert;
+
 class GlobalSearch
 {
+    public const TYPES = ['category', 'artist', 'event', 'location', 'announcement'];
+
     private ?string $textTyped;
+
+    /**
+     * @Assert\Choice(choices=GlobalSearch::TYPES, message="Choisissez un filtre valide.")
+     */
     private string $type = 'artist';
     private array $keywords;
     private array $results;
@@ -46,7 +54,7 @@ class GlobalSearch
      */
     public function getKeywords(): array
     {
-        if(!empty($this->textTyped)){
+        if (!empty($this->textTyped)) {
             $words = trim($this->textTyped);
             $keywords = explode(' ', $words);
         } else {

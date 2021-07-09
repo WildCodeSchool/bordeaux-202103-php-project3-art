@@ -10,11 +10,11 @@
                 <div class="main-box mt-5 mb-5">
                     <div class="row">
                         <div class="col-sm-6 text-justify">
-                      {{ happening.content }}
+                      {{ happening.content | raw }}
                             <a href="#" class="text-right">Lien vers l'évènement</a>
                         </div>
                             <div class="col-sm-6 text-center">
-                    <img src="{{ happening.media }}" alt="{{ happening.title }}" class="card-img" style="width: 300px">
+                    <img src="{{ happening.media is defined ? happening.media : happening.imageArticle.image }}" alt="{{ happening.title }}" class="card-img" style="width: 300px">
                     </div>
                     </div>
     </div>
@@ -24,15 +24,18 @@
         <div class="main-box mt-5 mb-5">
             <div class="row">
                 <div class="col-sm-6 text-center">
-                    <img src="{{ happening.media }}" alt="{{ happening.title }}" class="card-img" style="width: 300px">
+                    <img src="{{ happening.media is defined ? happening.media : "/uploads/images/users/" ~ happening.imageArticle.image }}" alt="{{ happening.title }}" class="card-img" style="width: 300px">
                 </div>
                 <div class="col-sm-6 text-justify">
-                    {{ happening.content }}
+                    {{ happening.content | raw }}
                     <a href="#" class="text-right">Lien vers l'évènement</a>
                 </div>
             </div>
         </div>
             {% endif %}
 {% endfor %}
+        <div class="text-center mb-5">
+        {{ knp_pagination_render(happenings) }}
+        </div>
 </div>
 </div>

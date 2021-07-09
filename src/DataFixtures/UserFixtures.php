@@ -40,7 +40,6 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
 
     ];
     public const NB_USERS = 6;
-
     private $encoder;
     public function __construct(UserPasswordEncoderInterface $encoder)
     {
@@ -68,7 +67,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
             $user->setUpdatedAt(new DateTime());
             $user->setEmail('artiste' . $i . '@gmail.com');
             $user->setPassword($this->encoder->encodePassword($user, '123456'));
-            $user->setRoles(['ARTIST']);
+            $user->setRoles(["ROLE_USER"]);
             $user->setAvatar($avatar);
             $user->setExpertise(self::EXPERTISES[$i - 1]);
             $user->addDiscipline($this->getReference(self::DISCIPLINES[$i - 1]));
@@ -76,6 +75,18 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
             $manager->persist($user);
             $this->addReference('user_' . $i, $user);
         }
+
+        $admin = new User();
+        $admin->setCreatedAt(new DateTime());
+        $admin->setUpdatedAt(new DateTime());
+        $admin->setEmail('admin@gmail.com');
+        $admin->setPassword($this->encoder->encodePassword($admin, '123456'));
+        $admin->setRoles(["ROLE_ADMIN"]);
+        $avatar = new Avatar();
+        $admin->setAvatar($avatar);
+        $manager->persist($admin);
+        $this->addReference('admin', $admin);
+
         $manager->flush();
     }
 

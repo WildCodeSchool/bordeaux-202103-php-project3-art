@@ -80,7 +80,7 @@
 			{% if app.user %}
 				{% if app.user.id == artist.id %}
 					<div class="container py-5">
-						<h2 class="ml-3 mb-5 card-title title-shadow font-medium text-uppercase">
+						<h2 class="mb-5 card-title title-shadow font-medium text-uppercase">
 							<span class="title-content font-medium">Contacts</span>
 						</h2>
 						<div class="d-flex flex-column">
@@ -132,13 +132,6 @@
 			</div>
 		</div>
 	{% endblock %}
-	{% block search %}
-		<div class="container">
-			<h2 class="ml-3 mb-5 card-title title-shadow font-medium text-uppercase">
-				<span class="title-content">Recherche</span>
-			</h2>
-		</div>
-	{% endblock %}
 	{% block announcements %}
 		<div class="container">
 			<div class="row col-12 mt-5">
@@ -163,7 +156,7 @@
 					</div>
 				{% endfor %}
 			</div>
-
 		</div>
+	</div>
 	{% endblock %}
 {% endblock %}

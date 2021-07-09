@@ -3,10 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\Announcement;
+use App\Entity\Artwork;
 use App\Entity\City;
+use App\Entity\Discipline;
 use App\Entity\Message;
 use App\Entity\User;
 use App\Form\AnnouncementType;
+use App\Form\ArtworkType;
 use App\Form\LocalisationType;
 use App\Form\MessageType;
 use App\Repository\AnnouncementRepository;
@@ -25,6 +28,8 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Knp\Component\Pager\PaginatorInterface;
 
 /**
  * @Route ("/artist", name="artist_")
@@ -51,6 +56,7 @@ class ArtistController extends AbstractController
     /**
      * @Route("/edit/{user_id}", name="edit")
      * @ParamConverter("user", class="App\Entity\User", options={"mapping": {"user_id" : "id"}})
+     * @IsGranted("ROLE_USER")
      */
     public function edit(User $user, Request $request, EntityManagerInterface $manager): Response
     {
@@ -86,13 +92,17 @@ class ArtistController extends AbstractController
 
     /**
      * @Route("/profil", name="profil",methods={"GET","POST"})
+     * @IsGranted("ROLE_USER")
      */
-    public function profile(MessageRepository $messageRepository, Request $request, EntityManagerInterface $entityManager, SessionInterface $session): Response
-    {
-//        dd($session->get('isMailBoxOpen'));
-
+    public function profile(
+        MessageRepository $messageRepository,
+        Request $request,
+        EntityManagerInterface $entityManager,
+        SessionInterface $session,
+        PaginatorInterface $paginator
+    ): Response {
         $user = $this->getUser();
-         $announcement = new Announcement();
+        $announcement = new Announcement();
         $newForm = $this->createForm(AnnouncementType::class, $announcement);
         $newForm->handleRequest($request);
         if ($newForm->isSubmitted() && $newForm->isValid()) {
@@ -104,12 +114,16 @@ class ArtistController extends AbstractController
             ]);
         }
         $totalUnreadMessage = $messageRepository->countUnreadMessage($user);
+        $messagesData = $messageRepository->findBy(['user' => $user]);
+        $messages = $paginator->paginate(
+            $messagesData,
+            $request->query->getInt('page', 1),
+            5
+        );
         return $this->render('artist/profil.html.twig', [
-            'messages' => $messageRepository->findBy(["user" => $user]),
+            'messages' => $messages,
             'totalUnreadMessage' => $totalUnreadMessage,
             'announcementForm' => $newForm->createView(),
-
-
         ]);
     }
 
@@ -141,15 +155,19 @@ class ArtistController extends AbstractController
      */
     public function showAll(UserRepository $repository)
     {
-        $artists = $repository->findAll();
-        return $this->render('artist/artist_show_all.html.twig', [
-            'artists' => $artists,
-        ]);
+        $artists = $repository->findByRoleUser($order = 'DESC');
+        foreach ($artists as $artist) {
+            $artist->getDisciplines()->get(0);
+            return $this->render('artist/artist_show_all.html.twig', [
+                'artists' => $artists,
+            ]);
+        }
     }
 
     /**
      * @Route("/{friend_id}/add_friends", name="add_friends", methods={"GET", "POST"})
      * @ParamConverter("friend", class="App\Entity\User", options={"mapping": {"friend_id" : "id"}})
+     * @IsGranted("ROLE_USER")
      */
     public function addToFriends(User $friend, EntityManagerInterface $entityManager): Response
     {
@@ -169,6 +187,7 @@ class ArtistController extends AbstractController
 
     /**
      * @Route("/profil/isRead/{id}", name="message_is_read", methods={"GET", "POST"})
+     * @IsGranted("ROLE_USER")
      */
     public function mailIsRead(
         Message $mail,
@@ -176,10 +195,11 @@ class ArtistController extends AbstractController
     ): Response {
         $mail->setIsRead(true);
         $entityManager->flush();
-        return $this->redirectToRoute('artist_profil');
+        return $this->redirectToRoute('artist_profil', ["_fragment" => "mailbox"]);
     }
     /**
      * @Route("/toggleMailBox", name="toggle", methods={"GET"})
+     * @IsGranted("ROLE_USER")
      */
     public function toggle(SessionInterface $session)
     {
