@@ -3,8 +3,12 @@
 {% form_theme form 'bootstrap_4_layout.html.twig' %}
 
 {% block title %}
-     - admin Evenements
+     {{ parent() }}-  Nouvel Evenement
 {% endblock %}
+  {% block javascripts %}
+       {{ parent() }}
+       {{ encore_entry_script_tags('inputFileValue') }}
+  {% endblock %}
 {% block body %}
 {% include 'admin/happening/_edit_new_happening.html.twig'%}
 {% endblock %}
