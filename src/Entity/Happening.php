@@ -76,7 +76,7 @@ class Happening
     /**
      * @ORM\OneToOne(targetEntity=ImageHappening::class, cascade={"persist", "remove"})
      */
-    private $ImageHappening;
+    private $imageHappening;
 
     public function __construct()
     {
@@ -244,12 +244,12 @@ class Happening
 
     public function getImageHappening(): ?ImageHappening
     {
-        return $this->ImageHappening;
+        return $this->imageHappening;
     }
 
-    public function setImageHappening(?ImageHappening $ImageHappening): self
+    public function setImageHappening(?ImageHappening $imageHappening): self
     {
-        $this->ImageHappening = $ImageHappening;
+        $this->imageHappening = $imageHappening;
 
         return $this;
     }
