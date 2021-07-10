@@ -145,7 +145,7 @@ class AdminController extends AbstractController
      */
     public function showUsers(UserRepository $userRepository): Response
     {
-        $users =  $userRepository->findByRoleUser($order = 'DESC');
+        $users =  $userRepository->findByRoleUser('DESC');
         return $this->render('admin/user/show_artists.html.twig', [
             'users' => $users,
         ]);
