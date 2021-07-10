@@ -76,6 +76,11 @@ class Happening
      */
     private $user;
 
+    /**
+     * @ORM\OneToOne(targetEntity=ImageHappening::class, cascade={"persist", "remove"})
+     */
+    private $ImageHappening;
+
     public function __construct()
     {
         $this->tags = new ArrayCollection();
@@ -250,5 +255,17 @@ class Happening
     public function onPreUpdate()
     {
         $this->updatedAt = new \DateTime();
+    }
+
+    public function getImageHappening(): ?ImageHappening
+    {
+        return $this->ImageHappening;
+    }
+
+    public function setImageHappening(?ImageHappening $ImageHappening): self
+    {
+        $this->ImageHappening = $ImageHappening;
+
+        return $this;
     }
 }
