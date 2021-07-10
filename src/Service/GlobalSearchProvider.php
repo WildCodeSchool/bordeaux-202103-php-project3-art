@@ -26,7 +26,7 @@ class GlobalSearchProvider
     public function initSearch(GlobalSearch $globalSearch): void
     {
         $allResults = [];
-        $users = $this->userRepository->findByRoleUser($order = 'DESC');
+        $users = $this->userRepository->findAll('DESC');
         $happenings = $this->happeningRepository->findBy([], ['createdAt' => 'DESC']);
         $allResults['users'] = $users;
         $allResults['happenings'] = $happenings;

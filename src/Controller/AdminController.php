@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\article;
+use App\Entity\SearchSingleEntity;
 use App\Form\ArticleType;
+use App\Form\EntitySearchType;
 use App\Form\HappeningType;
 use App\Entity\Happening;
 use App\Repository\ArticleRepository;
@@ -13,6 +15,7 @@ use App\Entity\User;
 use App\Form\AnnouncementType;
 use App\Repository\AnnouncementRepository;
 use App\Repository\UserRepository;
+use App\Service\SearchSingleEntityProvider;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -38,11 +41,22 @@ class AdminController extends AbstractController
     /**
      * @Route("/happening/show", name="happening_show")
      */
-    public function happeningShow(HappeningRepository $happeningRepository): Response
-    {
-        $happenings = $happeningRepository->findAll();
+    public function happeningShow(
+        HappeningRepository $happeningRepository,
+        Request $request,
+        SearchSingleEntityProvider $searchProvider
+    ): Response {
+        $happenings = $happeningRepository->findBy([], ['createdAt' => 'ASC']);
+        $searchEntity = new SearchSingleEntity();
+        $form = $this->createForm(EntitySearchType::class, $searchEntity);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $searchProvider->createSearchForHappenings($searchEntity);
+            $happenings = $searchEntity->getResults();
+        }
         return $this->render('admin/happening/show_happening.html.twig', [
-            'happenings' => $happenings
+            'happenings' => $happenings,
+            'form' => $form->createView(),
         ]);
     }
     /**
@@ -97,11 +111,22 @@ class AdminController extends AbstractController
     /**
      * @Route("/showAnnouncements", name="show_announcements")
      */
-    public function showAnnouncements(AnnouncementRepository $announcementRepository): Response
-    {
-        $announcements =  $announcementRepository->findAll();
+    public function showAnnouncements(
+        AnnouncementRepository $announcementRepository,
+        Request $request,
+        SearchSingleEntityProvider $searchProvider
+    ): Response {
+        $announcements =  $announcementRepository->findBy([], ['createdAt' => 'DESC']);
+        $searchEntity = new SearchSingleEntity();
+        $form = $this->createForm(EntitySearchType::class, $searchEntity);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $searchProvider->createSearchForAnnouncements($searchEntity);
+            $announcements = $searchEntity->getResults();
+        }
         return $this->render('admin/announcement/show_announcements.html.twig', [
             'announcements' => $announcements,
+            'form' => $form->createView(),
         ]);
     }
 
@@ -143,11 +168,22 @@ class AdminController extends AbstractController
     /**
      * @Route("/showArtists", name="show_artists")
      */
-    public function showUsers(UserRepository $userRepository): Response
-    {
-        $users =  $userRepository->findByRoleUser($order = 'DESC');
+    public function showUsers(
+        UserRepository $userRepository,
+        Request $request,
+        SearchSingleEntityProvider $searchProvider
+    ): Response {
+        $users =  $userRepository->findByRoleUser('DESC');
+        $searchEntity = new SearchSingleEntity();
+        $form = $this->createForm(EntitySearchType::class, $searchEntity);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $searchProvider->createSearchForUsers($searchEntity);
+            $users = $searchEntity->getResults();
+        }
         return $this->render('admin/user/show_artists.html.twig', [
             'users' => $users,
+            'form' => $form->createView(),
         ]);
     }
 
@@ -173,11 +209,22 @@ class AdminController extends AbstractController
     /**
      * @Route("/article/show", name="article_show")
      */
-    public function articleShow(ArticleRepository $articleRepository): Response
-    {
-        $articles = $articleRepository->findAll();
+    public function articleShow(
+        ArticleRepository $articleRepository,
+        Request $request,
+        SearchSingleEntityProvider $searchProvider
+    ): Response {
+        $articles = $articleRepository->findBy([], ['createdAt' => 'DESC']);
+        $searchEntity = new SearchSingleEntity();
+        $form = $this->createForm(EntitySearchType::class, $searchEntity);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $searchProvider->createSearchForArticles($searchEntity);
+            $articles = $searchEntity->getResults();
+        }
         return $this->render('admin/article/show_article.html.twig', [
-            'articles' => $articles
+            'articles' => $articles,
+            'form' => $form->createView()
         ]);
     }
     /**

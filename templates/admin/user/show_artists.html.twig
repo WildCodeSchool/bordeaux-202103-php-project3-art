@@ -9,7 +9,12 @@
         <h2 class="ml-3 mt-5 card-title title-shadow font-medium text-uppercase">
 			<span class="title-content">Gestion des utilisateurs</span>
         </h2>
-        <div class="row pt-5 pb-5">
+        <div class="pt-5">
+            <div class="pb-3 justify-content-center">
+                {{ form_start(form) }}
+                {{ form_widget(form) }}
+                {{ form_end(form) }}
+            </div>
             <table class="container">
                 <thead>
                 <tr class="border border-dark">

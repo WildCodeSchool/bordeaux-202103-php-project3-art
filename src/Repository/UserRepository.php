@@ -12,7 +12,6 @@ use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * @method User|null find($id, $lockMode = null, $lockVersion = null)
  * @method User|null findOneBy(array $criteria, array $orderBy = null)
- * @method User[]    findAll()
  * @method User[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class UserRepository extends ServiceEntityRepository implements PasswordUpgraderInterface
@@ -75,6 +74,16 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $qb
             ->leftJoin('u.city', 'c')
             ->orderBy('u.updatedAt', 'DESC');
+        return $qb->getQuery()->getResult();
+    }
+
+    public function findAll($order = 'ASC')
+    {
+        $qb = $this->createQueryBuilder('u')
+            ->andHaving('u.roles LIKE :role')
+            ->andHaving('u.isActive = true')
+            ->setParameter('role', '["ROLE_USER"]')
+            ->orderBy('u.createdAt', $order);
         return $qb->getQuery()->getResult();
     }
 
