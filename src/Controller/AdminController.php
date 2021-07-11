@@ -20,6 +20,7 @@ use App\Repository\AnnouncementRepository;
 use App\Repository\UserRepository;
 use App\Service\SearchSingleEntityProvider;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -117,9 +118,15 @@ class AdminController extends AbstractController
     public function showAnnouncements(
         AnnouncementRepository $announcementRepository,
         Request $request,
-        SearchSingleEntityProvider $searchProvider
+        SearchSingleEntityProvider $searchProvider,
+        PaginatorInterface $paginator
     ): Response {
-        $announcements =  $announcementRepository->findBy([], ['createdAt' => 'DESC']);
+        $announcementsData =  $announcementRepository->findBy([], ['createdAt' => 'DESC']);
+        $announcements = $paginator->paginate(
+            $announcementsData,
+            $request->query->getInt('page', 1),
+            10
+        );
         $searchEntity = new SearchSingleEntity();
         $form = $this->createForm(EntitySearchType::class, $searchEntity);
         $form->handleRequest($request);
