@@ -3,12 +3,15 @@
 namespace App\Controller;
 
 use App\Entity\article;
+use App\Entity\ExternalArticle;
 use App\Entity\SearchSingleEntity;
 use App\Form\ArticleType;
 use App\Form\EntitySearchType;
+use App\Form\ExternalType;
 use App\Form\HappeningType;
 use App\Entity\Happening;
 use App\Repository\ArticleRepository;
+use App\Repository\ExternalArticleRepository;
 use App\Repository\HappeningRepository;
 use App\Entity\Announcement;
 use App\Entity\User;
@@ -276,5 +279,74 @@ class AdminController extends AbstractController
         }
 
         return $this->redirectToRoute('admin_article_show');
+    }
+
+    /**
+     * @Route("/external/show", name="external_show")
+     */
+    public function externalShow(
+        ExternalArticleRepository $externalRepository,
+        Request $request,
+        SearchSingleEntityProvider $searchProvider
+    ): Response {
+        $externals = $externalRepository->findBy([], ['id' => 'DESC']);
+        $searchEntity = new SearchSingleEntity();
+        $form = $this->createForm(EntitySearchType::class, $searchEntity);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $externals = $searchEntity->getResults();
+        }
+        return $this->render('admin/external/show_external.html.twig', [
+            'externals' => $externals,
+            'form' => $form->createView()
+        ]);
+    }
+    /**
+     * @Route("/external/new", name="external_new")
+     */
+    public function externalNew(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $external = new ExternalArticle();
+        $form = $this->createForm(ExternalType::class, $external);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($external);
+            $entityManager->flush();
+            return $this->redirectToRoute('admin_external_show');
+        }
+        return $this->render('admin/external/new_external.html.twig', [
+            'form' => $form->createView(),
+
+        ]);
+    }
+
+    /**
+     * @Route("/external/edit/{id}", name="external_edit")
+     */
+    public function externalEdit(Request $request, EntityManagerInterface $entityManager, ExternalArticle $external): Response
+    {
+        $form = $this->createForm(ExternalType::class, $external);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->flush();
+            return $this->redirectToRoute('admin_external_show');
+        }
+        return $this->render('admin/external/edit_external.html.twig', [
+            'form' => $form->createView(),
+
+        ]);
+    }
+
+    /**
+     * @Route("/external/delete/{id}", name="external_delete", methods={"POST"})
+     */
+    public function externalDelete(ExternalArticle $external, EntityManagerInterface $entityManager, Request $request): Response
+    {
+        if ($this->isCsrfTokenValid('delete' . $external->getId(), $request->request->get('_token'))) {
+            $entityManager->remove($external);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('admin_external_show');
     }
 }
