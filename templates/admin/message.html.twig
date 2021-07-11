@@ -4,7 +4,8 @@
 	{{ encore_entry_script_tags('openMessaging') }}
 {% endblock %}
 
-{% block title %}Messaging
+{% block title %}
+	{{ parent() }} - Messages
 {% endblock %}
 
 {% block body %}
