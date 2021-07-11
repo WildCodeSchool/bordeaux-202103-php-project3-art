@@ -31,7 +31,10 @@ class AdminMessageController extends AbstractController
     {
         $message = new Message();
         $admin = $userRepository->findOneBy(['email' => $message->getAdminMailMessenger()]);
-        $adminMessagesData = $messageRepository->findBy(['user' => $admin->getId()]);
+        $adminMessagesData = $messageRepository->findBy(
+            ['user' => $admin->getId()],
+            ['sendAt' => 'DESC']
+        );
         $adminMessages = $paginator->paginate(
             $adminMessagesData,
             $request->query->getInt('page', 1),
