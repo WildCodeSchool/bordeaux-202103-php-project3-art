@@ -118,7 +118,7 @@ class ArtistController extends AbstractController
         $messages = $paginator->paginate(
             $messagesData,
             $request->query->getInt('page', 1),
-            5
+            10
         );
         return $this->render('artist/profil.html.twig', [
             'messages' => $messages,
