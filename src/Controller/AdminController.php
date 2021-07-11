@@ -48,9 +48,15 @@ class AdminController extends AbstractController
     public function happeningShow(
         HappeningRepository $happeningRepository,
         Request $request,
-        SearchSingleEntityProvider $searchProvider
+        SearchSingleEntityProvider $searchProvider,
+        PaginatorInterface $paginator
     ): Response {
-        $happenings = $happeningRepository->findBy([], ['createdAt' => 'ASC']);
+        $happeningsData = $happeningRepository->findBy([], ['createdAt' => 'ASC']);
+        $happenings = $paginator->paginate(
+            $happeningsData,
+            $request->query->getInt('page', 1),
+            10
+        );
         $searchEntity = new SearchSingleEntity();
         $form = $this->createForm(EntitySearchType::class, $searchEntity);
         $form->handleRequest($request);
