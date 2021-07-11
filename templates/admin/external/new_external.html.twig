@@ -1,0 +1,14 @@
+{% extends 'admin/dashboard.html.twig' %}
+
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+
+{% block title %}
+    {{ parent () }} - Nouvel article
+{% endblock %}
+  {% block javascripts %}
+      {{ parent() }}
+      {{ encore_entry_script_tags('inputFileValue') }}
+  {% endblock %}
+{% block body %}
+{% include 'admin/article/_edit_new_article.html.twig'%}
+{% endblock %}

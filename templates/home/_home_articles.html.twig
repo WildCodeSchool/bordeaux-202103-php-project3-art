@@ -6,28 +6,28 @@
 		<div class="d-flex justify-content-center d-none d-sm-block d-md-none">
 			<div class="swiper-container pt-5 pb-5 ">
 				<div class="swiper-wrapper">
-					<div class="swiper-slide">
+					{% for external in externals %}
+					<div class="swiper-slide ">
 						<div class="d-flex justify-content-around flex-wrap py-5 ">
-							<div class="zoom-parent" onclick="">
-								<a href="#"><img class="mb-4 zoom-child" src="https://picsum.photos/320/400?random=5" alt=""></a>
+							<div class="zoom-parent ex-slide"  onclick="">
+									<div class="ex-title">{{ external.title }}</div>
+									<a href="{{ external.link }}"><img class="mb-4 zoom-child" src="/uploads/images/users/{{ external.ImageExternalArticle.image }}" alt=""></a>
 							</div>
 						</div>
 					</div>
+					{% endfor %}
 				</div>
 				<div class="swiper-pagination"></div>
 			</div>
 		</div>
 		<div class="d-none d-md-block">
 			<div class="d-flex justify-content-around flex-wrap py-5 ">
+				{% for external in externals %}
 				<div class="zoom-parent" onclick="">
-					<a href="#"><img class="mb-4 zoom-child" src="https://picsum.photos/320/400?random=5" alt=""></a>
+					<div class="ex-title">{{ external.title }}</div>
+					<a href="{{ external.link }}"><img class="mb-4 zoom-child" src="/uploads/images/users/{{ external.ImageExternalArticle.image }}" alt=""></a>
 				</div>
-				<div class="zoom-parent" onclick="">
-					<a href="#"><img class="mb-4 zoom-child" src="https://picsum.photos/320/400?random=6" alt=""></a>
-				</div>
-				<div class="zoom-parent" onclick="">
-					<a href="#"><img class="zoom-child" src="https://picsum.photos/320/400?random=7" alt=""></a>
-				</div>
+				{% endfor %}
 			</div>
 		</div>
 	</div>

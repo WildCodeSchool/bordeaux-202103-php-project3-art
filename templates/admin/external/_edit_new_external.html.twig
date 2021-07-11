@@ -1,0 +1,16 @@
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+
+
+{% block body %}
+    <div class="container mt-5">
+    <h2 class=" font-weight-bold my-5 mx-3 title-shadow text-uppercase">
+        <span class="title-content ">Gérer mes articles</span>
+    </h2>
+        <div class="my-5">
+            {{ form_start(form)}}
+            {{ form_widget(form) }}
+            <button class="btn btn-outline-secondary">{{ button_label|default('Ajouter mon évenement') }}</button>
+            {{ form_end(form)}}
+        </div>
+    </div>
+{% endblock %}
