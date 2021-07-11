@@ -11,12 +11,12 @@
                            <div class="row">
                            <div class="col-sm-6 justify-content-center">
                                <h5 class="card-title font-medium">{{ happening.title }}</h5>
-                               <p class="card-text font-light text-justify">{{ happening.content|u.truncate(600, '...') }}</p>
+                               <p class="card-text font-light text-justify">{{ happening.content|u.truncate(600, '...')|raw }}</p>
                                <a href="{{ path('blog_article', {'id': happening.id}) }}" class="btn font-regular btn-outline-secondary">En savoir plus</a>
                                </div>
                            <div class="col-sm-4 offset-2">
                                <div class="card-img">
-                               <img src="{{ happening.media }}" alt="{{ happening.title }}" class="img-thumbnail mt-2" style="width: 18rem">
+                               <img src="/uploads/images/users/{{ happening.ImageHappening.image }}" alt="{{ happening.title }}" class="img-thumbnail mt-2" style="width: 18rem">
                            </div>
                        </div>
                            </div>

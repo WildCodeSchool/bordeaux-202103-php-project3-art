@@ -2,17 +2,15 @@
 
 namespace App\Entity;
 
-use App\Repository\ImageArticleRepository;
+use App\Repository\ImageHappeningRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
-
 /**
- * @ORM\Entity(repositoryClass=ImageArticleRepository::class)
- * @Vich\Uploadable
-
+ * @ORM\Entity(repositoryClass=ImageHappeningRepository::class)
+ *  * @Vich\Uploadable
  */
-class ImageArticle
+class ImageHappening
 {
     /**
      * @ORM\Id
@@ -33,7 +31,7 @@ class ImageArticle
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
-    * @var \DateTime
+     * @var \DateTime
      */
     private $updatedAt;
 
@@ -71,6 +69,7 @@ class ImageArticle
             $this->updatedAt = new \DateTime('now');
         }
     }
+
     /**
      * @return \DateTime
      */
@@ -78,6 +77,7 @@ class ImageArticle
     {
         return $this->updatedAt;
     }
+
     /**
      * @param \DateTime $updatedAt
      */

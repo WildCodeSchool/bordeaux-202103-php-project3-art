@@ -7,10 +7,9 @@
 
   {% endblock %}
 {% block title %}
-    {% block title %}
         {{ parent() }}-  Modifier Evenement
     {% endblock %}
-{% endblock %}
+
 {% block body %}
 {{  include ('admin/happening/_edit_new_happening.html.twig',{'button_label': 'Modifier'} )}}
 
