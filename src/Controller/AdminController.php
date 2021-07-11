@@ -234,9 +234,15 @@ class AdminController extends AbstractController
     public function articleShow(
         ArticleRepository $articleRepository,
         Request $request,
-        SearchSingleEntityProvider $searchProvider
+        SearchSingleEntityProvider $searchProvider,
+        PaginatorInterface $paginator
     ): Response {
-        $articles = $articleRepository->findBy([], ['createdAt' => 'DESC']);
+        $articlesData = $articleRepository->findBy([], ['createdAt' => 'DESC']);
+        $articles = $paginator->paginate(
+            $articlesData,
+            $request->query->getInt('page', 1),
+            10
+        );
         $searchEntity = new SearchSingleEntity();
         $form = $this->createForm(EntitySearchType::class, $searchEntity);
         $form->handleRequest($request);
