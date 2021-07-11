@@ -181,9 +181,15 @@ class AdminController extends AbstractController
     public function showUsers(
         UserRepository $userRepository,
         Request $request,
-        SearchSingleEntityProvider $searchProvider
+        SearchSingleEntityProvider $searchProvider,
+        PaginatorInterface $paginator
     ): Response {
-        $users =  $userRepository->findByRoleUser('DESC');
+        $usersData =  $userRepository->findByRoleUser('DESC');
+        $users = $paginator->paginate(
+            $usersData,
+            $request->query->getInt('page', 1),
+            10
+        );
         $searchEntity = new SearchSingleEntity();
         $form = $this->createForm(EntitySearchType::class, $searchEntity);
         $form->handleRequest($request);
