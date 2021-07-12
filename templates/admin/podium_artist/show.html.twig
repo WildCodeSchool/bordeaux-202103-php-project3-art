@@ -33,7 +33,11 @@
                             {% set position = loop.index %}
                             {% for user in users %}
                                 {% if user.podium == position %}
-                                    {{ user.firstname }} {{ user.lastname }}
+                                    {% if user.firstname is not null %}
+                                        {{ user.firstname }} {{ user.lastname }}
+                                    {% else %}
+                                        {{ user.email }}
+                                    {% endif %}
                                 {% endif %}
                             {% endfor %}
                         </td>

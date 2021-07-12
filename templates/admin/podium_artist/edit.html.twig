@@ -22,6 +22,7 @@
                     <th class="text-center">Pseudo</th>
                     <th class="text-center">Prénom</th>
                     <th class="text-center">Nom</th>
+                    <th class="text-center">Avatar</th>
                     <th class="text-center">Actions</th>
                 </tr>
                 </thead>
@@ -32,6 +33,7 @@
                         <td class="text-center">{{ (user.pseudo is not null) ? user.pseudo : 'Non-renseigné' }}</td>
                         <td class="text-center">{{ (user.firstname is not null) ? user.firstname : 'Non-renseigné' }}</td>
                         <td class="text-center">{{ (user.lastname is not null) ? user.lastname : 'Non-renseigné' }}</td>
+                        <td class="text-center">{{ (user.getAvatar.image is not null) ? 'Avatar présent' : 'Non-renseigné' }}</td>
                         <td class="text-center">
                             <a class="card-link text-dark" href="{{ path("admin_set_podium", {position: position, id:user.id}) }}"><i class="fas fa-plus"></i> Ajouter</a>
                         </td>
