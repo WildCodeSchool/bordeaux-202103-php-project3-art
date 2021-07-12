@@ -215,12 +215,13 @@ class ArtistController extends AbstractController
      * @IsGranted("ROLE_USER")
      */
 
-    public function reportProfile(EntityManagerInterface $entityManager, User $artist): Response
+    public function reportProfile(EntityManagerInterface $entityManager, User $artist, UserRepository $userRepository): Response
     {
         $connectedUser = $this->getUser();
 
         $message = new Message();
-        $message->setUser($connectedUser);
+        $adminContact = $userRepository->findOneBy(['email' => $message->getAdminMailMessenger()]);
+        $message->setUser($adminContact);
         $message->setMail($connectedUser->getEmail());
         $message->setObject('Signalement du profil de l\'artiste #' .$artist->getId());
         $message->setContent($connectedUser->getFirstname() . $connectedUser->getLastname() .
