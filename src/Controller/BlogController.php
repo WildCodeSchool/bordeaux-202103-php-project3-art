@@ -36,7 +36,7 @@ class BlogController extends AbstractController
         $happenings = $paginator->paginate(
             $orderedMixedTable,
             $request->query->getInt('page', 1),
-            2
+            3
         );
 
         return $this->render('blog/index.html.twig', [

@@ -114,11 +114,14 @@ class ArtistController extends AbstractController
             ]);
         }
         $totalUnreadMessage = $messageRepository->countUnreadMessage($user);
-        $messagesData = $messageRepository->findBy(['user' => $user]);
+        $messagesData = $messageRepository->findBy(
+            ['user' => $user],
+            ['sendAt' => 'DESC']
+        );
         $messages = $paginator->paginate(
             $messagesData,
             $request->query->getInt('page', 1),
-            5
+            10
         );
         return $this->render('artist/profil.html.twig', [
             'messages' => $messages,
