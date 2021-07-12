@@ -99,7 +99,8 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     public function findWithPosition()
     {
         $qb = $this->createQueryBuilder('u')
-            ->andWhere('u.podium IS NOT NULL');
+            ->andWhere('u.podium IS NOT NULL')
+            ->orderBy('u.podium', 'ASC');
         return  $qb->getQuery()->getResult();
     }
 
