@@ -33,7 +33,7 @@ class HomeController extends AbstractController
         HappeningRepository $happeningRepository,
         ExternalArticleRepository $externalArticleRepository
     ): Response {
-        $users = $userRepository->findByRoleUser();
+        $users = $userRepository->findWithPosition();
         $happenings = $happeningRepository->findBy(
             [],
             ['id' => 'DESC'],

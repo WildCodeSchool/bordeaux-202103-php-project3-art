@@ -1,0 +1,44 @@
+{% extends 'admin/dashboard.html.twig' %}
+
+{% block title %}
+    {{ parent()}} - Gestion du Podium
+{% endblock %}
+
+{% block body %}
+    <div class="container pt-5 pb-5">
+        <h2 class="ml-3 mt-5 card-title title-shadow font-medium text-uppercase">
+            <span class="title-content">Ajout de l'artiste à la position {{ position }} du podium</span>
+        </h2>
+        <div class="pt-5">
+            <div class="pb-3 justify-content-center">
+                {{ form_start(searchBarForm) }}
+                {{ form_widget(searchBarForm) }}
+                {{ form_end(searchBarForm) }}
+            </div>
+            <table class="container">
+                <thead>
+                <tr class="border border-dark">
+                    <th class="text-center">Mail</th>
+                    <th class="text-center">Pseudo</th>
+                    <th class="text-center">Prénom</th>
+                    <th class="text-center">Nom</th>
+                    <th class="text-center">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for user in users %}
+                    <tr class="border border-dark py-2">
+                        <td class="text-center">{{ user.email }}</td>
+                        <td class="text-center">{{ (user.pseudo is not null) ? user.pseudo : 'Non-renseigné' }}</td>
+                        <td class="text-center">{{ (user.firstname is not null) ? user.firstname : 'Non-renseigné' }}</td>
+                        <td class="text-center">{{ (user.lastname is not null) ? user.lastname : 'Non-renseigné' }}</td>
+                        <td class="text-center">
+                            <a class="card-link text-dark" href="{{ path("admin_set_podium", {position: position, id:user.id}) }}"><i class="fas fa-plus"></i> Ajouter</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
