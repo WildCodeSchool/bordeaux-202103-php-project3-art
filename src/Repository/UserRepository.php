@@ -96,6 +96,13 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         return $qb->getQuery()->getResult();
     }
 
+    public function findWithPosition()
+    {
+        $qb = $this->createQueryBuilder('u')
+            ->andWhere('u.podium IS NOT NULL');
+        return  $qb->getQuery()->getResult();
+    }
+
     // /**
     //  * @return User[] Returns an array of User objects
     //  */
