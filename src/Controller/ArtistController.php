@@ -209,4 +209,31 @@ class ArtistController extends AbstractController
         $session->set('isMailBoxOpen', !$session->get('isMailBoxOpen'));
         $this->json(['isMailBoxOpen' => $session->get('isMailBoxOpen')]);
     }
+
+    /**
+     * @Route("/reportProfile/{id}", name="report_profile", methods={"GET", "POST"})
+     * @IsGranted("ROLE_USER")
+     */
+
+    public function reportProfile(EntityManagerInterface $entityManager, User $artist): Response
+    {
+        $connectedUser = $this->getUser();
+
+        $message = new Message();
+        $message->setUser($connectedUser);
+        $message->setMail($connectedUser->getEmail());
+        $message->setObject('Signalement du profil de l\'artiste #' .$artist->getId());
+        $message->setContent($connectedUser->getFirstname() . $connectedUser->getLastname() .
+            ' a signalé le profil de ' .$artist->getFirstname() . $artist->getLastname(). ' pour non-conformité');
+        $message->setIsRead(false);
+        $message->onPrePersist();
+        $entityManager->persist($message);
+        $entityManager->flush();
+        $this->addFlash('success', 'Message envoyé !');
+        return $this->redirectToRoute('artist_show', ['id' => $artist->getId()]);
+
+        return $this->render('artist/_show_artist.html.twig', [
+            'artist' => $artist,
+        ]);
+    }
 }
