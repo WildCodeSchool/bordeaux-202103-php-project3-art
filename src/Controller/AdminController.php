@@ -20,6 +20,7 @@ use App\Repository\AnnouncementRepository;
 use App\Repository\UserRepository;
 use App\Service\SearchSingleEntityProvider;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -47,9 +48,15 @@ class AdminController extends AbstractController
     public function happeningShow(
         HappeningRepository $happeningRepository,
         Request $request,
-        SearchSingleEntityProvider $searchProvider
+        SearchSingleEntityProvider $searchProvider,
+        PaginatorInterface $paginator
     ): Response {
-        $happenings = $happeningRepository->findBy([], ['createdAt' => 'ASC']);
+        $happeningsData = $happeningRepository->findBy([], ['createdAt' => 'ASC']);
+        $happenings = $paginator->paginate(
+            $happeningsData,
+            $request->query->getInt('page', 1),
+            10
+        );
         $searchEntity = new SearchSingleEntity();
         $form = $this->createForm(EntitySearchType::class, $searchEntity);
         $form->handleRequest($request);
@@ -117,9 +124,15 @@ class AdminController extends AbstractController
     public function showAnnouncements(
         AnnouncementRepository $announcementRepository,
         Request $request,
-        SearchSingleEntityProvider $searchProvider
+        SearchSingleEntityProvider $searchProvider,
+        PaginatorInterface $paginator
     ): Response {
-        $announcements =  $announcementRepository->findBy([], ['createdAt' => 'DESC']);
+        $announcementsData =  $announcementRepository->findBy([], ['createdAt' => 'DESC']);
+        $announcements = $paginator->paginate(
+            $announcementsData,
+            $request->query->getInt('page', 1),
+            10
+        );
         $searchEntity = new SearchSingleEntity();
         $form = $this->createForm(EntitySearchType::class, $searchEntity);
         $form->handleRequest($request);
@@ -174,9 +187,15 @@ class AdminController extends AbstractController
     public function showUsers(
         UserRepository $userRepository,
         Request $request,
-        SearchSingleEntityProvider $searchProvider
+        SearchSingleEntityProvider $searchProvider,
+        PaginatorInterface $paginator
     ): Response {
-        $users =  $userRepository->findByRoleUser('DESC');
+        $usersData =  $userRepository->findByRoleUser('DESC');
+        $users = $paginator->paginate(
+            $usersData,
+            $request->query->getInt('page', 1),
+            10
+        );
         $searchEntity = new SearchSingleEntity();
         $form = $this->createForm(EntitySearchType::class, $searchEntity);
         $form->handleRequest($request);
@@ -215,9 +234,15 @@ class AdminController extends AbstractController
     public function articleShow(
         ArticleRepository $articleRepository,
         Request $request,
-        SearchSingleEntityProvider $searchProvider
+        SearchSingleEntityProvider $searchProvider,
+        PaginatorInterface $paginator
     ): Response {
-        $articles = $articleRepository->findBy([], ['createdAt' => 'DESC']);
+        $articlesData = $articleRepository->findBy([], ['createdAt' => 'DESC']);
+        $articles = $paginator->paginate(
+            $articlesData,
+            $request->query->getInt('page', 1),
+            10
+        );
         $searchEntity = new SearchSingleEntity();
         $form = $this->createForm(EntitySearchType::class, $searchEntity);
         $form->handleRequest($request);

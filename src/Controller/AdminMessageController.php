@@ -8,6 +8,7 @@ use App\Form\MessageType;
 use App\Repository\MessageRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,11 +27,19 @@ class AdminMessageController extends AbstractController
     /**
      * @Route("/index", name="index")
      */
-    public function index(UserRepository $userRepository, MessageRepository $messageRepository): Response
+    public function index(UserRepository $userRepository, MessageRepository $messageRepository, PaginatorInterface $paginator, Request $request): Response
     {
         $message = new Message();
         $admin = $userRepository->findOneBy(['email' => $message->getAdminMailMessenger()]);
-        $adminMessages = $messageRepository->findBy(['user' => $admin->getId()]);
+        $adminMessagesData = $messageRepository->findBy(
+            ['user' => $admin->getId()],
+            ['sendAt' => 'DESC']
+        );
+        $adminMessages = $paginator->paginate(
+            $adminMessagesData,
+            $request->query->getInt('page', 1),
+            10
+        );
         return $this->render('admin/message.html.twig', [
             'messages' => $adminMessages,
         ]);

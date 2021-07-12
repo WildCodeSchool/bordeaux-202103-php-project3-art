@@ -114,11 +114,14 @@ class ArtistController extends AbstractController
             ]);
         }
         $totalUnreadMessage = $messageRepository->countUnreadMessage($user);
-        $messagesData = $messageRepository->findBy(['user' => $user]);
+        $messagesData = $messageRepository->findBy(
+            ['user' => $user],
+            ['sendAt' => 'DESC']
+        );
         $messages = $paginator->paginate(
             $messagesData,
             $request->query->getInt('page', 1),
-            5
+            10
         );
         return $this->render('artist/profil.html.twig', [
             'messages' => $messages,
@@ -205,5 +208,33 @@ class ArtistController extends AbstractController
     {
         $session->set('isMailBoxOpen', !$session->get('isMailBoxOpen'));
         $this->json(['isMailBoxOpen' => $session->get('isMailBoxOpen')]);
+    }
+
+    /**
+     * @Route("/reportProfile/{id}", name="report_profile", methods={"GET", "POST"})
+     * @IsGranted("ROLE_USER")
+     */
+
+    public function reportProfile(EntityManagerInterface $entityManager, User $artist, UserRepository $userRepository): Response
+    {
+        $connectedUser = $this->getUser();
+
+        $message = new Message();
+        $adminContact = $userRepository->findOneBy(['email' => $message->getAdminMailMessenger()]);
+        $message->setUser($adminContact);
+        $message->setMail($connectedUser->getEmail());
+        $message->setObject('Signalement du profil de l\'artiste #' .$artist->getId());
+        $message->setContent($connectedUser->getFirstname() . $connectedUser->getLastname() .
+            ' a signalé le profil de ' .$artist->getFirstname() . $artist->getLastname(). ' pour non-conformité');
+        $message->setIsRead(false);
+        $message->onPrePersist();
+        $entityManager->persist($message);
+        $entityManager->flush();
+        $this->addFlash('success', 'Message envoyé !');
+        return $this->redirectToRoute('artist_show', ['id' => $artist->getId()]);
+
+        return $this->render('artist/_show_artist.html.twig', [
+            'artist' => $artist,
+        ]);
     }
 }
