@@ -35,7 +35,7 @@
                         <td class="text-center">{{ (user.firstname is not null) ? user.firstname : 'Non-renseigné' }}</td>
                         <td class="text-center">{{ (user.lastname is not null) ? user.lastname : 'Non-renseigné' }}</td>
                         <td class="text-center">{{ user.createdAt|date('d/m/Y') }}</td>
-                        <td class="text-center">{{ (user.isActive) ? 'Activé' : 'Désactivé'  }}</td>
+                        <td class="text-center">{{ (user.isActive) ? 'Activé' : 'Désactivé' }}</td>
                         <td class="text-center">
                             {{ include('admin/user/_delete_artist.html.twig') }}
                         </td>

@@ -15,6 +15,7 @@ use App\Form\MessageType;
 use App\Repository\AnnouncementRepository;
 use App\Repository\MessageRepository;
 use App\Form\UserType;
+use App\Repository\ArtworkRepository;
 use App\Repository\ResponseRepository;
 use App\Repository\UserRepository;
 use App\Service\CityBuilder;
@@ -153,6 +154,40 @@ class ArtistController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/contact/{user_id}/{artwork_id}", name="contact_artwork")
+     * @ParamConverter("user", class="App\Entity\User", options={"mapping": {"user_id" : "id"}})
+     * @ParamConverter("artwork", class="App\Entity\Artwork", options={"mapping": {"artwork_id" : "id"}})
+     */
+    public function contactArtistBuy(
+        User $user,
+        Artwork $artwork,
+        Request $request,
+        EntityManagerInterface $entityManager
+    ): Response {
+        $message = new Message();
+        $artworkName = 'Demande d\'achat de ' . $artwork->getName();
+        $isBuying = true;
+        $form = $this->createForm(
+            MessageType::class,
+            $message,
+            ['is_buying' => $isBuying, 'artwork_name' => $artworkName]
+        );
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $message->setIsRead(false);
+            $message->setUser($user);
+            $entityManager->persist($message);
+            $entityManager->flush();
+            $this->addFlash('success', 'Message envoyé !');
+            return $this->redirectToRoute('artist_show', ['id' => $artwork->getUser()->getId()]);
+        }
+        return $this->render('artist/artist_contact_artwork.html.twig', [
+            'form' => $form->createView(),
+            'artist' => $user,
+            'artwork' => $artwork,
+        ]);
+    }
     /**
      * @Route("/show_all", name="show_all")
      */

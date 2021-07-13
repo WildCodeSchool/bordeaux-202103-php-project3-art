@@ -54,7 +54,7 @@ class AdminMessageController extends AbstractController
     ): Response {
         $totalUnreadMessage = $messageRepository->countUnreadMessage($user);
         return $this->render('admin/messaging.html.twig', [
-            'messages' => $messageRepository->findBy(["user" => $user]),
+            'messages' => $messageRepository->findBy(['user' => $user]),
             'totalUnreadMessage' => $totalUnreadMessage,
         ]);
     }

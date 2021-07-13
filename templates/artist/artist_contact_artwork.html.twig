@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Contacter
+    {% if artist.pseudo is not null %}
+        {{ artist.pseudo }}
+    {% elseif artist.firstname is not null %}
+        {{ artist.firstname }}
+    {% else %}
+        {{ "Arts D'Eko" }}
+    {% endif %}
+    - Arts d'Eko
+{% endblock %}
+
+{% block body %}
+<div class="bloc-contact py-5">
+    <div class="container">
+        <h2 class="font-weight-bold mb-4 title-shadow text-uppercase">
+            <span class="title-content">Ecrire à
+                 {% if artist.pseudo is not null %}
+                     {{ artist.pseudo }}
+                 {% elseif artist.firstname is not null %}
+                     {{ artist.firstname }}
+                 {% else %}
+                     {{ "cet.te artiste :" }}
+                 {% endif %}
+            </span>
+        </h2>
+        <div class="mt-5">
+            {% form_theme form 'bootstrap_4_layout.html.twig' %}
+            {{ artwork.name }}
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            {{ form_errors(form) }}
+            <input type='submit' value='ENVOYER'>
+            {{ form_end(form) }}
+        </div>
+    </div>
+</div>
+{% endblock %}
