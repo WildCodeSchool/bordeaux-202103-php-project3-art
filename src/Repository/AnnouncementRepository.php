@@ -31,13 +31,13 @@ class AnnouncementRepository extends ServiceEntityRepository
         $qb = $this->createQueryBuilder('a');
         foreach ($keywords as $key => $keyword) {
             $qb
-                ->where('d.name LIKE :keyword' . $key)
+                ->orWhere('d.name LIKE :keyword' . $key)
                 ->orWhere('a.title LIKE :keyword' . $key)
                 ->andWhere('a.date >= CURRENT_DATE() or a.date is NULL')
-                ->setParameter('keyword' . $key, '%' . $keyword . '%')
-                ->leftJoin('a.discipline', 'd');
+                ->setParameter('keyword' . $key, '%' . $keyword . '%');
         }
            $qb
+            ->leftJoin('a.discipline', 'd')
             ->orderBy('a.createdAt', 'DESC');
         return $qb->getQuery()->getResult();
     }

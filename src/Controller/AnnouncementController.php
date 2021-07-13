@@ -5,10 +5,12 @@ namespace App\Controller;
 use App\Entity\Announcement;
 use App\Entity\Message;
 use App\Entity\Response as EntityResponse;
+use App\Entity\SearchSingleEntity;
 use App\Form\AnnouncementType;
 use App\Form\MessageType;
 use App\Form\EntitySearchType;
 use App\Repository\AnnouncementRepository;
+use App\Service\SearchSingleEntityProvider;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,18 +26,20 @@ class AnnouncementController extends AbstractController
     /**
      * @Route("/", name="index", methods={"GET","POST"})
      */
-    public function index(Request $request, AnnouncementRepository $announcementRepository): Response
-    {
-        $form = $this->createForm(EntitySearchType::class);
+    public function index(
+        Request $request,
+        AnnouncementRepository $announcementRepository,
+        SearchSingleEntityProvider $searchProvider
+    ): Response {
+        $searchEntity = new SearchSingleEntity();
+        $form = $this->createForm(EntitySearchType::class, $searchEntity);
         $form->handleRequest($request);
 
+        $announcements = $announcementRepository->getAnnouncementsByDate();
         if ($form->isSubmitted() && $form->isValid()) {
-            $search = $form->getData();
-            $announcements = $announcementRepository->findByTitleOrDiscipline($search);
-        } else {
-            $announcements = $announcementRepository->getAnnouncementsByDate();
+            $searchProvider->createSearchForAnnouncements($searchEntity);
+            $announcements = $searchEntity->getResults();
         }
-
         return $this->render('announcement/index.html.twig', [
             'announcements' => $announcements,
             'form' =>$form->createView()
