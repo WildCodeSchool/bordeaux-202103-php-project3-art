@@ -30,7 +30,7 @@ class AdminMessageController extends AbstractController
     {
         $message = new Message();
         $admin = $userRepository->findOneBy(['email' => $message->getAdminMailMessenger()]);
-        $adminMessages = $messageRepository->findBy(['user' => $admin->getId()]);
+        $adminMessages = $messageRepository->findBy(['user' => $admin]);
         return $this->render('admin/message.html.twig', [
             'messages' => $adminMessages,
         ]);
@@ -45,7 +45,7 @@ class AdminMessageController extends AbstractController
     ): Response {
         $totalUnreadMessage = $messageRepository->countUnreadMessage($user);
         return $this->render('admin/messaging.html.twig', [
-            'messages' => $messageRepository->findBy(["user" => $user]),
+            'messages' => $messageRepository->findBy(['user' => $user]),
             'totalUnreadMessage' => $totalUnreadMessage,
         ]);
     }
