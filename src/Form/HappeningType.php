@@ -20,14 +20,14 @@ class HappeningType extends AbstractType
             ->add('title', TextType::class, [
                 'label' => 'Titre de l\'évenement',
             ])
-            ->add('media', UrlType::class, [
-                'label' => 'Url de l\'image',
-            ])
             ->add('content', CKEditorType::class, [
                 'config' => [
                     'uiColor' => '#c1baba',
                 ],
                 'label' => 'Contenu',
+            ])
+            ->add('imageHappening', ImageHappeningType::class, [
+                'label' => false,
             ])
             ->add('dateStart', DateType::class, [
                 'label' => 'Date de commencement de l\'évenement',

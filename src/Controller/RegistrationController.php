@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Avatar;
 use App\Entity\User;
+use App\Repository\DisciplineRepository;
 use DateTimeInterface;
 use App\Form\RegistrationFormType;
 use App\Security\Authenticator;
@@ -23,7 +24,8 @@ class RegistrationController extends AbstractController
         Request $request,
         GuardAuthenticatorHandler $guardHandler,
         Authenticator $authenticator,
-        UserPasswordEncoderInterface $passwordEncoder
+        UserPasswordEncoderInterface $passwordEncoder,
+        DisciplineRepository $disciplineRepository
     ): Response {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
@@ -39,6 +41,8 @@ class RegistrationController extends AbstractController
             $avatar = new Avatar();
             $user->setRoles(['ROLE_USER']);
             $user->setAvatar($avatar);
+            $defaultDiscipline = $disciplineRepository->findOneBy(['identifier' => 'artvisu']);
+            $user->addDiscipline($defaultDiscipline);
             $user->setCreatedAt(new \DateTime());
             $user->setUpdatedAt(new \DateTime());
             $entityManager = $this->getDoctrine()->getManager();

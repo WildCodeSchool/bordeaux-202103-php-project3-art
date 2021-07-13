@@ -9,7 +9,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass=ImageArticleRepository::class)
- *  * @Vich\Uploadable
+ * @Vich\Uploadable
 
  */
 class ImageArticle

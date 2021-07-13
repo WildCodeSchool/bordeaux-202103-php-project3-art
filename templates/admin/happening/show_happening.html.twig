@@ -1,7 +1,7 @@
 {% extends 'admin/dashboard.html.twig' %}
 
 {% block title %}
-    Admin évenements
+    {{ parent()}} - Gestion des évenements
 {% endblock %}
 
 {% block body %}
@@ -12,9 +12,14 @@
                 {% block head_title %}Gestion des évenements{% endblock %}
 			</span>
         </h2>
-        <a class=" d-flex align-items-center btn btn-outline-secondary " href="{{ path('admin_happening_new') }}">Ajouter un article</a>
+        <a class=" d-flex align-items-center btn btn-outline-secondary " href="{{ path('admin_happening_new') }}">Ajouter un évenement</a>
         </div>
-        <div class="row pt-5 pb-5">
+        <div class="pt-5">
+            <div class="pb-3 justify-content-center">
+                {{ form_start(form) }}
+                {{ form_widget(form) }}
+                {{ form_end(form) }}
+            </div>
             <table class="container">
                 <thead>
                 <tr class="border border-dark">
@@ -28,7 +33,7 @@
                 {% for happening in happenings %}
                     <tr class="border border-dark">
                         <td class="text-center">{{ happening.title }}</td>
-                        <td class="text-center"><img style="width: 120px; height: 100px" src="{{ happening.media }}"></td>
+                        <td class="text-center"><img style="width: 120px; height: 100px" src="/uploads/images/users/{{ happening.ImageHappening.image }}"></td>
 
                         <td class="text-center">{{ happening.createdAt|date('d/m/Y') }}</td>
                         <td class="text-center">
@@ -42,4 +47,5 @@
             </table>
         </div>
     </div>
+    {{ knp_pagination_render(happenings) }}
 {% endblock %}

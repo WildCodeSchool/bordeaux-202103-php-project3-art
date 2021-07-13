@@ -140,8 +140,35 @@
 				</div>
 				{% if not app.user is same as(artist) %}
 					<div class="mt-3 container d-flex justify-content-end">
+						<p>
 						<a href="{{ path('artist_contact', {user_id: artist.id}) }}" class="link-{{ (artist.disciplines is empty) ? 'move' : artist.disciplines[0].color }} font-light profil-link mt-1 profil-link-border-{{ (artist.disciplines is empty) ? 'move' : artist.disciplines[0].color }}">
 							Contacter l'artiste</a>
+							<br>
+						<button type="button" class="btn btn-outline-secondary btn-sm mt-2" data-toggle="modal" data-target="#exampleModalCenter">
+							<i class="fas fa-exclamation-triangle"></i> Signaler ce profil
+						</button>
+						</p>
+
+						<!-- Modal -->
+						<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+							<div class="modal-dialog modal-dialog-centered" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title" id="exampleModalLongTitle">Signalement</h5>
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<div class="modal-body">
+										Souhaitez-vous envoyer un message automatique à l'administrateur pour signaler ce profil ?
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+										<a class="btn btn-outline-secondary" href="{{ path('artist_report_profile', {id: artist.id}) }}">Envoyer</a>
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
 				{% endif %}
 			</div>

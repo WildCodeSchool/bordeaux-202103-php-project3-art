@@ -58,7 +58,7 @@
                             <div class="col-sm-6 col-md-4">
                                 <p class="position-relative img-container">
                                     <a href="{{ path('blog_article', {id: happening.id}) }}" >
-                                        <img  class="artist-image " src="{{ happening.media }}"
+                                        <img  class="artist-image " src="/uploads/images/users/{{ happening.getImageHappening.image }}"
                                               alt="{{ happening.title }}" width="100%">
                                         <span class="ml-2 text-white artist-name">
                                 {{ happening.title }}

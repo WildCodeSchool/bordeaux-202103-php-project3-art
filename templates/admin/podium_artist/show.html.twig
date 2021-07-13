@@ -1,0 +1,58 @@
+{% extends 'admin/dashboard.html.twig' %}
+
+{% block title %}
+    {{ parent()}} - Gestion des artistes sur le podium
+{% endblock %}
+
+{% block body %}
+    <div class="container pt-5 pb-5">
+        <div class="d-flex justify-content-between">
+            <h2 class="card-title title-shadow font-medium text-uppercase">
+			<span class="title-content">
+                {% block head_title %}Gestion des artistes sur le podium{% endblock %}
+			</span>
+            </h2>
+
+        </div>
+        <div class="pt-5">
+            <table class="container">
+                <thead>
+                <tr class="border border-dark">
+                    <th class="ml-2 text-center">Position</th>
+                    <th class="text-center">Artiste</th>
+                    <th class="text-center">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% for i in 1..9 %}
+                    <tr class=" border border-dark">
+                        <td class="text-center">
+                            {{ loop.index }}
+                        </td>
+                        <td class="text-center">
+                            {% set position = loop.index %}
+                            {% for user in users %}
+                                {% if user.podium == position %}
+                                    {% if user.firstname is not null %}
+                                        {{ user.firstname }} {{ user.lastname }}
+                                    {% else %}
+                                        {{ user.email }}
+                                    {% endif %}
+                                {% endif %}
+                            {% endfor %}
+                        </td>
+                        <td class="text-center">
+                            <a class="card-link text-dark"
+                               href="{{ path("admin_edit_podium", {position: loop.index}) }}">
+                                <i class="fas fa-user-plus"></i> Ajouter</a>
+                            <a class="card-link text-dark"
+                               href="{{ path("admin_delete_podium", {position: loop.index}) }}">
+                                <i class="fas fa-user-minus"></i> Retirer</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

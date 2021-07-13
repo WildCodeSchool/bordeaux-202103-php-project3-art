@@ -2,22 +2,21 @@
 
 namespace App\Service;
 
+use App\Entity\Article;
+use App\Entity\Happening;
 use Doctrine\Common\Collections\ArrayCollection;
 
 class Fusion
 {
     public function goTenks(array $happenings, array $articles): array
     {
-        $posts = new ArrayCollection(array_merge($happenings, $articles));
-        $dates = [];
-        $result = [];
-        foreach ($posts as $key => $post) {
-            $dates[$key] =  $post->getCreatedAt();
-        }
-        asort($dates);
-        foreach ($dates as $key => $date) {
-            $result[] = $posts[$key];
-        }
-        return $result;
+        $posts = array_merge($happenings, $articles);
+        uasort($posts,function($a, $b){
+            if($a->getCreatedAt() === $b->getCreatedAt()) {
+                return 0;
+            }
+            return ($a < $b) ? 1 : -1;
+        });
+        return $posts;
     }
 }

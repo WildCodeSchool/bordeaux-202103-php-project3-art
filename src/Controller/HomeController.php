@@ -6,6 +6,7 @@ use App\Entity\Message;
 use App\Form\GlobalSearchType;
 use App\Form\MessageType;
 use App\Entity\GlobalSearch;
+use App\Repository\ExternalArticleRepository;
 use App\Repository\HappeningRepository;
 use App\Repository\UserRepository;
 use App\Service\GlobalSearchProvider;
@@ -29,10 +30,16 @@ class HomeController extends AbstractController
         Request $request,
         EntityManagerInterface $entityManager,
         UserRepository $userRepository,
-        HappeningRepository $happeningRepository
+        HappeningRepository $happeningRepository,
+        ExternalArticleRepository $externalArticleRepository
     ): Response {
-        $users = $userRepository->findByRoleUser();
+        $users = $userRepository->findWithPosition();
         $happenings = $happeningRepository->findBy(
+            [],
+            ['id' => 'DESC'],
+            self::MAX_ARTICLES_CAROUSEL,
+        );
+        $externals = $externalArticleRepository->findBy(
             [],
             ['id' => 'DESC'],
             self::MAX_ARTICLES_CAROUSEL,
@@ -56,7 +63,8 @@ class HomeController extends AbstractController
         return $this->render('home/index.html.twig', [
             'form' => $form->createView(),
             'artists' => $users,
-            'happenings' => $happenings
+            'happenings' => $happenings,
+            'externals' => $externals
         ]);
     }
 

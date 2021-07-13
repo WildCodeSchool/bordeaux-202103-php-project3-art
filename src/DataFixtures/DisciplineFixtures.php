@@ -9,12 +9,19 @@ use Doctrine\Persistence\ObjectManager;
 
 class DisciplineFixtures extends Fixture
 {
+    public const IDENTIFIER = [
+        'artvisu',
+        'artmouv',
+        'artlitt',
+        'artmusic'
+    ];
     public function load(ObjectManager $manager)
     {
         for ($i = 0; $i < count(Discipline::DISCIPLINES); $i++) {
             $discipline = new Discipline();
             $discipline->setName(Discipline::DISCIPLINES[$i]);
             $discipline->setColor(Discipline::COLORS[$i]);
+            $discipline->setIdentifier($this::IDENTIFIER[$i]);
             $manager->persist($discipline);
             $this->addReference('discipline_' . ($i + 1), $discipline);
             $manager->flush();
