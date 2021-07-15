@@ -30,6 +30,10 @@
 3. Run `./node_modules/.bin/eslint assets/js` to launch ESLint JS linter
 3. Run `../node_modules/.bin/sass-lint -c sass-linter.yml -v` to launch Sass-lint SASS/CSS linter
 
+### Dev environnement
+
+1. Setup the cron table with the following line : 
+
 ### Windows Users
 
 If you develop on Windows, you should edit you git configuration to change your end of line rules with this command :
