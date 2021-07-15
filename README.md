@@ -15,6 +15,7 @@
 2. Run `composer install`
 3. Run `yarn install`
 4. Run `yarn encore dev` to build assets
+5. To make ckeditor (WYSISWYG) work, make a `php bin/console ckeditor:install`
 
 ### Working
 
