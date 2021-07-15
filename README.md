@@ -30,9 +30,9 @@
 3. Run `./node_modules/.bin/eslint assets/js` to launch ESLint JS linter
 3. Run `../node_modules/.bin/sass-lint -c sass-linter.yml -v` to launch Sass-lint SASS/CSS linter
 
-### Dev environnement
+### Prod environment
 
-1. Setup the cron table with the following line : 
+1. Setup the crontab with the following line : `* 2 * * * php /var/www/staging/bin/console app-anonymiser` 
 
 ### Windows Users
 
