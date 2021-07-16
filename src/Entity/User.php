@@ -164,6 +164,11 @@ class User implements UserInterface
      */
     private $podium = null;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isAnonymised = false;
+
     public function __construct()
     {
         $this->disciplines = new ArrayCollection();
@@ -691,4 +696,16 @@ class User implements UserInterface
     {
         $this->podium = $podium;
     }
+
+    public function isAnonymised(): bool
+    {
+        return $this->isAnonymised;
+    }
+
+    public function setIsAnonymised(bool $isAnonymised): void
+    {
+        $this->isAnonymised = $isAnonymised;
+    }
+
+
 }

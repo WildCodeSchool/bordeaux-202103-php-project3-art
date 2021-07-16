@@ -104,18 +104,33 @@
 				<div class="row col-12 mt-5">
 					{% for artwork in artist.artworks %}
 						{% if artwork.media.support == "photo" %}
-							<div class="col-4">
-								<h4 class="title-shadow-grey font-regular text-uppercase color-{{ artist.disciplines[0].color }}">
-									<span class="title-content">{{ artwork.name }}</span>
-								</h4>
-								<img src="{{ artwork.media.url }}" alt="{{ artwork.name }}" width="100%">
+							<div class="col-12 col-md-6">
+								<div class="card bg-transparent border-light mt-3">
+									<div class="card-body">
+										<h4 class="ml-3 title-shadow-grey font-regular text-uppercase color-{{ artist.disciplines[0].color }}">
+											<span class="title-content">{{ artwork.name }}</span>
+										</h4>
+										<img class="mt-3 card-img-top media" width="400" src="{{ artwork.media.url }}" alt="{{ artwork.name }}">
+										<div class="card-text text-justify mt-3">
+											{{ artwork.description }}
+										</div>
+										<a href="{{ path('artist_contact_artwork', { user_id: artist.id, artwork_id: artwork.id }) }}" class="btn btn-outline-secondary mt-3">
+											<i class="fas fa-hands-helping"></i>
+											Demande d'achat
+										</a>
+									</div>
+								</div>
 							</div>
 						{% elseif artwork.media.support == "video" %}
 							<div class="col-12 col-md-6">
-								<h4 class="title-shadow-grey font-regular text-uppercase color-{{ artist.disciplines[0].color }}">
-									<span class="title-content">{{ artwork.name }}</span>
-								</h4>
-								<iframe class="mt-3 mb-5" width="100%" height="360" src="{{ artwork.media.url }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+								<div class="card mt-3 bg-transparent border-light">
+									<div class="card-body">
+										<h4 class="ml-3 title-shadow-grey font-regular text-uppercase color-{{ artist.disciplines[0].color }}">
+											<span class="title-content">{{ artwork.name }}</span>
+										</h4>
+										<iframe class="mt-3 card-img-top media-video " src="{{ artwork.media.url }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" alt="Card image cap" width="400" height="300"></iframe>
+									</div>
+								</div>
 							</div>
 						{% endif %}
 					{% else %}
@@ -125,8 +140,35 @@
 				</div>
 				{% if not app.user is same as(artist) %}
 					<div class="mt-3 container d-flex justify-content-end">
+						<p>
 						<a href="{{ path('artist_contact', {user_id: artist.id}) }}" class="link-{{ (artist.disciplines is empty) ? 'move' : artist.disciplines[0].color }} font-light profil-link mt-1 profil-link-border-{{ (artist.disciplines is empty) ? 'move' : artist.disciplines[0].color }}">
 							Contacter l'artiste</a>
+							<br>
+						<button type="button" class="btn btn-outline-secondary btn-sm mt-2" data-toggle="modal" data-target="#exampleModalCenter">
+							<i class="fas fa-exclamation-triangle"></i> Signaler ce profil
+						</button>
+						</p>
+
+						<!-- Modal -->
+						<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+							<div class="modal-dialog modal-dialog-centered" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title" id="exampleModalLongTitle">Signalement</h5>
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<div class="modal-body">
+										Souhaitez-vous envoyer un message automatique à l'administrateur pour signaler ce profil ?
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+										<a class="btn btn-outline-secondary" href="{{ path('artist_report_profile', {id: artist.id}) }}">Envoyer</a>
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
 				{% endif %}
 			</div>
@@ -145,12 +187,17 @@
 						<div class="card card-announcement card-{{ announcement.discipline.color }} bg-light mb-5" style="width: 18rem;">
 							<div class="card-body">
 								<h5 class="card-title text-uppercase font-weight-bold">{{ announcement.title }}</h5>
-								<h6 class="card-subtitle mb-2 text-muted">Catégorie : {{ announcement.discipline.name }}</h6>
+								<h6 class="card-subtitle mb-2 text-muted">Catégorie :
+									{{ announcement.discipline.name }}</h6>
 								{% if announcement.date is not null %}
 									<h6 class="card-subtitle mb-2 text-muted">{{ announcement.date|date('d/m/Y') }}</h6>
 								{% endif %}
 								<p class="card-text text-justify">{{ announcement.content }}</p>
-								<p class="text-uppercase text-right"><a href="{{ path('artist_contact', {user_id: announcement.user.id}) }}" class="font-weight-bold text-dark card-link"><i class="far fa-envelope"></i> Contacter</a></p>
+								<p class="text-uppercase text-right">
+									<a href="{{ path('artist_contact', {user_id: announcement.user.id}) }}" class="font-weight-bold text-dark card-link">
+										<i class="far fa-envelope"></i>
+										Contacter</a>
+								</p>
 							</div>
 						</div>
 					</div>
@@ -158,5 +205,4 @@
 			</div>
 		</div>
 	</div>
-	{% endblock %}
-{% endblock %}
+{% endblock %}{% endblock %}

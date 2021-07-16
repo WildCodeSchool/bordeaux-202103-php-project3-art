@@ -15,6 +15,7 @@ use App\Form\MessageType;
 use App\Repository\AnnouncementRepository;
 use App\Repository\MessageRepository;
 use App\Form\UserType;
+use App\Repository\ArtworkRepository;
 use App\Repository\ResponseRepository;
 use App\Repository\UserRepository;
 use App\Service\CityBuilder;
@@ -114,11 +115,14 @@ class ArtistController extends AbstractController
             ]);
         }
         $totalUnreadMessage = $messageRepository->countUnreadMessage($user);
-        $messagesData = $messageRepository->findBy(['user' => $user]);
+        $messagesData = $messageRepository->findBy(
+            ['user' => $user],
+            ['sendAt' => 'DESC']
+        );
         $messages = $paginator->paginate(
             $messagesData,
             $request->query->getInt('page', 1),
-            5
+            10
         );
         return $this->render('artist/profil.html.twig', [
             'messages' => $messages,
@@ -151,11 +155,45 @@ class ArtistController extends AbstractController
     }
 
     /**
+     * @Route("/contact/{user_id}/{artwork_id}", name="contact_artwork")
+     * @ParamConverter("user", class="App\Entity\User", options={"mapping": {"user_id" : "id"}})
+     * @ParamConverter("artwork", class="App\Entity\Artwork", options={"mapping": {"artwork_id" : "id"}})
+     */
+    public function contactArtistBuy(
+        User $user,
+        Artwork $artwork,
+        Request $request,
+        EntityManagerInterface $entityManager
+    ): Response {
+        $message = new Message();
+        $artworkName = 'Demande d\'achat de ' . $artwork->getName();
+        $isBuying = true;
+        $form = $this->createForm(
+            MessageType::class,
+            $message,
+            ['is_buying' => $isBuying, 'artwork_name' => $artworkName]
+        );
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $message->setIsRead(false);
+            $message->setUser($user);
+            $entityManager->persist($message);
+            $entityManager->flush();
+            $this->addFlash('success', 'Message envoyé !');
+            return $this->redirectToRoute('artist_show', ['id' => $artwork->getUser()->getId()]);
+        }
+        return $this->render('artist/artist_contact_artwork.html.twig', [
+            'form' => $form->createView(),
+            'artist' => $user,
+            'artwork' => $artwork,
+        ]);
+    }
+    /**
      * @Route("/show_all", name="show_all")
      */
     public function showAll(UserRepository $repository)
     {
-        $artists = $repository->findByRoleUser($order = 'DESC');
+        $artists = $repository->findAll('DESC');
         foreach ($artists as $artist) {
             $artist->getDisciplines()->get(0);
             return $this->render('artist/artist_show_all.html.twig', [
@@ -205,5 +243,33 @@ class ArtistController extends AbstractController
     {
         $session->set('isMailBoxOpen', !$session->get('isMailBoxOpen'));
         $this->json(['isMailBoxOpen' => $session->get('isMailBoxOpen')]);
+    }
+
+    /**
+     * @Route("/reportProfile/{id}", name="report_profile", methods={"GET", "POST"})
+     * @IsGranted("ROLE_USER")
+     */
+
+    public function reportProfile(EntityManagerInterface $entityManager, User $artist, UserRepository $userRepository): Response
+    {
+        $connectedUser = $this->getUser();
+
+        $message = new Message();
+        $adminContact = $userRepository->findOneBy(['email' => $message->getAdminMailMessenger()]);
+        $message->setUser($adminContact);
+        $message->setMail($connectedUser->getEmail());
+        $message->setObject('Signalement du profil de l\'artiste #' .$artist->getId());
+        $message->setContent($connectedUser->getFirstname() . $connectedUser->getLastname() .
+            ' a signalé le profil de ' .$artist->getFirstname() . $artist->getLastname(). ' pour non-conformité');
+        $message->setIsRead(false);
+        $message->onPrePersist();
+        $entityManager->persist($message);
+        $entityManager->flush();
+        $this->addFlash('success', 'Message envoyé !');
+        return $this->redirectToRoute('artist_show', ['id' => $artist->getId()]);
+
+        return $this->render('artist/_show_artist.html.twig', [
+            'artist' => $artist,
+        ]);
     }
 }

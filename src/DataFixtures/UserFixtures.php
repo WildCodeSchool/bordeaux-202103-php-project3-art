@@ -72,6 +72,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
             $user->setExpertise(self::EXPERTISES[$i - 1]);
             $user->addDiscipline($this->getReference(self::DISCIPLINES[$i - 1]));
             $user->setCity($this->getReference('city_' . $i));
+            $user->setPodium($i);
             $manager->persist($user);
             $this->addReference('user_' . $i, $user);
         }

@@ -23,26 +23,42 @@ class MessageType extends AbstractType
                 'label_attr' => [
                     'class' => 'font-regular text-uppercase'
                 ]
-            ])
-            ->add('object', TextType::class, [
-                'label' => 'Objet du message',
-                'label_attr' => [
-                    'class' => 'font-regular text-uppercase'
+            ]);
+        if ($options['is_buying']) {
+            $builder
+                ->add('object', TextType::class, [
+                    'label' => 'Objet du message',
+                    'attr' => [
+                        'value' => $options['artwork_name']
+                    ],
+                    'label_attr' => [
+                        'class' => 'font-regular text-uppercase'
                     ]
-            ])
+                ]);
+        } else {
+            $builder
+                ->add('object', TextType::class, [
+                    'label' => 'Objet du message',
+                    'label_attr' => [
+                        'class' => 'font-regular text-uppercase'
+                    ]
+                ]);
+        }
+        $builder
             ->add('content', TextareaType::class, [
                 'label' => 'Votre message',
                 'label_attr' => [
                     'class' => 'font-regular text-uppercase'
                 ]
-            ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'data_class' => Message::class,
+            'is_buying' => false,
+            'artwork_name' => null,
         ]);
     }
 }

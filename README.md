@@ -15,6 +15,7 @@
 2. Run `composer install`
 3. Run `yarn install`
 4. Run `yarn encore dev` to build assets
+5. To make ckeditor (WYSISWYG) work, make a `php bin/console ckeditor:install`
 
 ### Working
 
@@ -28,6 +29,10 @@
 3. Run `.vendor/bin/phpmd src text phpmd.xml` to launch PHP Mess Detector
 3. Run `./node_modules/.bin/eslint assets/js` to launch ESLint JS linter
 3. Run `../node_modules/.bin/sass-lint -c sass-linter.yml -v` to launch Sass-lint SASS/CSS linter
+
+### Prod environment
+
+1. Setup the crontab with the following line : `* 2 * * * php /var/www/staging/bin/console app-anonymiser` 
 
 ### Windows Users
 

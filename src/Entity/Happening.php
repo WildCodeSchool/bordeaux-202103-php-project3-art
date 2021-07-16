@@ -25,10 +25,7 @@ class Happening
      */
     private $title;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $media;
+
 
     /**
      * @ORM\Column(type="text")
@@ -76,6 +73,11 @@ class Happening
      */
     private $user;
 
+    /**
+     * @ORM\OneToOne(targetEntity=ImageHappening::class, cascade={"persist", "remove"})
+     */
+    private $imageHappening;
+
     public function __construct()
     {
         $this->tags = new ArrayCollection();
@@ -94,18 +96,6 @@ class Happening
     public function setTitle(string $title): self
     {
         $this->title = $title;
-
-        return $this;
-    }
-
-    public function getMedia(): ?string
-    {
-        return $this->media;
-    }
-
-    public function setMedia(?string $media): self
-    {
-        $this->media = $media;
 
         return $this;
     }
@@ -250,5 +240,17 @@ class Happening
     public function onPreUpdate()
     {
         $this->updatedAt = new \DateTime();
+    }
+
+    public function getImageHappening(): ?ImageHappening
+    {
+        return $this->imageHappening;
+    }
+
+    public function setImageHappening(?ImageHappening $imageHappening): self
+    {
+        $this->imageHappening = $imageHappening;
+
+        return $this;
     }
 }
