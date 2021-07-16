@@ -3,8 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Message;
-use App\Entity\User;
-use App\Form\MessageType;
 use App\Repository\MessageRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -14,7 +12,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
@@ -27,8 +24,12 @@ class AdminMessageController extends AbstractController
     /**
      * @Route("/index", name="index")
      */
-    public function index(UserRepository $userRepository, MessageRepository $messageRepository, PaginatorInterface $paginator, Request $request): Response
-    {
+    public function index(
+        UserRepository $userRepository,
+        MessageRepository $messageRepository,
+        PaginatorInterface $paginator,
+        Request $request
+    ): Response {
         $message = new Message();
         $admin = $userRepository->findOneBy(['email' => $message->getAdminMailMessenger()]);
         $adminMessagesData = $messageRepository->findBy(
@@ -45,19 +46,16 @@ class AdminMessageController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/", name="unread",methods={"GET","POST"})
-     */
-    public function unread(
-        MessageRepository $messageRepository,
-        User $user
-    ): Response {
-        $totalUnreadMessage = $messageRepository->countUnreadMessage($user);
-        return $this->render('admin/messaging.html.twig', [
-            'messages' => $messageRepository->findBy(['user' => $user]),
-            'totalUnreadMessage' => $totalUnreadMessage,
+    public function countUnreadMessage(UserRepository $userRepository, MessageRepository $messageRepository): Response
+    {
+        $message = new Message();
+        $admin = $userRepository->findOneBy(['email' => $message->getAdminMailMessenger()]);
+        $totalUnreadAdminMessage = $messageRepository->countUnreadMessage($admin);
+        return $this->render('admin/_unread_admin.html.twig', [
+            'totalUnreadAdminMessage' => $totalUnreadAdminMessage,
         ]);
     }
+
 
     /**
      * @Route("/isRead/{id}", name="is_read", methods={"GET", "POST"})
