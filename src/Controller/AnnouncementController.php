@@ -105,6 +105,7 @@ class AnnouncementController extends AbstractController
             $message->setUser($poster);
             $entityManager->persist($message);
             $entityManager->flush();
+            $this->addFlash('success', 'Message envoyé !');
             return $this->redirectToRoute('announcement_index');
         }
         return $this->render('announcement/response.html.twig', [
