@@ -52,7 +52,7 @@ class GlobalSearchProvider
                 $results['users'] = $this->userRepository->findByCitiesNameAndZipcode($keywords);
                 break;
             case 'announcement':
-                $results['announcements'] = $this->announcementRepository->findByTitle($keywords);
+                $results['announcements'] = $this->announcementRepository->findByTitleOrDiscipline($keywords);
         }
         $globalSearch->setResults($results);
     }
