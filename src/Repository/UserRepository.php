@@ -45,6 +45,9 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
                 ->setParameter('keyword' . $key, '%' . $keyword . '%');
         }
         $qb
+            ->andHaving('u.isActive = true')
+            ->andHaving('u.roles LIKE :role')
+            ->setParameter('role', '["ROLE_USER"]')
             ->orderBy('u.updatedAt', 'DESC');
         return $qb->getQuery()->getResult();
     }
@@ -58,7 +61,10 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
                 ->setParameter('keyword' . $key, '%' . $keyword . '%');
         }
             $qb
-             ->orderBy('u.updatedAt', 'DESC');
+                ->andHaving('u.isActive = true')
+                ->andHaving('u.roles LIKE :role')
+                ->setParameter('role', '["ROLE_USER"]')
+                ->orderBy('u.updatedAt', 'DESC');
         return $qb->getQuery()->getResult();
     }
 
@@ -72,6 +78,9 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
                 ->setParameter('keyword' . $key, '%' . $keyword . '%');
         }
         $qb
+            ->andHaving('u.isActive = true')
+            ->andHaving('u.roles LIKE :role')
+            ->setParameter('role', '["ROLE_USER"]')
             ->leftJoin('u.city', 'c')
             ->orderBy('u.updatedAt', 'DESC');
         return $qb->getQuery()->getResult();

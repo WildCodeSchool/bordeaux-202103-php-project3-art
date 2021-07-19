@@ -42,7 +42,7 @@
 {% block message %}
 	<div id="block-message" class="{{ app.session.get('isMailBoxOpen') ? "" : "d-none" }} container mt-5">
 		<h2 class="mb-5 card-title title-shadow font-medium text-uppercase">
-			<span class="title-content font-medium">
+			<span class="title-content">
 				Messages
 			</span>
 		</h2>
@@ -172,7 +172,7 @@
 </div></div>{% endblock %}{% block announcements %}<div class="container">
 <div class="row col-12 mt-5">
 	<h2 class="ml-3 mb-5 card-title title-shadow font-medium text-uppercase">
-		<span class="title-content font-medium">Ma sélection</span>
+		<span class="title-content">Ma sélection</span>
 	</h2>
 </div>
 <div class="row pt-5 pb-5">
@@ -199,8 +199,8 @@
 {% else %}
 	Pas d'annonce sélectionnée pour le moment
 {% endfor %}</div><div id="myAnnouncements" class="row col-12 mt-5">
-<h2 class="ml-3 mb-5 card-title title-shadow font-medium text-uppercase">
-	<span class="title-content font-medium">Mes annonces</span>
+<h2 class="ml-3 card-title title-shadow font-medium text-uppercase">
+	<span class="title-content">Mes annonces</span>
 </h2></div><div class="row pt-5 pb-5">
 {% for announcement in app.user.announcements %}
 	<div class="col-sm-4 d-flex justify-content-center">

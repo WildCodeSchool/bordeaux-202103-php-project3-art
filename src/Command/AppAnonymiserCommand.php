@@ -4,6 +4,7 @@ namespace App\Command;
 
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -17,15 +18,20 @@ class AppAnonymiserCommand extends Command
     protected static $defaultDescription = 'Anonymise inactives users';
     private UserRepository $userRepository;
     private EntityManagerInterface $entityManager;
+    private LoggerInterface $logger;
 
     public function __construct(
         UserRepository $userRepository,
         EntityManagerInterface $entityManager,
+        LoggerInterface $logger,
         string $name = null
+
     ) {
         parent::__construct($name);
         $this->userRepository = $userRepository;
         $this->entityManager = $entityManager;
+        $this->logger = $logger;
+
     }
 
     protected function configure(): void
@@ -59,6 +65,7 @@ class AppAnonymiserCommand extends Command
         }
 
         $this->entityManager->flush();
+        $this->logger->info('Succes : ' . $numberUsersInactives . ' users has been anonymised.');
         $io->success('Succes : ' . $numberUsersInactives . ' users has been anonymised.');
 
         return Command::SUCCESS;

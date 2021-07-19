@@ -6,16 +6,16 @@
 {% block body %}
     <div class="memphis-background">
 <div class="container pt-5 pb-5">
-    <h2 class="font-weight-bold mb-4 title-shadow text-uppercase">
+    <h2 class="font-medium mb-4 title-shadow text-uppercase">
         <span class="title-content">Article {{ happening.id }}</span>
     </h2>
         <div class="container">
             <div class="row justify-content-center pt-5 pb-5">
                 <div class="col-lg-6">
                         <div class="card">
-                            <img class="card-img-top" src="{{ happening.media }}" alt="Card image cap" width="500px">
+                            <img src="{{ happening.imageHappening is defined ? "/uploads/images/users/" ~ happening.imageHappening.image : "/uploads/images/users/" ~ happening.imageArticle.image }}" alt="{{ happening.title }}" class="card-img-top" width="500px">
                             <div class="card-body">
-                                <h5 class="card-title font-weight-bold">{{ happening.title }}</h5>
+                                <h5 class="card-title font-medium">{{ happening.title }}</h5>
                                 <p class="card-text text-justify">{{ happening.content }}</p>
                                 <p class="card-text"><small class="text-muted">Last updated</small></p>
                             </div>
