@@ -18,8 +18,10 @@
 }
 
 @mixin highLight($color){
-    background: linear-gradient(180deg, rgba(0,0,0,0) 56%, $color 56%);
+    background: linear-gradient(180deg, rgba(0,0,0,0) 42%, $color 42%);
+    padding-bottom: 6px;
     display: inline;
+    object-fit: fill;
 }
 
 @mixin spanHighlight(){

@@ -1,32 +1,32 @@
 <div id="bloc-article" class="bloc-article ">
 	<div class="container">
-		<h2 class="ml-3 mb-5 card-title title-shadow text-uppercase font-bold">
-			<span class="title-content font-medium">Ils parlent de nous</span>
-		</h2>
+			<h2 class="ml-3 mb-5 card-title title-shadow text-uppercase font-medium">
+				<span class="title-content">Ils parlent de nous</span>
+			</h2>
 		<div class="d-flex justify-content-center d-none d-sm-block d-md-none">
 			<div class="swiper-container pt-5 pb-5 ">
 				<div class="swiper-wrapper">
 					{% for external in externals %}
-					<div class="swiper-slide ">
-						<div class="d-flex justify-content-around flex-wrap py-5 ">
-							<div class="zoom-parent ex-slide"  onclick="">
-									<div class="ex-title">{{ external.title }}</div>
-									<a href="{{ external.link }}"><img class="mb-4 zoom-child" src="/uploads/images/users/{{ external.ImageExternalArticle.image }}" alt=""></a>
+						<div class="swiper-slide ">
+							<div class="d-flex justify-content-center  ">
+								<div class="card bg-transparent border-0 zoom-parent ex-slide" onclick="">
+									<div class="card-title ex-title mx-auto">{{ external.title }}</div>
+									<a class="d-flex justify-content-center card-img" href="{{ external.link }}"><img class="mb-4 zoom-child" src="/uploads/images/users/{{ external.ImageExternalArticle.image }}" alt=""></a>
+								</div>
 							</div>
 						</div>
-					</div>
 					{% endfor %}
 				</div>
 				<div class="swiper-pagination"></div>
 			</div>
 		</div>
 		<div class="d-none d-md-block">
-			<div class="d-flex justify-content-around flex-wrap py-5 ">
+			<div class="card-deck my-5 ">
 				{% for external in externals %}
-				<div class="zoom-parent" onclick="">
-					<div class="ex-title">{{ external.title }}</div>
-					<a href="{{ external.link }}"><img class="mb-4 zoom-child" src="/uploads/images/users/{{ external.ImageExternalArticle.image }}" alt=""></a>
-				</div>
+					<div class="card bg-transparent border-0 zoom-parent" onclick="">
+						<div class="card-title ex-title mx-auto">{{ external.title }}</div>
+						<a class="d-flex justify-content-center card-img" href="{{ external.link }}"><img class="mb-4 zoom-child" src="/uploads/images/users/{{ external.ImageExternalArticle.image }}" alt=""></a>
+					</div>
 				{% endfor %}
 			</div>
 		</div>
