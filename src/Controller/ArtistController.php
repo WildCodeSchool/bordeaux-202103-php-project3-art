@@ -55,7 +55,7 @@ class ArtistController extends AbstractController
     }
 
     /**
-     * @Route("/edit/{user_id}", name="edit")
+     * @Route("/edit/{user_id}", name="edit", methods={"GET","POST"})
      * @ParamConverter("user", class="App\Entity\User", options={"mapping": {"user_id" : "id"}})
      * @IsGranted("ROLE_USER")
      */
@@ -258,9 +258,9 @@ class ArtistController extends AbstractController
         $adminContact = $userRepository->findOneBy(['email' => $message->getAdminMailMessenger()]);
         $message->setUser($adminContact);
         $message->setMail($connectedUser->getEmail());
-        $message->setObject('Signalement du profil de l\'artiste #' .$artist->getId());
+        $message->setObject('Signalement du profil de l\'artiste #' . $artist->getId());
         $message->setContent($connectedUser->getFirstname() . $connectedUser->getLastname() .
-            ' a signalé le profil de ' .$artist->getFirstname() . $artist->getLastname(). ' pour non-conformité');
+            ' a signalé le profil de ' . $artist->getFirstname() . $artist->getLastname() . ' pour non-conformité');
         $message->setIsRead(false);
         $message->onPrePersist();
         $entityManager->persist($message);
