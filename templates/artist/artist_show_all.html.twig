@@ -17,9 +17,9 @@
 		<div class="row row-cols-1-md-6 mt-5 mx-auto">
 			{% for artist in artists %}
 				<div class="card artist-cards mx-auto border-0 bg-transparent">
-					{% if artist.avatar %}
-						<a href="{{ path('artist_show', {id: artist.id}) }}target=" _blank"">
-							<img class="rounded-circle avatar-img" src="/uploads/images/users/{{ artist.avatar.image }}" alt="image profil"></a>
+					{% if artist.avatar.image is not null %}
+						<a href="{{ path('artist_show', {id: artist.id}) }}">
+							<img class="rounded-circle avatar-img" src="/uploads/images/users/{{ artist.avatar.image }}"></a>
 					{% else %}
 						<a href="{{ path('artist_show', {id: artist.id}) }}">
 							<img class="rounded-circle avatar-img" src="{{ asset('build/default-profile.png') }}"></a>

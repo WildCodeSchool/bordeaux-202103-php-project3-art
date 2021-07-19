@@ -14,7 +14,7 @@ class CityType extends AbstractType
     {
         $builder
             ->add('zipCode', TextType::class, [
-                'label' => 'Code Postal'
+                'label' => 'Code Postal',
             ])
         ;
     }
@@ -24,7 +24,6 @@ class CityType extends AbstractType
         $resolver->setDefaults([
             'data_class' => City::class,
             'label' => false,
-
         ]);
     }
 }
