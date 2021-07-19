@@ -11,24 +11,9 @@
 {% block body %}
 	<div class="container my-5 pt-3">
 		<h2 class="ml-3 my-5 card-title title-shadow text-uppercase font-medium">
-			<span class="title-content">carte
-			</span>
-		</h2>
-		<div id="map" class="my-5"></div>
-		{% for artist in artists %}
-			<div class="artist-card d-none" data-latitude="{{ artist.city is empty ? '' : artist.city.latitude }}" data-longitude="{{ artist.city is empty ? '' : artist.city.longitude }}" data-color="{{ artist.disciplines is empty ? '' : artist.disciplines[0].color }}">
-				<a class="bg-{{ artist.disciplines is empty ? '' : artist.disciplines[0].color }} text-{{ artist.disciplines is empty ? '' : artist.disciplines[0].color }}" href={{ path("artist_show", {id: artist.id}) }}>
-					{{ artist.pseudo }},
-					{{ artist.expertise }}
-					<img src=" /uploads/images/users/{{ artist.avatar is empty ? '' : artist.avatar.image }}" alt="" width="100%">
-				</a>
-			</div>
-		{% endfor %}
-		<h2 class="ml-3 my-5 card-title title-shadow text-uppercase font-medium">
 			<span class="title-content">Tous les artistes
 			</span>
 		</h2>
-
 		<div class="row row-cols-1-md-6 mt-5 mx-auto">
 			{% for artist in artists %}
 				<div class="card artist-cards mx-auto border-0 bg-transparent">
@@ -53,5 +38,19 @@
 				</div>
 			{% endfor %}
 		</div>
+		<h2 class="ml-3 my-5 card-title title-shadow text-uppercase font-medium">
+			<span class="title-content">carte
+			</span>
+		</h2>
+		<div id="map" class="my-5"></div>
+		{% for artist in artists %}
+			<div class="artist-card d-none" data-latitude="{{ artist.city is empty ? '' : artist.city.latitude }}" data-longitude="{{ artist.city is empty ? '' : artist.city.longitude }}" data-color="{{ artist.disciplines is empty ? '' : artist.disciplines[0].color }}">
+				<a class="bg-{{ artist.disciplines is empty ? '' : artist.disciplines[0].color }} text-{{ artist.disciplines is empty ? '' : artist.disciplines[0].color }}" href={{ path("artist_show", {id: artist.id} ) }}>
+					{{ artist.pseudo }},
+					{{ artist.expertise }}
+					<img src=" /uploads/images/users/{{ artist.avatar is empty ? '' : artist.avatar.image }}" alt="" width="100%">
+				</a>
+			</div>
+		{% endfor %}
 	</div>
 {% endblock %}

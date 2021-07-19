@@ -1,11 +1,13 @@
 {% extends 'admin/dashboard.html.twig' %}
+
 {% block javascripts %}
-{{ parent() }}
+	{{ parent() }}
 	{{ encore_entry_script_tags('openMessaging') }}
 {% endblock %}
 
 {% block title %}
-	{{ parent() }} - Messages
+	{{ parent() }}
+	- Messages
 {% endblock %}
 
 {% block body %}
@@ -17,7 +19,7 @@
 		</h2>
 		<div class="block-mail card mt-5 mb-5">
 			<table class="table-light table-hover">
-				{% for message in messages %}
+			{% for message in messages %}
 					<tr class="cursor-pointer title-message border-top border-bottom">
 						<td align="center" class="text-uppercase {{ (message.isRead) ? '' : " font-weight-bold" }}">
 							<h2 class="rounded-circle letter-circle text-light mt-1 bg-secondary">{{ message.mail|length > 0 ? message.mail|slice(-0, 1) : message.mail }}</h2>
