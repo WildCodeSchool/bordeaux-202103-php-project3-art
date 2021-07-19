@@ -5,9 +5,9 @@
 		</h2>
 		<div class="row mt-5 ">
 			{% for artist in artists %}
-				<div class="col-sm-6 col-md-4">
+				<div class="col-sm-6 col-md-4 artist" id="photo{{ loop.index + 1 }}" data-target="comment{{ loop.index + 1 }}" data-link="link{{ loop.index + 1 }}">
 					<p class="bg-{{ artist.disciplines[0].color }}  position-relative img-container">
-						<a class="trigger" href="#collapse{{ loop.index }}" data-toggle="collapse">
+{#						<a class="trigger" href="#collapse{{ loop.index }}" data-toggle="collapse">#}
 							<img class="artist-image " src="/uploads/images/users/{{ artist.avatar.image }}" alt="{{ artist.firstName }} {{ artist.lastName }}" width="100%">
 							<span class=" {{ artist.disciplines[0].color }}"></span>
 							<span class="ml-2 text-white font-light artist-name">
@@ -20,8 +20,8 @@
 			{% endfor %}
 		</div>
 		{% for artist in artists %}
-			<div class="collapse mt-5" id="collapse{{loop.index }}">
-				<div class="row col-12 img-container">
+			<div class="hidden" id="comment{{ loop.index + 1 }}" data-link="link{{ loop.index + 1 }}">
+				<div class="row col-12 img-container" >
 					<div class="card border-0 bg-transparent mb-3">
 						<div class="row no-gutters">
 							<div class="col-md-4">
