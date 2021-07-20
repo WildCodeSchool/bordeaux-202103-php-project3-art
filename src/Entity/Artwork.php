@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ArtworkRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=ArtworkRepository::class)
@@ -20,6 +21,7 @@ class Artwork
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Merci de bien vouloir saisir un titre")
      */
     private $name;
 
@@ -51,6 +53,7 @@ class Artwork
 
     /**
      * @ORM\OneToOne(targetEntity=Media::class, mappedBy="artwork", cascade={"persist", "remove"})
+     * @Assert\NotBlank(message="Merci de bien vouloir saisir une Url")
      */
     private $media;
 
