@@ -191,15 +191,17 @@ class ArtistController extends AbstractController
     /**
      * @Route("/show_all", name="show_all")
      */
-    public function showAll(UserRepository $repository)
+    public function showAll(UserRepository $repository, Request $request, PaginatorInterface $paginator): Response
     {
-        $artists = $repository->findAll('DESC');
-        foreach ($artists as $artist) {
-            $artist->getDisciplines()->get(0);
+        $artistsData = $repository->findAll('DESC');
+        $artists = $paginator->paginate(
+            $artistsData,
+            $request->query->getInt('page', 1),
+            9
+        );
             return $this->render('artist/artist_show_all.html.twig', [
                 'artists' => $artists,
             ]);
-        }
     }
 
     /**
