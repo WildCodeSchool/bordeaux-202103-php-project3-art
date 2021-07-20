@@ -14,7 +14,7 @@
             <a href="{{ path("home_page") }}"><img id='logo-navbar' class='' src="{{ asset('build/logo.png') }}" alt="logo arts d'eko" width="100px"></a>
             <div class="adjust-navbar d-flex flex-column flex-lg-row justify-content-between">
             <a class="nav-link navbar-white font-bold text-uppercase" href="{{ path('home_page', {'_fragment': 'contact-homepage'}) }}">Contact</a>
-            {% if is_granted("ROLE_ADMIN") %}
+            {% if is_granted("ROLE_ADMIN") or is_granted ("ROLE_SUPERADMIN") %}
                 <a class="nav-link navbar-white font-bold text-uppercase" href="{{ path('admin_dashboard') }}"> Admin</a>
             {% else %}
                 <a class="nav-link navbar-white font-bold text-uppercase" href="{{ (app.user) ? path('artist_profil') : path('app_login') }}">

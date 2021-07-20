@@ -447,5 +447,44 @@ class AdminController extends AbstractController
         $entityManager->flush();
         return $this->redirectToRoute('admin_show_podium');
     }
-}
 
+    /**
+     * @Route("/makeAdmin{id}", name="makeAdmin", methods={"POST"})
+     */
+    public function makeAdmin(
+        Request $request,
+        User $user,
+        EntityManagerInterface $entityManager
+    ): Response {
+        if ($this->isCsrfTokenValid('makeAdmin' . $user->getId(), $request->request->get('_token'))) {
+            $role = $user->getRoles();
+            if (in_array('ROLE_ADMIN', $role)) {
+                $user->setRoles(['ROLE_USER']);
+            } else {
+                $user->setRoles(['ROLE_ADMIN']);
+            }
+            $entityManager->flush();
+        }
+        return $this->redirectToRoute('admin_show_artists');
+    }
+    /**
+     * @Route("/showAdmin", name="show_admin")
+     * @IsGranted("ROLE_SUPER_ADMIN")
+     */
+    public function showAdmin(
+        UserRepository $userRepository,
+        Request $request,
+        PaginatorInterface $paginator
+    ): Response {
+        $usersData = $userRepository->findByAdmin();
+        $users = $paginator->paginate(
+            $usersData,
+            $request->query->getInt('page', 1),
+            10
+        );
+
+        return $this->render('admin/user/admin_show.html.twig', [
+            'users' => $users,
+            ]);
+    }
+}
