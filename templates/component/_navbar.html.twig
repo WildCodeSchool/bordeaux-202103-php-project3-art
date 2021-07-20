@@ -1,34 +1,32 @@
-<div class="container-fluid-nav">
-	<nav id='navbar' class="navbar sticky-navbar fixed-top navbar-expand-lg navbar-dark">
-		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-		<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-			<div class="navbar-nav container d-flex  flex-nowrap  justify-content-between">
-				<div class="adjust-navbar d-flex flex-column flex-lg-row justify-content-around">
-					<a class="nav-link navbar-white font-bold text-uppercase" href="{{ path('artist_show_all') }}">Les artistes</a>
-					<a class="nav-link navbar-white font-bold text-uppercase" href="{{ path('home_page', {'_fragment': 'presentation-homepage'}) }}">L'asso</a>
-					<a class="nav-link navbar-white font-bold text-uppercase" href="{{ path('announcement_index') }}">Annonces</a>
-					<a class="nav-link navbar-white font-bold text-uppercase" href="{{ path('blog_index') }}">Blog</a>
-				</div>
-				<a href="{{ path("home_page") }}"><img id='logo-navbar' class='' src="{{ asset('build/logo.png') }}" alt="logo arts d'eko" width="100px"></a>
-				<div class="adjust-navbar d-flex flex-column flex-lg-row justify-content-between">
-					<a class="nav-link navbar-white font-bold text-uppercase" href="{{ path('home_page', {'_fragment': 'contact-homepage'}) }}">Contact</a>
-					{% if is_granted("ROLE_ADMIN") %}
-						<a class="nav-link navbar-white font-bold text-uppercase" href="{{ path('admin_dashboard') }}">
-							Admin</a>
-					{% else %}
-						<a class="nav-link navbar-white font-bold text-uppercase" href="{{ (app.user) ? path('artist_profil') : path('app_login') }}">
-							{{ (app.user) ? "Profil" : "Connexion" }}
-						</a>
-					{% endif %}
-					{% if app.user %}
-						<a class="nav-link navbar-white font-bold text-uppercase" href="{{ path("app_logout") }}">Déconnexion</a>
-					{% endif %}
-					<a class="nav-link navbar-white font-bold text-uppercase" href="{{ path("home_search") }}">Recherche</a>
-				</div>
-			</div>
-		</div>
-	</nav>
-	<div class="space-navbar"></div>
-</div>
+<div class="container-fluid-nav"></div>
+<nav id='navbar' class="navbar sticky-navbar fixed-top navbar-expand-lg navbar-dark">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div  class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav container d-flex  flex-nowrap  justify-content-between">
+            <div class="adjust-navbar d-flex flex-column flex-lg-row justify-content-around">
+            <a class="nav-link navbar-white font-bold text-uppercase" href="{{ path('artist_show_all') }}">Les artistes</a>
+            <a class="nav-link navbar-white font-bold text-uppercase" href="{{ path('home_page', {'_fragment': 'presentation-homepage'}) }}">L'asso</a>
+            <a class="nav-link navbar-white font-bold text-uppercase" href="{{ path('announcement_index') }}">Annonces</a>
+            <a class="nav-link navbar-white font-bold text-uppercase" href="{{ path('blog_index') }}">Blog</a>
+            </div>
+            <a href="{{ path("home_page") }}"><img id='logo-navbar' class='' src="{{ asset('build/logo.png') }}" alt="logo arts d'eko" width="100px"></a>
+            <div class="adjust-navbar d-flex flex-column flex-lg-row justify-content-between">
+            <a class="nav-link navbar-white font-bold text-uppercase" href="{{ path('home_page', {'_fragment': 'contact-homepage'}) }}">Contact</a>
+            {% if is_granted("ROLE_ADMIN") or is_granted ("ROLE_SUPERADMIN") %}
+                <a class="nav-link navbar-white font-bold text-uppercase" href="{{ path('admin_dashboard') }}"> Admin</a>
+            {% else %}
+                <a class="nav-link navbar-white font-bold text-uppercase" href="{{ (app.user) ? path('artist_profil') : path('app_login') }}">
+                   {{ (app.user) ? "Profil" : "Connexion" }} </a>
+            {% endif %}
+            {% if app.user %}
+                <a class="nav-link navbar-white font-bold text-uppercase" href="{{ path("app_logout") }}">Déconnexion</a>
+            {% endif %}
+            <a class="nav-link navbar-white font-bold text-uppercase" href="{{ path("home_search") }}">Recherche</a>
+            </div>
+        </div>
+    </div>
+</nav>
+<div class="space-navbar"></div>
+

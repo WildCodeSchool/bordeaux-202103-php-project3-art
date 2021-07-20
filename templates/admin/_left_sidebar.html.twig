@@ -14,6 +14,9 @@
                             <li><a href="{{ path('admin_show_artists') }}"><i class="fas fa-angle-right"></i> Gestion des utilisateurs</a></li>
                             <li><a href="{{ path('admin_show_announcements') }}"><i class="fas fa-angle-right"></i> Gestion des annonces</a></li>
                             <li><a href="{{ path('admin_show_podium') }}"><i class="fas fa-angle-right"></i> Mise en avant des artistes</a></li>
+                            {% if is_granted('ROLE_SUPER_ADMIN') %}
+                                <li><a href="{{ path('admin_show_admin') }}"><i class="fas fa-angle-right"></i> Gestion des admins</a></li>
+                            {% endif %}
                         </ul>
                     </li>
                     <li class="nav-item">

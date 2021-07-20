@@ -1,20 +1,15 @@
 {% extends 'admin/dashboard.html.twig' %}
 
 {% block title %}
-    Gestion des utilisateurs - {{ parent() }}
+    Gestion des admins - {{ parent() }}
 {% endblock %}
 
 {% block body %}
     <div class="container pt-5 pb-5">
         <h2 class="ml-3 mt-5 card-title title-shadow font-medium text-uppercase">
-			<span class="title-content">Gestion des utilisateurs</span>
+            <span class="title-content">Gestion des admins</span>
         </h2>
         <div class="pt-5">
-            <div class="pb-3 justify-content-center">
-                {{ form_start(form) }}
-                {{ form_widget(form) }}
-                {{ form_end(form) }}
-            </div>
             <table class="container">
                 <thead>
                 <tr class="border border-dark">
@@ -23,7 +18,7 @@
                     <th class="text-center">Prénom</th>
                     <th class="text-center">Nom</th>
                     <th class="text-center">Compte crée le</th>
-                    <th class="text-center">Actions</th>
+                    <th class="text-center">Action</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -35,10 +30,7 @@
                         <td class="text-center">{{ (user.lastname is not null) ? user.lastname : 'Non-renseigné' }}</td>
                         <td class="text-center">{{ user.createdAt|date('d/m/Y') }}</td>
                         <td class="text-center">
-                            {{ include('admin/user/_delete_artist.html.twig') }}
-                            {% if is_granted('ROLE_SUPER_ADMIN') %}
-                                {{ include('admin/user/_makeAdmin.html.twig') }}
-                            {% endif %}
+                            {{ include('admin/user/_makeAdmin.html.twig') }}
                         </td>
                     </tr>
                 {% endfor %}

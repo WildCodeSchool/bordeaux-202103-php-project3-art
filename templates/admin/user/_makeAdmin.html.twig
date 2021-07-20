@@ -1,0 +1,5 @@
+<form method="post" action="{{ path('admin_makeAdmin', {'id': user.id}) }}"
+      onsubmit="return confirm('Voulez-vous donner les droits Admin à cet utilisateur ?');">
+    <input type="hidden" name="_token" value="{{ csrf_token('makeAdmin' ~ user.id) }}">
+    <button class="btn"><i class="fas fa-user-shield"></i> Gérer droit Admin</button>
+</form>
