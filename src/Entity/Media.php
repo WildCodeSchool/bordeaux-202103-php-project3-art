@@ -36,6 +36,11 @@ class Media
      */
     private $artwork;
 
+    /**
+     * @ORM\OneToOne(targetEntity=ImageArtwork::class, inversedBy="media", cascade={"persist", "remove"})
+     */
+    private $imageArtwork;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -94,5 +99,17 @@ class Media
     public function onPreUpdate()
     {
         $this->updatedAt = new \DateTime();
+    }
+
+    public function getImageArtwork(): ?ImageArtwork
+    {
+        return $this->imageArtwork;
+    }
+
+    public function setImageArtwork(?ImageArtwork $imageArtwork): self
+    {
+        $this->imageArtwork = $imageArtwork;
+
+        return $this;
     }
 }

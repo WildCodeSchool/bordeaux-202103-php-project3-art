@@ -13,14 +13,17 @@ class MediaType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('url')
             ->add('support', ChoiceType::class, [
                 'choices' => [
                     'photo' => 'photo',
                     'video' => 'video',
                 ],
+            ])
+            ->add('url')
+            ->add('imageArtwork',ImageArtworkType::class,[
+                'label'=>false,
             ]);
-    }
+   }
 
     public function configureOptions(OptionsResolver $resolver)
     {
