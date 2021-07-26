@@ -1,6 +1,6 @@
 <div id="bloc-article" class="bloc-article ">
 	<div class="container">
-			<h2 class="ml-3 mb-5 card-title title-shadow text-uppercase font-medium">
+			<h2 class="ml-3 mb-5 rounded-0 card-title title-shadow text-uppercase font-medium">
 				<span class="title-content">Ils parlent de nous</span>
 			</h2>
 		<div class="d-flex justify-content-center d-none d-sm-block d-md-none">
@@ -9,9 +9,9 @@
 					{% for external in externals %}
 						<div class="swiper-slide ">
 							<div class="d-flex justify-content-center  ">
-								<div class="card bg-transparent border-0 zoom-parent ex-slide" onclick="">
-									<div class="card-title ex-title mx-auto">{{ external.title }}</div>
-									<a class="d-flex justify-content-center card-img" href="{{ external.link }}"><img class="mb-4 zoom-child" src="/uploads/images/users/{{ external.ImageExternalArticle.image }}" alt=""></a>
+								<div class="card rounded-0 bg-transparent border-0 zoom-parent ex-slide" onclick="">
+									<div class="card-title rounded-0 ex-title mx-auto">{{ external.title }}</div>
+									<a class="d-flex justify-content-center rounded-0 card-img" href="{{ external.link }}"><img class="mb-4 zoom-child" src="/uploads/images/users/{{ external.ImageExternalArticle.image }}" alt=""></a>
 								</div>
 							</div>
 						</div>
@@ -21,11 +21,11 @@
 			</div>
 		</div>
 		<div class="d-none d-md-block">
-			<div class="card-deck my-5 ">
+			<div class=" rounded-0 card-deck my-5 ">
 				{% for external in externals %}
-					<div class="card bg-transparent border-0 zoom-parent" onclick="">
-						<div class="card-title ex-title mx-auto">{{ external.title }}</div>
-						<a class="d-flex justify-content-center card-img" href="{{ external.link }}"><img class="mb-4 zoom-child" src="/uploads/images/users/{{ external.ImageExternalArticle.image }}" alt=""></a>
+					<div class="rounded-0 card bg-transparent border-0 zoom-parent" onclick="">
+						<div class="rounded-0 card-title ex-title mx-auto">{{ external.title }}</div>
+						<a class="rounded-0 d-flex justify-content-center card-img" href="{{ external.link }}"><img class="mb-4 zoom-child" src="/uploads/images/users/{{ external.ImageExternalArticle.image }}" alt=""></a>
 					</div>
 				{% endfor %}
 			</div>

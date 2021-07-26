@@ -34,6 +34,9 @@ class HomeController extends AbstractController
         ExternalArticleRepository $externalArticleRepository
     ): Response {
         $users = $userRepository->findWithPosition();
+        if (empty($users)) {
+           $users = $userRepository->findAll('DESC');
+        }
         $happenings = $happeningRepository->findBy(
             [],
             ['id' => 'DESC'],
