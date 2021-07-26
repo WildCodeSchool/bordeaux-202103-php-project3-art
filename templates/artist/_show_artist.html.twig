@@ -114,7 +114,7 @@
 										<div class="card-text text-justify mt-3">
 											{{ artwork.description }}
 										</div>
-										<a href="{{ path('artist_contact_artwork', { user_id: artist.id, artwork_id: artwork.id }) }}" class="btn btn-outline-secondary mt-3">
+										<a href="{{ path('artist_contact_artwork', { user_id: artist.id, artwork_id: artwork.id }) }}" class="btn rounded-0 btn-outline-secondary mt-3">
 											<i class="fas fa-hands-helping"></i>
 											Demande d'achat
 										</a>
@@ -144,7 +144,7 @@
 						<a href="{{ path('artist_contact', {user_id: artist.id}) }}" class="link-{{ (artist.disciplines is empty) ? 'move' : artist.disciplines[0].color }} font-light profil-link mt-1 profil-link-border-{{ (artist.disciplines is empty) ? 'move' : artist.disciplines[0].color }}">
 							Contacter l'artiste</a>
 							<br>
-						<button type="button" class="btn btn-outline-secondary btn-sm mt-2" data-toggle="modal" data-target="#exampleModalCenter">
+						<button type="button" class="btn rounded-0 btn-outline-secondary btn-sm mt-2" data-toggle="modal" data-target="#exampleModalCenter">
 							<i class="fas fa-exclamation-triangle"></i> Signaler ce profil
 						</button>
 						</p>
@@ -163,8 +163,8 @@
 										Souhaitez-vous envoyer un message automatique à l'administrateur pour signaler ce profil ?
 									</div>
 									<div class="modal-footer">
-										<button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-										<a class="btn btn-outline-secondary" href="{{ path('artist_report_profile', {id: artist.id}) }}">Envoyer</a>
+										<button type="button" class="btn rounded-0 btn-secondary" data-dismiss="modal">Fermer</button>
+										<a class="btn rounded-0 btn-outline-secondary" href="{{ path('artist_report_profile', {id: artist.id}) }}">Envoyer</a>
 									</div>
 								</div>
 							</div>
