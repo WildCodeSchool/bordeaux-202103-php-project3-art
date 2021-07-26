@@ -59,7 +59,7 @@ class UserType extends AbstractType
                 'by_reference' => false,
             ])
             ->add('city', CityType::class, [
-                'required' => false
+                'required' => true
             ])
         ;
     }
