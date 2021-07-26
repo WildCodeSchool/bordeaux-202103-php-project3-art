@@ -1,0 +1,5 @@
+<form method="post" action="{{ path('admin_delete_podium', {position: loop.index}) }}"
+      onsubmit="return confirm('Retirer cet utilisateur.trice sur le podium ?');">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete_podium' ~ loop.index) }}">
+    <button class="btn-admin card-link text-dark"><i class="fas fa-user-minus"></i> Retirer</button>
+</form>

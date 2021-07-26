@@ -45,9 +45,8 @@
                             <a class="card-link text-dark"
                                href="{{ path("admin_edit_podium", {position: loop.index}) }}">
                                 <i class="fas fa-user-plus"></i> Ajouter</a>
-                            <a class="card-link text-dark"
-                               href="{{ path("admin_delete_podium", {position: loop.index}) }}">
-                                <i class="fas fa-user-minus"></i> Retirer</a>
+                            {{ include('admin/podium_artist/_delete_podium.html.twig') }}
+
                         </td>
                     </tr>
                 {% endfor %}

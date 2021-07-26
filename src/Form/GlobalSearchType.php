@@ -48,6 +48,7 @@ class GlobalSearchType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => GlobalSearch::class,
+            'csrf_protection' => false,
         ]);
     }
 }
