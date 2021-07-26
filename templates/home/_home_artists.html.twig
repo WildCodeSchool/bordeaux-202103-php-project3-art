@@ -10,7 +10,7 @@
 {#						<a class="trigger" href="#collapse{{ loop.index }}" data-toggle="collapse">#}
 							<img class="artist-image " src="/uploads/images/users/{{ artist.avatar.image }}" alt="{{ artist.firstName }} {{ artist.lastName }}" width="100%">
 							<span class=" {{ artist.disciplines[0].color }}"></span>
-							<a class="ml-2 text-white font-light artist-name" href"{{ path('artist_show',{id:artist.id}) }}">
+							<a class="ml-2 text-white font-light artist-name" href="{{ path('artist_show',{id:artist.id}) }}">
 								{{ artist.firstname }}
 								{{ artist.lastname }}
 							</a>
@@ -58,7 +58,7 @@
 									<span class="title-content">{{ artwork.name }}</span>
 								</h4>
 								<div class="mt-3 d-flex justify-content-between">
-									<img class="image-size mt-2" src="{{ artwork.media.url }}" alt="{{ artwork.name }}" width="100%">
+									<img class="image-size mt-2" src="/uploads/images/users/{{ artwork.media.imageArtwork.image }}" alt="{{ artwork.name }}" width="100%">
 								</div>
 							</div>
 						{% elseif artwork.media.support == "video" %}

@@ -13,6 +13,10 @@ class RedirectionController extends AbstractController
      */
     public function index(): Response
     {
-      return $this->redirectToRoute('artist_edit', ['user_id'=> $this->getUser()->getId()]);
+        $route = $this->redirectToRoute('artist_edit', ['user_id'=> $this->getUser()->getId()]);
+        if($this->getUser()->getAvatar()->getImage()){
+            $route = $this->redirectToRoute('home_page');
+        }
+      return $route;
     }
 }
