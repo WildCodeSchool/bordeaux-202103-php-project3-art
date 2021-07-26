@@ -1,17 +1,19 @@
 <div class="container pt-5 pb-5">
-<h2 class="ml-3 mb-5 font-medium mb-4 title-shadow text-uppercase">
-    <span class="title-content">Actualité</span>
-</h2>
     <div class="col-sm-12">
 {% for happening in happenings %}
         {% if loop.index is divisible by (2) %}
+            <h2 class="ml-3 mb-5 font-medium mb-4 title-shadow text-uppercase">
+                <span class="title-content">{{ happening.type == "article"? "On parle d'eux": "Actualité" }}</span>
+            </h2>
                 <h3 class="card-title font-medium mt-5">{{ happening.title }}</h3>
                 Publié le {{ happening.createdAt|date('d/m/Y') }}
                 <div class="main-box mt-5 mb-5">
                     <div class="row">
                         <div class="col-sm-6 text-justify">
                       {{ happening.content | raw }}
-                            <a href="{{ path('blog_article', {'id': happening.id}) }}" class="text-right">Lien vers l'évènement</a>
+{#                            <a href="{{ path('blog_article', {'id': happening.id}) }}" class="text-right">Lien vers l'évènement</a>#}
+                            <a href="{{ path(happening.type == "happening"?'blog_article':'article', {'id': happening.id}) }}" class="text-right">Lien vers l'évènement</a>
+
                         </div>
                             <div class="col-sm-6 text-center">
                     <img src="{{ happening.imageHappening is defined ? "/uploads/images/users/" ~ happening.imageHappening.image : "/uploads/images/users/" ~ happening.imageArticle.image }}" alt="{{ happening.title }}" class="card-img" style="width: 300px">
@@ -19,6 +21,12 @@
                     </div>
     </div>
         {% else %}
+            <div class="text-right">
+
+                <h2 class="ml-3 mb-5 font-medium mb-4 title-shadow text-uppercase">
+                    <span class="title-content text-right">{{ happening.type == "article"? "On parle d'eux": "Actualité" }}</span>
+                </h2>
+            </div>
                 <h3 class="card-title font-medium mt-5 text-right">{{ happening.title }}</h3>
             <p class="text-right">Publié le {{ happening.createdAt|date('d/m/Y') }}</p>
         <div class="main-box mt-5 mb-5">
@@ -28,7 +36,7 @@
                 </div>
                 <div class="col-sm-6 text-justify">
                     {{ happening.content | raw }}
-                    <a href="{{ path('blog_article', {'id': happening.id}) }}" class="text-right">Lien vers l'évènement</a>
+                    <a href="{{ path(happening.type == "happening"?'blog_article':'article', {'id': happening.id}) }}" class="text-right">Lien vers l'évènement</a>
                 </div>
             </div>
         </div>

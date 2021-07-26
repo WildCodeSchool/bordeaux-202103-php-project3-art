@@ -57,6 +57,11 @@ class Article
      */
     private $imageArticle;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $type = "article";
+
     public function __construct()
     {
         $this->tags = new ArrayCollection();
@@ -182,5 +187,17 @@ class Article
     public function onPreUpdate()
     {
         $this->updatedAt = new \DateTime();
+    }
+
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType(?string $type): self
+    {
+        $this->type = $type;
+
+        return $this;
     }
 }
