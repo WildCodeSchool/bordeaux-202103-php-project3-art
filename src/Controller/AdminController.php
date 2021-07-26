@@ -414,37 +414,43 @@ class AdminController extends AbstractController
     }
 
     /**
-     * @Route("/setPodium/{position}/{id}", name="set_podium", requirements={"position"="\d+"})
+     * @Route("/setPodium/{position}/{id}", name="set_podium", methods={"POST"}, requirements={"position"="\d+"})
      */
     public function setPodium(
         int $position,
         User $user,
         UserRepository $userRepository,
-        EntityManagerInterface $entityManager
+        EntityManagerInterface $entityManager,
+        Request $request
     ): Response {
-        $podiumOwner = $userRepository->findOneBy(['podium' => $position]);
-        $statusPodium = ($podiumOwner != null);
-        if ($statusPodium) {
-            if ($podiumOwner->getPodium()) {
-                $podiumOwner->setPodium(null);
+        if ($this->isCsrfTokenValid('add_podium' . $user->getId(), $request->request->get('_token'))) {
+            $podiumOwner = $userRepository->findOneBy(['podium' => $position]);
+            $statusPodium = ($podiumOwner != null);
+            if ($statusPodium) {
+                if ($podiumOwner->getPodium()) {
+                    $podiumOwner->setPodium(null);
+                }
             }
+            $user->setPodium($position);
+            $entityManager->flush();
         }
-        $user->setPodium($position);
-        $entityManager->flush();
         return $this->redirectToRoute('admin_show_podium');
     }
 
     /**
-     * @Route("/deletePodium{position}", name="delete_podium", requirements={"position"="\d+"})
+     * @Route("/deletePodium{position}", name="delete_podium", methods={"POST"}, requirements={"position"="\d+"})
      */
     public function deletePodium(
         int $position,
         UserRepository $userRepository,
-        EntityManagerInterface $entityManager
+        EntityManagerInterface $entityManager,
+        Request $request
     ): Response {
-        $userWithPosition = $userRepository->findOneBy(['podium' => $position ]);
-        $userWithPosition->setPodium(null);
-        $entityManager->flush();
+        if ($this->isCsrfTokenValid('delete_podium' . $position, $request->request->get('_token'))) {
+            $userWithPosition = $userRepository->findOneBy(['podium' => $position]);
+            $userWithPosition->setPodium(null);
+            $entityManager->flush();
+        }
         return $this->redirectToRoute('admin_show_podium');
     }
 
