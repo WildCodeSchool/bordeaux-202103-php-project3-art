@@ -80,7 +80,6 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
                 ', Contrairement à une opinion répandue, le Lorem Ipsum n\'est pas simplement du texte aléatoire.'
             );
             $user->setPseudo(self::FIRSTNAMES[$i - 1], self::LASTNAMES[$i - 1]);
-            $user->setZipCode(self::ZIP_CODES[$i - 1]);
             $user->setCreatedAt(new DateTime());
             $user->setUpdatedAt(new DateTime());
             $user->setEmail('artiste' . $i . '@gmail.com');

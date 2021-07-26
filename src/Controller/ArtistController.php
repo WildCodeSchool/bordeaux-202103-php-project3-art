@@ -55,7 +55,7 @@ class ArtistController extends AbstractController
     }
 
     /**
-     * @Route("/edit/{user_id}", name="edit", methods={"GET", "POST"})
+     * @Route("/edit/{user_id}", name="edit", methods={"POST","GET"})
      * @ParamConverter("user", class="App\Entity\User", options={"mapping": {"user_id" : "id"}})
      * @IsGranted("ROLE_USER")
      */
