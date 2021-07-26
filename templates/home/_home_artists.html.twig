@@ -10,10 +10,10 @@
 {#						<a class="trigger" href="#collapse{{ loop.index }}" data-toggle="collapse">#}
 							<img class="artist-image " src="/uploads/images/users/{{ artist.avatar.image }}" alt="{{ artist.firstName }} {{ artist.lastName }}" width="100%">
 							<span class=" {{ artist.disciplines[0].color }}"></span>
-							<span class="ml-2 text-white font-light artist-name">
+							<a class="ml-2 text-white font-light artist-name" href"{{ path('artist_show',{id:artist.id}) }}">
 								{{ artist.firstname }}
 								{{ artist.lastname }}
-							</span>
+							</a>
 						</a>
 					</p>
 				</div>
@@ -29,10 +29,12 @@
 							</div>
 							<div class="col-md-8">
 								<div class="card-body">
-									<h3 class=" card-title ml-3 mb-5 text-uppercase font-medium title-shadow-grey color-{{ artist.disciplines[0].color }}">
-										<span class="title-content">
-											<strong>{{ artist.firstname }}</strong>
-											{{ artist.lastname }}</span>
+									<h3 id="link-artist" class=" card-title ml-3 mb-5 text-uppercase font-medium title-shadow-grey color-{{ artist.disciplines[0].color }}">
+										<a href="{{ path('artist_show',{id:artist.id}) }}" class="color-{{ artist.disciplines[0].color }}">
+											<span class="title-content">
+												<strong>{{ artist.firstname }}</strong>
+												{{ artist.lastname }}</span>
+										</a>
 									</h3>
 									<br>
 									<h4 class="ml-3 mb-5 title-shadow-grey font-regular text-uppercase color-{{ artist.disciplines[0].color }}">

@@ -30,7 +30,7 @@
 	<form method="post" action="{{ path('artist_edit', {user_id: artist.id}) }}">
 		<button class="btn-profil link-{{ (artist.disciplines is empty) ? 'move' : artist.disciplines[0].color }}
 				profil-link mt-1 font-light profil-link-border-{{ (artist.disciplines is empty) ? 'move' : artist.disciplines[0].color }}"
-				type="submit">Modifier mon profil</button>
+				type="submit">ENREGISTRER LES MODIFICATIONS</button>
 	</form>
 
 {% endblock %}
