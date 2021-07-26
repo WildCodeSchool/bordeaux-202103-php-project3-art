@@ -19,7 +19,7 @@
 				mon profil</span>
 		</h2>
 		<div class="row col-12 mt-5">
-			<div class="card border-0 bg-transparent flex-column">
+			<div class="card rounded-0 border-0 bg-transparent flex-column">
 				{% if artist.avatar %}
 					<img class="avatar-picture " src="/uploads/images/users/{{ artist.avatar.image }}" alt="image profil">
 				{% else %}
@@ -28,23 +28,23 @@
 				{{ form_start(formUpdate) }}
 				{{ form_row(formUpdate.avatar) }}
 			</div>
-			<div class="card border-0 bg-transparent col-xl-4 col-xs-8 d-flex flex-column">
+			<div class="card rounded-0 border-0 bg-transparent col-xl-4 col-xs-8 d-flex flex-column">
 				{{ form_row(formUpdate.pseudo) }}
 				{{ form_row(formUpdate.firstname) }}
 				{{ form_row(formUpdate.lastname) }}
 				{{ form_row(formUpdate.city) }}
 				<!-- Button trigger modal -->
-				<button type="button" id="modal-launcher" class="btn btn-outline-secondary text-uppercase" data-toggle="modal" data-target="#exampleModal">
+				<button type="button" id="modal-launcher" class="btn rounded-0 btn-outline-secondary text-uppercase" data-toggle="modal" data-target="#exampleModal">
 					Se localiser plus précisément
 				</button>
 				{{ form_row(formUpdate.disciplines) }}
 			</div>
-			<div class="card border-0 bg-transparent col-xl-4 col-xs-8 d-flex flex-column">
+			<div class="card rounded-0 border-0 bg-transparent col-xl-4 col-xs-8 d-flex flex-column">
 				{{ form_row(formUpdate.expertise) }}
 				{{ form_row(formUpdate.description) }}
 				{{ form_row(formUpdate.facebookUrl) }}
 				{{ form_row(formUpdate.instagramUrl) }}
-				<button type="submit" class="btn btn-outline-secondary text-uppercase">Modifier profil</button>
+				<button type="submit" class="btn rounded-0 btn-outline-secondary text-uppercase">Modifier profil</button>
 				{{ form_end(formUpdate) }}
 			</div>
 
@@ -53,7 +53,7 @@
 					<div class="modal-content">
 						<div class="modal-header">
 							<h5 class="modal-title" id="exampleModalLabel">Localisation</h5>
-							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<button type="button" class="close rounded-0" data-dismiss="modal" aria-label="Close">
 								<span aria-hidden="true">&times;</span>
 							</button>
 						</div>
@@ -61,10 +61,10 @@
 							<div id="map"></div>
 						</div>
 						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+							<button type="button" class="btn btn-secondary rounded-0" data-dismiss="modal">Fermer</button>
 							{{ form_start(form_localisation) }}
 							{{ form_widget(form_localisation) }}
-							<button type="submit" class="btn btn-outline-secondary text-uppercase">Enregistrer coordonnées</button>
+							<button type="submit" class="btn btn-outline-secondary text-uppercase rounded-0">Enregistrer coordonnées</button>
 							{{ form_end(form_localisation) }}
 						</form>
 					</div>
