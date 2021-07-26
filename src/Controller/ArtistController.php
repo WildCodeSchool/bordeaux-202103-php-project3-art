@@ -55,40 +55,44 @@ class ArtistController extends AbstractController
     }
 
     /**
-     * @Route("/edit/{user_id}", name="edit", methods={"GET","POST"})
+     * @Route("/edit/{user_id}", name="edit", methods={"POST","GET"})
      * @ParamConverter("user", class="App\Entity\User", options={"mapping": {"user_id" : "id"}})
      * @IsGranted("ROLE_USER")
      */
     public function edit(User $user, Request $request, EntityManagerInterface $manager): Response
     {
-        $formLocalisation = $this->createForm(LocalisationType::class);
-        $formLocalisation->handleRequest($request);
-        if ($formLocalisation->isSubmitted() && $formLocalisation->isValid()) {
-            $coordinates = $formLocalisation->getData();
-            $this->getUser()->getCity()->setLatitude($coordinates['latitude']);
-            $this->getUser()->getCity()->setLongitude($coordinates['longitude']);
-            $city = $this->cityBuilder->fetchCityByCoordinates($coordinates['latitude'], $coordinates['longitude']);
-            $this->getUser()->getCity()->setZipcode($city['codesPostaux'][0]);
-            $this->getUser()->getCity()->setName($city['nom']);
-            $manager->flush();
-            return $this->redirectToRoute('artist_edit', ['user_id' => $this->getUser()->getId()]);
-        }
-        $formUpdate = $this->createForm(UserType::class, $user);
-        $formUpdate->handleRequest($request);
-        if ($formUpdate->isSubmitted() && $formUpdate->isValid()) {
-            $zipCode = $formUpdate->getData()->getCity()->getZipCode();
-            $city = $this->cityBuilder->fetchCity($zipCode);
-            $this->getUser()->getCity()->setName($city['nom']);
-            $this->getUser()->getCity()->setLongitude($city['centre']['coordinates'][0]);
-            $this->getUser()->getCity()->setLatitude($city['centre']['coordinates'][1]);
-            $manager->flush();
+        if ($user === $this->getUser()) {
+            $formLocalisation = $this->createForm(LocalisationType::class);
+            $formLocalisation->handleRequest($request);
+            if ($formLocalisation->isSubmitted() && $formLocalisation->isValid()) {
+                $coordinates = $formLocalisation->getData();
+                $this->getUser()->getCity()->setLatitude($coordinates['latitude']);
+                $this->getUser()->getCity()->setLongitude($coordinates['longitude']);
+                $city = $this->cityBuilder->fetchCityByCoordinates($coordinates['latitude'], $coordinates['longitude']);
+                $this->getUser()->getCity()->setZipcode($city['codesPostaux'][0]);
+                $this->getUser()->getCity()->setName($city['nom']);
+                $manager->flush();
+                return $this->redirectToRoute('artist_edit', ['user_id' => $this->getUser()->getId()]);
+            }
+            $formUpdate = $this->createForm(UserType::class, $user);
+            $formUpdate->handleRequest($request);
+            if ($formUpdate->isSubmitted() && $formUpdate->isValid()) {
+                $zipCode = $formUpdate->getData()->getCity()->getZipCode();
+                $city = $this->cityBuilder->fetchCity($zipCode);
+                $this->getUser()->getCity()->setName($city['nom']);
+                $this->getUser()->getCity()->setLongitude($city['centre']['coordinates'][0]);
+                $this->getUser()->getCity()->setLatitude($city['centre']['coordinates'][1]);
+                $manager->flush();
+                return $this->redirectToRoute('artist_profil');
+            };
+            return $this->render('artist/edit.html.twig', [
+                'formUpdate' => $formUpdate->createView(),
+                'artist' => $user,
+                'form_localisation' => $formLocalisation->createView(),
+            ]);
+        } else {
             return $this->redirectToRoute('artist_profil');
-        };
-        return $this->render('artist/edit.html.twig', [
-            'formUpdate' => $formUpdate->createView(),
-            'artist' => $user,
-            'form_localisation' => $formLocalisation->createView(),
-        ]);
+        }
     }
 
     /**

@@ -24,6 +24,7 @@ class UserType extends AbstractType
             ])
             ->add('avatar', AvatarType::class,[
                 'label'=>false,
+                'required' => true,
             ])
             ->add('firstname', TextType::class, [
                 'label' => 'Prénom',
@@ -59,7 +60,7 @@ class UserType extends AbstractType
                 'by_reference' => false,
             ])
             ->add('city', CityType::class, [
-                'required' => false
+                'required' => true
             ])
         ;
     }
