@@ -10,10 +10,10 @@
 {#						<a class="trigger" href="#collapse{{ loop.index }}" data-toggle="collapse">#}
 							<img class="artist-image " src="/uploads/images/users/{{ artist.avatar.image }}" alt="{{ artist.firstName }} {{ artist.lastName }}" width="100%">
 							<span class=" {{ artist.disciplines[0].color }}"></span>
-							<span class="ml-2 text-white font-light artist-name">
-								{{ artist.firstname }}
-								{{ artist.lastname }}
-							</span>
+							<a class="ml-2 text-white font-light artist-name" href="{{ path('artist_show',{id:artist.id}) }}">
+								<span class="font-weight-bold">{{ artist.firstname|upper }}</span>
+								{{ artist.lastname|upper }}
+							</a>
 						</a>
 					</p>
 				</div>
@@ -28,11 +28,15 @@
 								<img class="avatar-show mt-3" src="/uploads/images/users/{{ artist.avatar.image }}" alt="{{ artist.firstName }} {{ artist.lastName }}" width="100%">
 							</div>
 							<div class="col-md-8">
-								<div class="rounded-0 card-body">
-									<h3 class="rounded-0 card-title ml-3 mb-5 text-uppercase font-medium title-shadow-grey color-{{ artist.disciplines[0].color }}">
-										<span class="title-content">
-											<strong>{{ artist.firstname }}</strong>
-											{{ artist.lastname }}</span>
+
+								<div class="card-body">
+									<h3 id="link-artist" class=" card-title ml-3 mb-5 text-uppercase font-medium title-shadow-grey color-{{ artist.disciplines[0].color }}">
+										<a href="{{ path('artist_show',{id:artist.id}) }}" class="color-{{ artist.disciplines[0].color }}">
+											<span class="title-content">
+												<strong class="font-weight-bold">{{ artist.firstname|upper }}</strong>
+												{{ artist.lastname|upper }}</span>
+										</a>
+
 									</h3>
 									<br>
 									<h4 class="ml-3 mb-5 title-shadow-grey font-regular text-uppercase color-{{ artist.disciplines[0].color }}">
@@ -54,7 +58,7 @@
 									<span class="title-content">{{ artwork.name }}</span>
 								</h4>
 								<div class="mt-3 d-flex justify-content-between">
-									<img class="image-size mt-2" src="{{ artwork.media.url }}" alt="{{ artwork.name }}" width="100%">
+									<img class="image-size mt-2" src="/uploads/images/users/{{ artwork.media.imageArtwork.image }}" alt="{{ artwork.name }}" width="100%">
 								</div>
 							</div>
 						{% elseif artwork.media.support == "video" %}
@@ -74,6 +78,8 @@
 					{% if not app.user is same as(artist) %}
 						<div class="mt-3 container d-flex justify-content-end">
 							<p class="my-5">
+								{{ dump(artist.id) }}
+								{{ dump(artist.firstname) }}
 								<a href="{{ path('artist_contact', {user_id: artist.id}) }}" class="link-{{ (artist.disciplines is empty) ? 'move' : artist.disciplines[0].color }} profil-link font-regular mt-1 profil-link-border-{{ (artist.disciplines is empty) ? 'move' : artist.disciplines[0].color }}">
 									Contacter l'artiste</a>
 								<br>
