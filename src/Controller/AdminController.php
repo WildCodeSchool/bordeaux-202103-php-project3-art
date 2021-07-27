@@ -220,8 +220,9 @@ class AdminController extends AbstractController
         if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
             if ($user->isActive()) {
                 $user->setIsActive(false);
-            } else {
-                $user->setIsActive(true);
+                if ($user->getPodium() != null){
+                    $user->setPodium(null);
+                }
             }
             $entityManager->flush();
         }
