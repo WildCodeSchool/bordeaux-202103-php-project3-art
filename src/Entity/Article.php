@@ -62,6 +62,11 @@ class Article
      */
     private $type = "article";
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $podium = null;
+
     public function __construct()
     {
         $this->tags = new ArrayCollection();
@@ -200,4 +205,22 @@ class Article
 
         return $this;
     }
+
+    /**
+     * @return null
+     */
+    public function getPodium()
+    {
+        return $this->podium;
+    }
+
+    /**
+     * @param null $podium
+     */
+    public function setPodium($podium): void
+    {
+        $this->podium = $podium;
+    }
+
+
 }
