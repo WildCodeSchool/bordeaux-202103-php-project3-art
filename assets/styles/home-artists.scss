@@ -29,9 +29,15 @@
 }
 .hidden{
 
-  //display: none !important;
+  display: none !important;
   opacity: 0 !important;
   height: 0 !important;
 }
+#link-artist{
+  a{
+    text-decoration: none;
+  }
+}
+
 
 

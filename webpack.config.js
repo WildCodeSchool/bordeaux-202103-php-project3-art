@@ -40,6 +40,7 @@ Encore
     .addEntry('location', './assets/preciseLocation.js')
     .addEntry('openMessaging', './assets/openMessaging.js')
     .addEntry('transparent', './assets/transparent-navbar.js')
+    .addEntry('inputToggle', './assets/inputToggle.js')
 
 
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)

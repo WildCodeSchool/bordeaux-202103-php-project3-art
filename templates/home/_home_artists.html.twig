@@ -6,14 +6,12 @@
 		<div class="row mt-5 ">
 			{% for artist in artists %}
 				<div class="col-sm-6 col-md-4 artist" id="photo{{ loop.index + 1 }}" data-target="comment{{ loop.index + 1 }}" data-link="link{{ loop.index + 1 }}">
-					<p
-						class="bg-{{ artist.disciplines[0].color }}  position-relative img-container">
-						{#						<a class="trigger" href="#collapse{{ loop.index }}" data-toggle="collapse">#}
+					<p class="bg-{{ artist.disciplines[0].color }}  position-relative img-container">
 						<img class="artist-image " src="/uploads/images/users/{{ artist.avatar.image }}" alt="{{ artist.firstName }} {{ artist.lastName }}" width="100%">
 						<span class=" {{ artist.disciplines[0].color }}"></span>
 						<span class="ml-2 text-white font-light artist-name">
-							{{ artist.firstname }}
-							{{ artist.lastname }}</span>
+							{{ artist.firstname|upper }}
+							{{ artist.lastname|upper }}</span>
 					</p>
 				</a>
 			</p>

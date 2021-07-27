@@ -3,6 +3,8 @@ import 'devbridge-autocomplete';
 
 const lonInput = document.getElementById('localisation_longitude');
 const latInput = document.getElementById('localisation_latitude');
+let marker = [];
+
 let currentMarker;
 
 delete L.Icon.Default.prototype._getIconUrl;
@@ -34,7 +36,12 @@ function onMapClick(e)
 {
     const { lat } = e.latlng;
     const lon = e.latlng.lng;
+
     currentMarker = L.marker([lat, lon], { icon: CCursor });
+    marker.push(currentMarker);
+    for(let i = 0; i < marker.length ;i++) {
+        map.removeLayer(marker[i]);
+    }
     currentMarker.addTo(map);
     lonInput.value = lon;
     latInput.value = lat;
