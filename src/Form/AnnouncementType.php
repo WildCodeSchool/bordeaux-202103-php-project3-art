@@ -23,7 +23,9 @@ class AnnouncementType extends AbstractType
                 'label' => 'Description de l\'annonce'
             ])
             ->add('date', DateType::class, [
-                'label' => 'Annonce disponible jusqu\'au'
+                'label' => 'Annonce disponible jusqu\'au',
+                'widget'=>'single_text',
+
             ])
             ->add('time', TimeType::class, [
                 'label' => 'Heure de l\'évenement'
