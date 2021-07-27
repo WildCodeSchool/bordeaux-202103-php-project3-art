@@ -1,0 +1,38 @@
+{% extends 'admin/dashboard.html.twig' %}
+
+{% block title %}
+    {{ parent()}} - Gestion du Podium des articles
+{% endblock %}
+
+{% block body %}
+    <div class="container pt-5 pb-5">
+        <h2 class="ml-3 mt-5 card-title title-shadow font-medium text-uppercase">
+            <span class="title-content">Ajout de l'article à la position {{ position }} du podium</span>
+        </h2>
+        <div class="pt-5">
+            <div class="pb-3 justify-content-center">
+                {{ form_start(searchBarForm) }}
+                {{ form_widget(searchBarForm) }}
+                {{ form_end(searchBarForm) }}
+            </div>
+            <table class="container">
+                <thead>
+                <tr class="border border-dark">
+                    <th class="text-center">Titre</th>
+                    <th class="text-center">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for article in articles %}
+                    <tr class="border border-dark py-2">
+                        <td class="text-center">{{ article.title }}</td>
+                        <td class="text-center">
+                            {{ include('admin/podium_about_them/_add_podium.html.twig') }}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
