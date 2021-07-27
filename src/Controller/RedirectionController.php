@@ -16,8 +16,12 @@ class RedirectionController extends AbstractController
 
         $user = $this->getUser();
         $route = $this->redirectToRoute('artist_edit', ['user_id'=> $this->getUser()->getId()]);
-        if($user->getAvatar()->getImage() || in_array("ROLE_SUPER_ADMIN",$this->getUser()->getRoles()) || in_array("ROLE_ADMIN",$this->getUser()->getRoles())){
+        if($user->getAvatar()->getImage() ){
             $route = $this->redirectToRoute('home_page');
+        } elseif (
+            in_array("ROLE_SUPER_ADMIN",$this->getUser()->getRoles()) || in_array("ROLE_ADMIN",$this->getUser()->getRoles())
+        ) {
+            $route = $this->redirectToRoute('admin_dashboard');
         }
       return $route;
     }
