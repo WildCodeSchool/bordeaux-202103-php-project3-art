@@ -22,7 +22,8 @@ class ArticleFixtures extends Fixture implements DependentFixtureInterface
                 ->setImageArticle($image)
                 ->setCreatedAt(new \DateTime())
                 ->setUpdatedAt(new \DateTime())
-                ->setUser($this->getReference('admin'));
+                ->setUser($this->getReference('admin'))
+                ->setPodium($i);
              $manager->persist($article);
         }
         $manager->flush();
