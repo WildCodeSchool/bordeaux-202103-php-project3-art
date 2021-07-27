@@ -16,6 +16,26 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class ArtworkController extends AbstractController
 {
+    /**
+     * @Route("/new", name="artwork_new", methods={"GET","POST"})
+     */
+    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $artwork = new Artwork();
+        $form = $this->createForm(ArtworkType::class, $artwork);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $artwork->setUser($this->getUser());
+            $entityManager->persist($artwork);
+            $entityManager->flush();
+            return $this->redirectToRoute('artist_profil');
+        }
+        return $this->render('artwork/new.html.twig', [
+            'artwork' => $artwork,
+            'formArtwork' => $form->createView(),
+        ]);
+    }
 
     /**
      * @Route("/{id}", name="artwork_delete", methods={"POST"})
@@ -47,24 +67,5 @@ class ArtworkController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{user.id}/new", name="artwork_new", methods={"GET","POST"})
-     */
-    public function new(Request $request): Response
-    {
-        $artwork = new Artwork();
-        $formArtwork = $this->createForm(ArtworkType::class, $artwork);
-        $formArtwork->handleRequest($request);
-        if ($formArtwork->isSubmitted() && $formArtwork->isValid()) {
-            $artwork->setUser($this->getUser());
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($artwork);
-            $entityManager->flush();
-            return $this->redirectToRoute('artist_profil');
-        }
-        return $this->render('artwork/new.html.twig', [
-            'artwork' => $artwork,
-            'formArtwork' => $formArtwork->createView(),
-        ]);
-    }
+
 }

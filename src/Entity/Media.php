@@ -21,7 +21,7 @@ class Media
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $url;
 
@@ -35,6 +35,11 @@ class Media
      * @ORM\JoinColumn(nullable=false)
      */
     private $artwork;
+
+    /**
+     * @ORM\OneToOne(targetEntity=ImageArtwork::class, inversedBy="media", cascade={"persist", "remove"})
+     */
+    private $imageArtwork;
 
     public function getId(): ?int
     {
@@ -94,5 +99,17 @@ class Media
     public function onPreUpdate()
     {
         $this->updatedAt = new \DateTime();
+    }
+
+    public function getImageArtwork(): ?ImageArtwork
+    {
+        return $this->imageArtwork;
+    }
+
+    public function setImageArtwork(?ImageArtwork $imageArtwork): self
+    {
+        $this->imageArtwork = $imageArtwork;
+
+        return $this;
     }
 }

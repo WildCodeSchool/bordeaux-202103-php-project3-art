@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\ImageArtwork;
 use App\Entity\Media;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
@@ -16,12 +17,6 @@ class MediaFixtures extends Fixture implements DependentFixtureInterface
     'https://www.youtube.com/embed/SXfgixkt4-Q',
     'https://www.youtube.com/embed/tG-xwv0kw0',
     'https://www.youtube.com/embed/-kT0HJhm5ck',
-    'https://images-na.ssl-images-amazon.com/images/I/71k3hhdlc+L.jpg',
-    'https://images-na.ssl-images-amazon.com/images/I/711O-AZOBQL.jpg',
-    'https://images-na.ssl-images-amazon.com/images/I/61vcmNNnZaL.jpg',
-    'https://images-na.ssl-images-amazon.com/images/I/81C+n9HH63L.jpg',
-    'https://images-na.ssl-images-amazon.com/images/I/61uJXHwZuPL.jpg',
-    'https://images-na.ssl-images-amazon.com/images/I/91dVpTCx1vL.jpg',
     'https://www.youtube.com/embed/1jCh5XLGWEs',
     'https://www.youtube.com/embed/IXkG7SRtJJs',
     'https://www.youtube.com/embed/J78NMdKN5UQ',
@@ -34,12 +29,6 @@ class MediaFixtures extends Fixture implements DependentFixtureInterface
         Media::SUPPORT_CHOICE[0],
         Media::SUPPORT_CHOICE[0],
         Media::SUPPORT_CHOICE[0],
-        Media::SUPPORT_CHOICE[1],
-        Media::SUPPORT_CHOICE[1],
-        Media::SUPPORT_CHOICE[1],
-        Media::SUPPORT_CHOICE[1],
-        Media::SUPPORT_CHOICE[1],
-        Media::SUPPORT_CHOICE[1],
         Media::SUPPORT_CHOICE[0],
         Media::SUPPORT_CHOICE[0],
         Media::SUPPORT_CHOICE[0],
@@ -54,6 +43,17 @@ class MediaFixtures extends Fixture implements DependentFixtureInterface
             $media->setArtwork($this->getReference('artwork_' . $i));
             $manager->persist($media);
             $this->addReference('media_' . $i, $media);
+        }
+        for($i=1; $i <= 6; $i++){
+            $imageArtwork = new ImageArtwork();
+            $imageArtwork->setImage('book' . $i . '.jpg');
+            $manager->persist($imageArtwork);
+            $media = new Media();
+            $media->setImageArtwork($imageArtwork);
+            $media->setSupport('photo');
+            $media->setArtwork($this->getReference('artwork_' . ($i + 9)));
+            $manager->persist($media);
+            $this->addReference('media_' . ($i + 9), $media);
         }
         $manager->flush();
     }

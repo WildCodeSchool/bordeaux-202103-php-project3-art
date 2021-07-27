@@ -1,4 +1,9 @@
 {% extends 'base.html.twig' %}
+		{% block javascripts %}
+			{{ parent() }}
+			{{ encore_entry_script_tags('inputFileValue') }}
+			{{ encore_entry_script_tags('inputToggle') }}
+		{% endblock %}
 {% form_theme formArtwork 'bootstrap_4_layout.html.twig' %}
 
 {% block body %}
@@ -9,7 +14,10 @@
 		<div class="mb-5 mt-5 col-xl-6 col-xs-8 card mx-auto rounded-0 border-0 bg-transparent d-flex flex-column">
 			{{ form_start(formArtwork) }}
 			{{ form_row(formArtwork.name) }}
-			{{ form_row(formArtwork.media) }}
+			{{ form_row(formArtwork.media.support) }}
+			<label for="artwork_media_url" id="labelUrl" class="d-none">URL Youtube</label>
+			{{ form_widget(formArtwork.media.url,{'attr':{'class':'d-none'}}) }}
+			{{ form_row(formArtwork.media.imageArtwork) }}
 			{{ form_row(formArtwork.description) }}
 			{{ form_row(formArtwork.discipline) }}
 			<button class="btn btn-outline-secondary text-uppercase  mb-5">{{ button_label|default('Sauvegarder') }}</button>
