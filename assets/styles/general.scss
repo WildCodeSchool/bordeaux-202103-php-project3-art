@@ -1,3 +1,6 @@
+* {
+  border-radius: 0px !important;
+}
 * body{
   background-image: url("/assets/images/memphis-mini.png");
 }
@@ -30,4 +33,10 @@ body {
   background-color: $navbar-bg;
 }
 
+.page-link {
+  border-radius: 0px !important;
+}
 
+.form-control {
+  border-radius: 0px !important;
+}

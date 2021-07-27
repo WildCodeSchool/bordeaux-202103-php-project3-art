@@ -128,10 +128,12 @@ class ArtistController extends AbstractController
             $request->query->getInt('page', 1),
             10
         );
+        $dateMin = new DateTime();
         return $this->render('artist/profil.html.twig', [
             'messages' => $messages,
             'totalUnreadMessage' => $totalUnreadMessage,
             'announcementForm' => $newForm->createView(),
+            'date_min' => $dateMin,
         ]);
     }
 

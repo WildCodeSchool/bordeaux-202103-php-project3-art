@@ -40,7 +40,7 @@ class UserType extends AbstractType
             ])
 
             ->add('expertise', TextType::class, [
-                'label' => 'Compétence',
+                'label' => 'Spécialité',
                 'required' => false,
             ])
             ->add('facebookUrl', TextType::class, [
