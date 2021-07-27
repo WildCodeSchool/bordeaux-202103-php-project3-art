@@ -6,6 +6,7 @@ use App\Entity\Message;
 use App\Form\GlobalSearchType;
 use App\Form\MessageType;
 use App\Entity\GlobalSearch;
+use App\Repository\ArticleRepository;
 use App\Repository\ExternalArticleRepository;
 use App\Repository\HappeningRepository;
 use App\Repository\UserRepository;
@@ -31,7 +32,8 @@ class HomeController extends AbstractController
         EntityManagerInterface $entityManager,
         UserRepository $userRepository,
         HappeningRepository $happeningRepository,
-        ExternalArticleRepository $externalArticleRepository
+        ExternalArticleRepository $externalArticleRepository,
+        ArticleRepository $articleRepository
     ): Response {
         $users = $userRepository->findWithPosition();
         if (empty($users)) {
@@ -47,6 +49,7 @@ class HomeController extends AbstractController
             ['id' => 'DESC'],
             self::MAX_ARTICLES_CAROUSEL,
         );
+        $articlesAboutThem = $articleRepository->findWithPosition();
 
         $message = new Message();
         $form = $this->createForm(MessageType::class, $message);
@@ -67,7 +70,8 @@ class HomeController extends AbstractController
             'form' => $form->createView(),
             'artists' => $users,
             'happenings' => $happenings,
-            'externals' => $externals
+            'externals' => $externals,
+            'articles' => $articlesAboutThem,
         ]);
     }
 

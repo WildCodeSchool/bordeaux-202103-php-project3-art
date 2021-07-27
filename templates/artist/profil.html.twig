@@ -87,7 +87,7 @@
 							<a class="btn rounded-0 btn-outline-secondary" data-toggle="tooltip" data-placement="top" title="Marquer comme lu" href="{{ path("artist_message_is_read", {id: message.id}) }}">
 								<i class="far fa-envelope-open"></i>
 							</a>
-							<a class="btn rounded-0 btn-outline-secondary text-uppercase " href="mailto:">Répondre</a>
+							<a class="btn rounded-0 btn-outline-secondary text-uppercase" target="_blank" href="mailto:{{ message.mail }}">Répondre</a>
 						</td>
 					</tr>
 				</tbody>

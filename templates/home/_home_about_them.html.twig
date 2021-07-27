@@ -6,28 +6,30 @@
 		<div class="d-flex justify-content-center d-none d-sm-block d-md-none">
 			<div class="swiper-container pt-5 pb-5 ">
 				<div class="swiper-wrapper">
+					{% for article in articles %}
 					<div class="swiper-slide">
 						<div class="d-flex justify-content-around flex-wrap py-5 ">
-							<div class="zoom-parent" onclick="">
-								<a href="#"><img class="mb-4 zoom-child" src="https://picsum.photos/seed/4/320/400" alt=""></a>
+							<div class="card rounded-0 bg-transparent border-0 zoom-parent ex-slide" onclick="">
+								<div class="card-title font-medium rounded-0 mx-auto">{{ article.title }}</div>
+								<a class="d-flex justify-content-center rounded-0 card-img" href="{{ path('article', {id: article.id}) }}">
+									<img class="mb-4 zoom-child" src="/uploads/images/users/{{ article.getImageArticle.image }}" alt=""></a>
 							</div>
 						</div>
 					</div>
+					{% endfor %}
 				</div>
 				<div class="swiper-pagination"></div>
 			</div>
 		</div>
 		<div class="d-none d-md-block">
-			<div class="d-flex justify-content-around flex-wrap py-5 ">
-				<div class="zoom-parent" onclick="">
-					<a href="#"><img class="mb-4 zoom-child" src="https://picsum.photos/seed/4/320/400" alt=""></a>
-				</div>
-				<div class="zoom-parent" onclick="">
-					<a href="#"><img class="mb-4 zoom-child" src="https://picsum.photos/seed/5/320/400" alt=""></a>
-				</div>
-				<div class="zoom-parent" onclick="">
-					<a href="#"><img class="zoom-child" src="https://picsum.photos/seed/6/320/400" alt=""></a>
-				</div>
+			<div class=" rounded-0 card-deck my-5 ">
+				{% for article in articles %}
+					<div class="rounded-0 card bg-transparent border-0 zoom-parent" onclick="">
+						<div class="rounded-0 card-title font-medium  mx-auto">{{ article.title }}</div>
+						<a class="rounded-0 d-flex justify-content-center card-img" href="{{ path('article', {id: article.id}) }}">
+							<img class="mb-4 zoom-child" src="/uploads/images/users/{{ article.getImageArticle.image }}" alt=""></a>
+					</div>
+				{% endfor %}
 			</div>
 		</div>
 	</div>
