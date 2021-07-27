@@ -31,8 +31,8 @@
 				</div>
 			</div>
 			<div class="pt-3 col-md-8 card border-0 bg-transparent">
-				<div>
-					<h3 class="text-uppercase card-title title-shadow-grey font-medium color-{{ (artist.disciplines is empty) ? 'move' : artist.disciplines[0].color }}">
+				<div class="mb-2">
+					<h3 class="text-uppercase mb-2 card-title title-shadow-grey font-medium color-{{ (artist.disciplines is empty) ? 'move' : artist.disciplines[0].color }}">
 						<span class="title-content">
 							<strong>{{ artist.firstname is null ? 'Prénom' : artist.firstname }}</strong>
 							{{ (artist.lastname is null) ? 'Nom' : artist.lastname }}</span>
@@ -49,7 +49,7 @@
 						{{ (artist.city.zipcode is null) ? "Ville" : artist.city.name }}
 					{% endif %}
 				</p>
-				<p class="font-regular">{{ (artist.description is null) ? 'Description du profil' : artist.description }}</p>
+				<p class="font-regular text-justify">{{ (artist.description is null) ? 'Description du profil' : artist.description }}</p>
 				{% block icon %}
 					{% if app.user and app.user.id != artist.id  %}
 						<p class="font-light">
@@ -107,10 +107,14 @@
 							<div class="col-12 col-md-6">
 								<div class="card bg-transparent border-light mt-3">
 									<div class="card-body">
+<<<<<<< HEAD
+										<img class="mt-3 card-img-top media rounded-0 " width="400" src="{{ artwork.media.url }}" alt="{{ artwork.name }}">
+=======
 										<h4 class="ml-3 title-shadow-grey font-regular text-uppercase color-{{ artist.disciplines[0].color }}">
 											<span class="title-content">{{ artwork.name }}</span>
 										</h4>
 										<img class="mt-3 card-img-top media" width="400" src="/uploads/images/users/{{ artwork.media.imageArtwork.image }}" alt="{{ artwork.name }}">
+>>>>>>> origin
 										<div class="card-text text-justify mt-3">
 											{{ artwork.description }}
 										</div>
@@ -125,10 +129,7 @@
 							<div class="col-12 col-md-6">
 								<div class="card mt-3 bg-transparent border-light">
 									<div class="card-body">
-										<h4 class="ml-3 title-shadow-grey font-regular text-uppercase color-{{ artist.disciplines[0].color }}">
-											<span class="title-content">{{ artwork.name }}</span>
-										</h4>
-										<iframe class="mt-3 card-img-top media-video " src="{{ artwork.media.url }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" alt="Card image cap" width="400" height="300"></iframe>
+										<iframe class="mt-3 card-img-top media-video rounded-0 " src="{{ artwork.media.url }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" alt="Card image cap" width="400" height="300"></iframe>
 									</div>
 								</div>
 							</div>

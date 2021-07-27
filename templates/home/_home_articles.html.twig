@@ -8,10 +8,10 @@
 				<div class="swiper-wrapper">
 					{% for external in externals %}
 						<div class="swiper-slide ">
-							<div class="d-flex justify-content-center  ">
+							<div class="d-flex justify-content-center">
 								<div class="card rounded-0 bg-transparent border-0 zoom-parent ex-slide" onclick="">
-									<div class="card-title rounded-0 font-medium mx-auto">{{ external.title }}</div>
-									<a class="d-flex justify-content-center rounded-0 card-img" href="{{ external.link }}"><img class="mb-4 zoom-child" src="/uploads/images/users/{{ external.ImageExternalArticle.image }}" alt=""></a>
+									<div class="card-title rounded-0 ex-title mx-auto">{{ external.title }}</div>
+									<a class="d-flex justify-content-center rounded-0 card-img" href="{{ external.link }}" target="blank"><img class="mb-4 zoom-child" src="/uploads/images/users/{{ external.ImageExternalArticle.image }}" alt=""></a>
 								</div>
 							</div>
 						</div>
@@ -24,8 +24,8 @@
 			<div class=" rounded-0 card-deck my-5 ">
 				{% for external in externals %}
 					<div class="rounded-0 card bg-transparent border-0 zoom-parent" onclick="">
-						<div class="rounded-0 card-title font-medium mx-auto">{{ external.title }}</div>
-						<a class="rounded-0 d-flex justify-content-center card-img" href="{{ external.link }}"><img class="mb-4 zoom-child" src="/uploads/images/users/{{ external.ImageExternalArticle.image }}" alt=""></a>
+						<div class="rounded-0 card-title ex-title mx-auto">{{ external.title }}</div>
+						<a class="rounded-0 d-flex justify-content-center card-img" href="{{ external.link }}" target="blank"><img class="mb-4 zoom-child" src="/uploads/images/users/{{ external.ImageExternalArticle.image }}" alt=""></a>
 					</div>
 				{% endfor %}
 			</div>
