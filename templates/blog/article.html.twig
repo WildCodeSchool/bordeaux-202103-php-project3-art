@@ -7,21 +7,19 @@
 {% block body %}
 	<div class="memphis-background">
 		<div class="container pt-5 pb-5">
-			<h2 class="font-medium mb-4 title-shadow text-uppercase">
-				<span class="title-content">Article
-					{{ happening.id }}</span>
-			</h2>
 			<div class="container">
-				<div class="row justify-content-center pt-5 pb-5">
-					<div class="col-lg-6">
-						<div class="card rounded-0 ">
-							<img src="{{ happening.imageHappening is defined ? "/uploads/images/users/" ~ happening.imageHappening.image : "/uploads/images/users/" ~ happening.imageArticle.image }}" alt="{{ happening.title }}" class="rounded-0 card-img-top" width="500px">
-							<div class="card-body">
-								<h5 class="card-title font-medium">{{ happening.title }}</h5>
-								<p class="card-text text-justify">{{ happening.content }}</p>
-								<p class="card-text">
-									<small class="text-muted">Last updated</small>
-								</p>
+				<div class="row justify-content-center align-items-center pb-5">
+					<div class="col-lg-8">
+						<h2 class="font-medium mb-4 title-shadow text-uppercase">
+				<span class="title-content">Actualité</span>
+						</h2>
+						<h5 class="font-medium mt-5 mb-5">{{ happening.title }}</h5>
+						<div class="text-center">
+							<img src="{{ happening.imageHappening is defined ? "/uploads/images/users/" ~ happening.imageHappening.image : "/uploads/images/users/" ~ happening.imageArticle.image }}" alt="{{ happening.title }}" class="img-fluid mb-4">
+						</div>
+							<p class="text-justify pt-4 pb-4">Publié le {{ happening.createdAt|date('d/m/Y') }}</p>
+						<p class="text-justify">{{ happening.content }}</p>
+						<a href="{{ path('blog_index') }}" class="btn btn-outline-secondary rounded-0 mt-4">Retour</a>
 							</div>
 						</div>
 					</div>

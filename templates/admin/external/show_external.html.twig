@@ -12,14 +12,8 @@
                 {% block head_title %}Gestion des articles externes{% endblock %}
 			</span>
         </h2>
-        <a class=" d-flex align-items-center btn btn-outline-secondary " href="{{ path('admin_external_new') }}">Ajouter un article externe</a>
         </div>
         <div class=" pt-5 ">
-            <div class=" pb-3 justify-content-center">
-                {{ form_start(form) }}
-                {{ form_widget(form) }}
-                {{ form_end(form) }}
-            </div>
             <table class="container">
                 <thead>
                 <tr class="border border-dark">
