@@ -78,8 +78,7 @@ class Authenticator extends AbstractFormLoginAuthenticator implements PasswordAu
 
     public function checkCredentials($credentials, UserInterface $user)
     {
-        //return $this->passwordEncoder->isPasswordValid($user, $credentials['password']);
-        return $user->IsActive();
+        return $this->passwordEncoder->isPasswordValid($user, $credentials['password']) && $user->IsActive();
     }
 
     /**
