@@ -1,3 +1,7 @@
+*{
+  border-radius: 0px !important;
+}
+
 * body{
   background-image: url("/assets/images/memphis-mini.png");
 }
@@ -28,6 +32,7 @@ body {
   border-radius: 0px !important;
 }
 
-.form-control {
-  border-radius: 0px !important;
-}
+:root {
+  --swiper-navigation-color: #bdf4bd  !important;
+  --swiper-theme-color: #bdf4bd  !important;
+  }
