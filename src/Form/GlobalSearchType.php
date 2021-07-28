@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Entity\GlobalSearch;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SearchType;
@@ -46,7 +47,8 @@ class GlobalSearchType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            // Configure your form options here
+            'data_class' => GlobalSearch::class,
+            'csrf_protection' => false,
         ]);
     }
 }

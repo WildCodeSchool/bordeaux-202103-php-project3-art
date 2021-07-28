@@ -7,11 +7,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 class GlobalSearch
 {
     private ?string $textTyped;
-
-    /**
-     * @Assert\Choice(choices={'category', 'artist', 'event', 'location', 'announcement'},
-     *      message="Choisissez un filtre valide.")
-     */
     private string $type = 'artist';
     private array $keywords;
     private array $results;

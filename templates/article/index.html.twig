@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+    {{ parent() }} - On parle d'eux
+{% endblock %}
+
+{% block body %}
+    <div class="memphis-background">
+        <div class="container pt-5 pb-5">
+            <div class="container">
+                <div class="row justify-content-center align-items-center pb-5">
+                    <div class="col-lg-8">
+            <h2 class="font-medium mb-4 title-shadow text-uppercase">
+                <span class="title-content">On parle d'eux</span>
+            </h2>
+                        <h5 class="font-medium mt-5 mb-5">{{ article.title }}</h5>
+                        <div class="text-center">
+                        <img src="{{ article.imageArticle is defined ? "/uploads/images/users/" ~ article.imageArticle.image : "/uploads/images/users/" ~ happening.imageArticle.image }}" alt="{{ article.title }}" class="img-fluid mb-4">
+                        </div>
+                        <p class="text-justify pt-4 pb-4">Publié le {{ article.createdAt|date('d/m/Y') }}</p>
+                        <p class="text-justify">{{ article.content }}</p>
+                        <h5 class="font-medium mt-5 mb-4">Découvrez les autres portraits</h5>
+                        <div class="d-flex justify-content-between">
+                            {% for article in articles %}
+                            <a href="{{ path('article', {id: article.id}) }}"><img src="{{ article.imageArticle is defined ? "/uploads/images/users/" ~ article.imageArticle.image : "/uploads/images/users/" ~ happening.imageArticle.image }}" alt="{{ article.title }}" width="200px" class="img-thumbnail"></a>
+                            {% endfor %}
+                        </div>
+                        <br>
+                        <a href="{{ path('blog_index') }}" class="btn btn-outline-secondary rounded-0 mt-4">Retour</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

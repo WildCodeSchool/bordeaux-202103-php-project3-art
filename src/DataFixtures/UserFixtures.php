@@ -39,6 +39,24 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
       'discipline_4',
 
     ];
+    public const FIRSTNAMES = [
+        'Nath',
+        'Camille',
+        'Roger',
+        'Catherine',
+        'David',
+        'Leonardo'
+
+    ];
+    public const LASTNAMES = [
+        'Sanson',
+        'Martin',
+        'Philippe',
+        'Philippe',
+        'To One',
+        'Donatello'
+
+    ];
     public const NB_USERS = 6;
     private $encoder;
     public function __construct(UserPasswordEncoderInterface $encoder)
@@ -55,14 +73,13 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
 
 
             $user = new User();
-            $user->setFirstname('Artiste');
-            $user->setLastname($i);
+            $user->setFirstname(self::FIRSTNAMES[$i - 1]);
+            $user->setLastname(self::LASTNAMES[$i - 1]);
             $user->setDescription(
                 'Je m\'appelle artiste ' . $i .
                 ', Contrairement à une opinion répandue, le Lorem Ipsum n\'est pas simplement du texte aléatoire.'
             );
-            $user->setPseudo('Artist' . $i);
-            $user->setZipCode(self::ZIP_CODES[$i - 1]);
+            $user->setPseudo(self::FIRSTNAMES[$i - 1], self::LASTNAMES[$i - 1]);
             $user->setCreatedAt(new DateTime());
             $user->setUpdatedAt(new DateTime());
             $user->setEmail('artiste' . $i . '@gmail.com');
@@ -82,7 +99,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
         $admin->setUpdatedAt(new DateTime());
         $admin->setEmail('admin@gmail.com');
         $admin->setPassword($this->encoder->encodePassword($admin, '123456'));
-        $admin->setRoles(["ROLE_ADMIN"]);
+        $admin->setRoles(["ROLE_SUPER_ADMIN"]);
         $avatar = new Avatar();
         $admin->setAvatar($avatar);
         $manager->persist($admin);

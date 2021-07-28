@@ -20,7 +20,6 @@ use App\Repository\AnnouncementRepository;
 use App\Repository\UserRepository;
 use App\Service\SearchSingleEntityProvider;
 use Doctrine\ORM\EntityManagerInterface;
-use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -42,21 +41,18 @@ class AdminController extends AbstractController
             'controller_name' => 'AdminController',
         ]);
     }
+
     /**
      * @Route("/happening/show", name="happening_show")
      */
     public function happeningShow(
         HappeningRepository $happeningRepository,
         Request $request,
-        SearchSingleEntityProvider $searchProvider,
-        PaginatorInterface $paginator
-    ): Response {
-        $happeningsData = $happeningRepository->findBy([], ['createdAt' => 'ASC']);
-        $happenings = $paginator->paginate(
-            $happeningsData,
-            $request->query->getInt('page', 1),
-            10
-        );
+        SearchSingleEntityProvider $searchProvider
+    ): Response
+    {
+        $happenings = $happeningRepository->findBy([], ['createdAt' => 'ASC']);
+
         $searchEntity = new SearchSingleEntity();
         $form = $this->createForm(EntitySearchType::class, $searchEntity);
         $form->handleRequest($request);
@@ -69,6 +65,7 @@ class AdminController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
     /**
      * @Route("/happening/new", name="happening_new")
      */
@@ -88,6 +85,7 @@ class AdminController extends AbstractController
 
         ]);
     }
+
     /**
      * @Route("/happening/edit/{id}", name="happening_edit")
      */
@@ -105,6 +103,7 @@ class AdminController extends AbstractController
 
         ]);
     }
+
     /**
      * @Route("/happening/delete/{id}", name="happening_delete", methods={"POST"})
      */
@@ -124,15 +123,11 @@ class AdminController extends AbstractController
     public function showAnnouncements(
         AnnouncementRepository $announcementRepository,
         Request $request,
-        SearchSingleEntityProvider $searchProvider,
-        PaginatorInterface $paginator
-    ): Response {
-        $announcementsData =  $announcementRepository->findBy([], ['createdAt' => 'DESC']);
-        $announcements = $paginator->paginate(
-            $announcementsData,
-            $request->query->getInt('page', 1),
-            10
-        );
+        SearchSingleEntityProvider $searchProvider
+    ): Response
+    {
+        $announcements = $announcementRepository->findBy([], ['createdAt' => 'DESC']);
+
         $searchEntity = new SearchSingleEntity();
         $form = $this->createForm(EntitySearchType::class, $searchEntity);
         $form->handleRequest($request);
@@ -153,7 +148,8 @@ class AdminController extends AbstractController
         Request $request,
         Announcement $announcement,
         EntityManagerInterface $entityManager
-    ): Response {
+    ): Response
+    {
         if ($this->isCsrfTokenValid('delete' . $announcement->getId(), $request->request->get('_token'))) {
             $entityManager->remove($announcement);
             $entityManager->flush();
@@ -187,15 +183,11 @@ class AdminController extends AbstractController
     public function showUsers(
         UserRepository $userRepository,
         Request $request,
-        SearchSingleEntityProvider $searchProvider,
-        PaginatorInterface $paginator
-    ): Response {
-        $usersData =  $userRepository->findByRoleUser('DESC');
-        $users = $paginator->paginate(
-            $usersData,
-            $request->query->getInt('page', 1),
-            10
-        );
+        SearchSingleEntityProvider $searchProvider
+    ): Response
+    {
+        $users = $userRepository->findByRoleUser('DESC');
+
         $searchEntity = new SearchSingleEntity();
         $form = $this->createForm(EntitySearchType::class, $searchEntity);
         $form->handleRequest($request);
@@ -216,12 +208,14 @@ class AdminController extends AbstractController
         Request $request,
         User $user,
         EntityManagerInterface $entityManager
-    ): Response {
+    ): Response
+    {
         if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
             if ($user->isActive()) {
                 $user->setIsActive(false);
-            } else {
-                $user->setIsActive(true);
+                if ($user->getPodium() != null) {
+                    $user->setPodium(null);
+                }
             }
             $entityManager->flush();
         }
@@ -234,15 +228,11 @@ class AdminController extends AbstractController
     public function articleShow(
         ArticleRepository $articleRepository,
         Request $request,
-        SearchSingleEntityProvider $searchProvider,
-        PaginatorInterface $paginator
-    ): Response {
-        $articlesData = $articleRepository->findBy([], ['createdAt' => 'DESC']);
-        $articles = $paginator->paginate(
-            $articlesData,
-            $request->query->getInt('page', 1),
-            10
-        );
+        SearchSingleEntityProvider $searchProvider
+    ): Response
+    {
+        $articles = $articleRepository->findBy([], ['createdAt' => 'DESC']);
+
         $searchEntity = new SearchSingleEntity();
         $form = $this->createForm(EntitySearchType::class, $searchEntity);
         $form->handleRequest($request);
@@ -255,6 +245,7 @@ class AdminController extends AbstractController
             'form' => $form->createView()
         ]);
     }
+
     /**
      * @Route("/article/new", name="article_new")
      */
@@ -310,38 +301,13 @@ class AdminController extends AbstractController
      * @Route("/external/show", name="external_show")
      */
     public function externalShow(
-        ExternalArticleRepository $externalRepository,
-        Request $request,
-        SearchSingleEntityProvider $searchProvider
-    ): Response {
+        ExternalArticleRepository $externalRepository
+    ): Response
+    {
         $externals = $externalRepository->findBy([], ['id' => 'DESC']);
-        $searchEntity = new SearchSingleEntity();
-        $form = $this->createForm(EntitySearchType::class, $searchEntity);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $externals = $searchEntity->getResults();
-        }
+
         return $this->render('admin/external/show_external.html.twig', [
             'externals' => $externals,
-            'form' => $form->createView()
-        ]);
-    }
-    /**
-     * @Route("/external/new", name="external_new")
-     */
-    public function externalNew(Request $request, EntityManagerInterface $entityManager): Response
-    {
-        $external = new ExternalArticle();
-        $form = $this->createForm(ExternalType::class, $external);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($external);
-            $entityManager->flush();
-            return $this->redirectToRoute('admin_external_show');
-        }
-        return $this->render('admin/external/new_external.html.twig', [
-            'form' => $form->createView(),
-
         ]);
     }
 
@@ -369,7 +335,8 @@ class AdminController extends AbstractController
         ExternalArticle $external,
         EntityManagerInterface $entityManager,
         Request $request
-    ): Response {
+    ): Response
+    {
         if ($this->isCsrfTokenValid('delete' . $external->getId(), $request->request->get('_token'))) {
             $entityManager->remove($external);
             $entityManager->flush();
@@ -414,38 +381,156 @@ class AdminController extends AbstractController
     }
 
     /**
-     * @Route("/setPodium/{position}/{id}", name="set_podium", requirements={"position"="\d+"})
+     * @Route("/setPodium/{position}/{id}", name="set_podium", methods={"POST"}, requirements={"position"="\d+"})
      */
     public function setPodium(
         int $position,
         User $user,
         UserRepository $userRepository,
-        EntityManagerInterface $entityManager
+        EntityManagerInterface $entityManager,
+        Request $request
     ): Response {
-        $podiumOwner = $userRepository->findOneBy(['podium' => $position]);
-        $statusPodium = ($podiumOwner != null);
-        if ($statusPodium) {
-            if ($podiumOwner->getPodium()) {
-                $podiumOwner->setPodium(null);
+        if ($this->isCsrfTokenValid('add_podium' . $user->getId(), $request->request->get('_token'))) {
+            $podiumOwner = $userRepository->findOneBy(['podium' => $position]);
+            $statusPodium = ($podiumOwner != null);
+            if ($statusPodium) {
+                if ($podiumOwner->getPodium()) {
+                    $podiumOwner->setPodium(null);
+                }
             }
+            $user->setPodium($position);
+            $entityManager->flush();
         }
-        $user->setPodium($position);
-        $entityManager->flush();
         return $this->redirectToRoute('admin_show_podium');
     }
 
     /**
-     * @Route("/deletePodium{position}", name="delete_podium", requirements={"position"="\d+"})
+     * @Route("/deletePodium{position}", name="delete_podium", methods={"POST"}, requirements={"position"="\d+"})
      */
     public function deletePodium(
         int $position,
         UserRepository $userRepository,
-        EntityManagerInterface $entityManager
+        EntityManagerInterface $entityManager,
+        Request $request
     ): Response {
-        $userWithPosition = $userRepository->findOneBy(['podium' => $position ]);
-        $userWithPosition->setPodium(null);
-        $entityManager->flush();
+        if ($this->isCsrfTokenValid('delete_podium' . $position, $request->request->get('_token'))) {
+            $userWithPosition = $userRepository->findOneBy(['podium' => $position]);
+            $userWithPosition->setPodium(null);
+            $entityManager->flush();
+        }
         return $this->redirectToRoute('admin_show_podium');
     }
-}
 
+    /**
+     * @Route("/makeAdmin{id}", name="makeAdmin", methods={"POST"})
+     */
+    public function makeAdmin(
+        Request $request,
+        User $user,
+        EntityManagerInterface $entityManager
+    ): Response {
+        if ($this->isCsrfTokenValid('makeAdmin' . $user->getId(), $request->request->get('_token'))) {
+            $role = $user->getRoles();
+            if (in_array('ROLE_ADMIN', $role)) {
+                $user->setRoles(['ROLE_USER']);
+            } else {
+                $user->setRoles(['ROLE_ADMIN']);
+            }
+            $entityManager->flush();
+        }
+        return $this->redirectToRoute('admin_show_artists');
+    }
+
+    /**
+     * @Route("/showAdmin", name="show_admin")
+     * @IsGranted("ROLE_SUPER_ADMIN")
+     */
+    public function showAdmin(
+        UserRepository $userRepository,
+        Request $request
+    ): Response
+    {
+        $users = $userRepository->findByAdmin();
+
+        return $this->render('admin/user/admin_show.html.twig', [
+            'users' => $users,
+        ]);
+    }
+
+    /**
+     * @Route("/articlePodium/show", name="podium_article")
+     */
+    public function articlePodiumShow(ArticleRepository $articleRepository): Response
+    {
+        $articles = $articleRepository->findWithPosition();
+        return $this->render('admin/podium_about_them/show.html.twig', [
+            'articles' => $articles,
+        ]);
+    }
+
+    /**
+     * @Route("/articlePodium/edit/{position}", name="edit_podium_article",  requirements={"position"="\d+"})
+     */
+    public function changePodiumArticle(
+        int $position,
+        ArticleRepository $articleRepository,
+        Request $request,
+        SearchSingleEntityProvider $searchProvider
+    ): Response {
+        $articles = $articleRepository->findAll();
+        $searchEntity = new SearchSingleEntity();
+        $searchBarForm = $this->createForm(EntitySearchType::class, $searchEntity);
+        $searchBarForm->handleRequest($request);
+        if ($searchBarForm->isSubmitted() && $searchBarForm->isValid()) {
+            $searchProvider->createSearchForArticles($searchEntity);
+            $articles = $searchEntity->getResults();
+        }
+        return $this->render('admin/podium_about_them/edit.html.twig', [
+            'articles' => $articles,
+            'searchBarForm' => $searchBarForm->createView(),
+            'position' => $position,
+        ]);
+    }
+
+    /**
+     * @Route("/articlePodium/{position}/{id}", name="set_article_podium", methods={"POST"}, requirements={"position"="\d+"})
+     */
+    public function setPodiumArticle(
+        int $position,
+        Article $article,
+        ArticleRepository $articleRepository,
+        EntityManagerInterface $entityManager,
+        Request $request
+    ): Response {
+        if ($this->isCsrfTokenValid('add_podium_article' . $article->getId(), $request->request->get('_token'))) {
+            $podiumOwner = $articleRepository->findOneBy(['podium' => $position]);
+            $statusPodium = ($podiumOwner != null);
+            if ($statusPodium) {
+                if ($podiumOwner->getPodium()) {
+                    $podiumOwner->setPodium(null);
+                }
+            }
+            $article->setPodium($position);
+            $entityManager->flush();
+        }
+        return $this->redirectToRoute('admin_podium_article');
+    }
+
+    /**
+     * @Route("/deletePodiumArticle{position}", name="delete_article_podium", methods={"POST"},
+     *      requirements={"position"="\d+"})
+     */
+    public function deletePodiumArticle(
+        int $position,
+        ArticleRepository $articleRepository,
+        EntityManagerInterface $entityManager,
+        Request $request
+    ): Response {
+        if ($this->isCsrfTokenValid('delete_article_podium' . $position, $request->request->get('_token'))) {
+            $articleWithPosition = $articleRepository->findOneBy(['podium' => $position]);
+            $articleWithPosition->setPodium(null);
+            $entityManager->flush();
+        }
+        return $this->redirectToRoute('admin_podium_article');
+    }
+}

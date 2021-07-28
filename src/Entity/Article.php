@@ -57,6 +57,16 @@ class Article
      */
     private $imageArticle;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $type = "article";
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $podium = null;
+
     public function __construct()
     {
         $this->tags = new ArrayCollection();
@@ -183,4 +193,34 @@ class Article
     {
         $this->updatedAt = new \DateTime();
     }
+
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType(?string $type): self
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * @return null
+     */
+    public function getPodium()
+    {
+        return $this->podium;
+    }
+
+    /**
+     * @param null $podium
+     */
+    public function setPodium($podium): void
+    {
+        $this->podium = $podium;
+    }
+
+
 }

@@ -14,7 +14,7 @@
 {% block body %}
 <div class="bloc-contact py-5">
     <div class="container">
-        <h2 class="font-weight-bold mb-4 title-shadow text-uppercase">
+        <h2 class="font-medium mb-4 title-shadow text-uppercase">
             <span class="title-content">Ecrire à
                  {% if artist.pseudo is not null %}
                      {{ artist.pseudo }}
@@ -27,7 +27,6 @@
         </h2>
         <div class="mt-5">
             {% form_theme form 'bootstrap_4_layout.html.twig' %}
-            {{ artwork.name }}
             {{ form_start(form) }}
             {{ form_widget(form) }}
             {{ form_errors(form) }}

@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container my-5 py-5 d-flex flex-column  align-items-center justify-content-center">
+    <h1 class="font-medium">Page non trouvée</h1>
+        <div class="py-3  rounded-circle d-flex justify-content-center align-items-center logo-404">
+        <a href="{{ path("home_page") }}"><img id='logo-navbar' class='' src="{{ asset('build/logo.png') }}" alt="logo arts d'eko" width="100px"></a>
+        </div>
+    <p class="text-center font-regular pt-2 mt-2">
+        Oupsie, la page demandée n'existe pas !<br>
+        <a href="{{ path("home_page") }}">Retour à l'accueil</a>.
+    </p>
+    </div>
+{% endblock %}

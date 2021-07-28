@@ -1,0 +1,5 @@
+<form method="post" action="{{ path('admin_set_podium', {position: position, id:user.id}) }}"
+      onsubmit="return confirm('Ajouter cet utilisateur.trice sur le podium ?');">
+    <input type="hidden" name="_token" value="{{ csrf_token('add_podium' ~ user.id) }}">
+    <button class="btn-admin card-link text-dark"><i class="fas fa-user-plus"></i> Ajouter</button>
+</form>

@@ -1,0 +1,41 @@
+{% extends 'admin/dashboard.html.twig' %}
+
+{% block title %}
+    Gestion des admins - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    <div class="container pt-5 pb-5">
+        <h2 class="ml-3 mt-5 card-title title-shadow font-medium text-uppercase">
+            <span class="title-content">Gestion des admins</span>
+        </h2>
+        <div class="pt-5">
+            <table class="container">
+                <thead>
+                <tr class="border border-dark">
+                    <th class="text-center">Mail</th>
+                    <th class="text-center">Pseudo</th>
+                    <th class="text-center">Prénom</th>
+                    <th class="text-center">Nom</th>
+                    <th class="text-center">Compte crée le</th>
+                    <th class="text-center">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for user in users %}
+                    <tr class="border border-dark py-2">
+                        <td class="text-center">{{ user.email }}</td>
+                        <td class="text-center">{{ (user.pseudo is not null) ? user.pseudo : 'Non-renseigné' }}</td>
+                        <td class="text-center">{{ (user.firstname is not null) ? user.firstname : 'Non-renseigné' }}</td>
+                        <td class="text-center">{{ (user.lastname is not null) ? user.lastname : 'Non-renseigné' }}</td>
+                        <td class="text-center">{{ user.createdAt|date('d/m/Y') }}</td>
+                        <td class="text-center">
+                            {{ include('admin/user/_makeAdmin.html.twig') }}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

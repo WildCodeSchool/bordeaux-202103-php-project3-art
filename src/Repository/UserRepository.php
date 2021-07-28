@@ -45,6 +45,9 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
                 ->setParameter('keyword' . $key, '%' . $keyword . '%');
         }
         $qb
+            ->andHaving('u.isActive = true')
+            ->andHaving('u.roles LIKE :role')
+            ->setParameter('role', '["ROLE_USER"]')
             ->orderBy('u.updatedAt', 'DESC');
         return $qb->getQuery()->getResult();
     }
@@ -58,7 +61,10 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
                 ->setParameter('keyword' . $key, '%' . $keyword . '%');
         }
             $qb
-             ->orderBy('u.updatedAt', 'DESC');
+                ->andHaving('u.isActive = true')
+                ->andHaving('u.roles LIKE :role')
+                ->setParameter('role', '["ROLE_USER"]')
+                ->orderBy('u.updatedAt', 'DESC');
         return $qb->getQuery()->getResult();
     }
 
@@ -72,18 +78,22 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
                 ->setParameter('keyword' . $key, '%' . $keyword . '%');
         }
         $qb
+            ->andHaving('u.isActive = true')
+            ->andHaving('u.roles LIKE :role')
+            ->setParameter('role', '["ROLE_USER"]')
             ->leftJoin('u.city', 'c')
             ->orderBy('u.updatedAt', 'DESC');
         return $qb->getQuery()->getResult();
     }
 
-    public function findAll($order = 'ASC')
+    public function findAll($order = 'ASC', $maxResults = null)
     {
         $qb = $this->createQueryBuilder('u')
             ->andHaving('u.roles LIKE :role')
             ->andHaving('u.isActive = true')
             ->setParameter('role', '["ROLE_USER"]')
-            ->orderBy('u.createdAt', $order);
+            ->orderBy('u.createdAt', $order)
+            ->setMaxResults($maxResults);
         return $qb->getQuery()->getResult();
     }
 
@@ -102,6 +112,15 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $qb = $this->createQueryBuilder('u')
             ->andWhere('u.podium IS NOT NULL')
             ->orderBy('u.podium', 'ASC');
+        return  $qb->getQuery()->getResult();
+    }
+
+    public function findByAdmin()
+    {
+        $qb = $this->createQueryBuilder('u')
+            ->orWhere('u.roles LIKE :role')
+            ->andWhere('u.isActive = true')
+            ->setParameter('role', '["ROLE_ADMIN"]');
         return  $qb->getQuery()->getResult();
     }
 

@@ -1,0 +1,5 @@
+<form method="post" action="{{ path('admin_set_article_podium', {position: position, id:article.id}) }}"
+      onsubmit="return confirm('Ajouter cet article sur le podium ?');">
+    <input type="hidden" name="_token" value="{{ csrf_token('add_podium_article' ~ article.id) }}">
+    <button class="btn-admin card-link text-dark"><i class="fas fa-user-plus"></i> Ajouter</button>
+</form>

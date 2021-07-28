@@ -26,11 +26,11 @@ class ArtworkType extends AbstractType
             ->add('discipline', EntityType::class, [
                 'class' => Discipline::class,
                 'choice_label' => 'name',
-                'required' => false,
+                'required' => true,
             ])
             ->add('media', MediaType::class, [
                 'label' => false,
-                'required' => false,
+                'required' => true,
             ]);
     }
 

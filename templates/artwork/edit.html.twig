@@ -1,18 +1,26 @@
 {% extends 'base.html.twig' %}
+		{% block javascripts %}
+			{{ parent() }}
+			{{ encore_entry_script_tags('inputFileValue') }}
+			{{ encore_entry_script_tags('inputToggle') }}
+		{% endblock %}
 {% form_theme formArtwork 'bootstrap_4_layout.html.twig' %}
 
 {% block body %}
 	<div class="container mt-5">
-		<h2 class="mt-5 ml-3 card-title title-shadow text-uppercase font-weight-bold">
+		<h2 class="mt-5 ml-3 card-title title-shadow text-uppercase font-medium">
 			<span class="title-content">Modifier une œuvre</span>
 		</h2>
-		<div class="mb-5 mt-5 col-xl-6 col-xs-8 card mx-auto border-0 bg-transparent d-flex flex-column">
+		<div class="mb-5 mt-5 col-xl-6 col-xs-8 card mx-auto rounded-0 border-0 bg-transparent d-flex flex-column">
 			{{ form_start(formArtwork) }}
 			{{ form_row(formArtwork.name) }}
-			{{ form_row(formArtwork.media) }}
+			{{ form_row(formArtwork.media.support) }}
+			<label for="artwork_media_url" id="labelUrl" class="d-none">URL Youtube</label>
+			{{ form_widget(formArtwork.media.url,{'attr':{'class':'d-none'}}) }}
+			{{ form_row(formArtwork.media.imageArtwork) }}
 			{{ form_row(formArtwork.description) }}
 			{{ form_row(formArtwork.discipline) }}
-			<button class="btn btn-outline-secondary text-uppercase  mb-5">{{ button_label|default('Sauvgarder') }}</button>
+			<button class="btn btn-outline-secondary text-uppercase  mb-5">{{ button_label|default('Sauvegarder') }}</button>
 			{{ form_end(formArtwork) }}
 		</div>
 	</div>

@@ -24,6 +24,7 @@ class UserType extends AbstractType
             ])
             ->add('avatar', AvatarType::class,[
                 'label'=>false,
+                'required' => false,
             ])
             ->add('firstname', TextType::class, [
                 'label' => 'Prénom',
@@ -39,7 +40,7 @@ class UserType extends AbstractType
             ])
 
             ->add('expertise', TextType::class, [
-                'label' => 'Compétence',
+                'label' => 'Spécialité',
                 'required' => false,
             ])
             ->add('facebookUrl', TextType::class, [
@@ -59,7 +60,7 @@ class UserType extends AbstractType
                 'by_reference' => false,
             ])
             ->add('city', CityType::class, [
-                'required' => false
+                'required' => true
             ])
         ;
     }

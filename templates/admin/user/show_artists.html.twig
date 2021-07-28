@@ -23,7 +23,6 @@
                     <th class="text-center">Prénom</th>
                     <th class="text-center">Nom</th>
                     <th class="text-center">Compte crée le</th>
-                    <th class="text-center">Statut compte</th>
                     <th class="text-center">Actions</th>
                 </tr>
                 </thead>
@@ -35,9 +34,11 @@
                         <td class="text-center">{{ (user.firstname is not null) ? user.firstname : 'Non-renseigné' }}</td>
                         <td class="text-center">{{ (user.lastname is not null) ? user.lastname : 'Non-renseigné' }}</td>
                         <td class="text-center">{{ user.createdAt|date('d/m/Y') }}</td>
-                        <td class="text-center">{{ (user.isActive) ? 'Activé' : 'Désactivé' }}</td>
                         <td class="text-center">
                             {{ include('admin/user/_delete_artist.html.twig') }}
+                            {% if is_granted('ROLE_SUPER_ADMIN') %}
+                                {{ include('admin/user/_makeAdmin.html.twig') }}
+                            {% endif %}
                         </td>
                     </tr>
                 {% endfor %}
@@ -45,5 +46,4 @@
             </table>
         </div>
     </div>
-    {{ knp_pagination_render(users) }}
 {% endblock %}

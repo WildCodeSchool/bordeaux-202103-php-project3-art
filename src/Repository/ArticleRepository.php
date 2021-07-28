@@ -30,6 +30,14 @@ class ArticleRepository extends ServiceEntityRepository
         return $qb->getQuery()->getResult();
     }
 
+    public function findWithPosition()
+    {
+        $qb = $this->createQueryBuilder('a')
+            ->andWhere('a.podium IS NOT NULL')
+            ->orderBy('a.podium', 'ASC');
+        return  $qb->getQuery()->getResult();
+    }
+
     // /**
     //  * @return Article[] Returns an array of Article objects
     //  */

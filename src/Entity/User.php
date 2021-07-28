@@ -69,10 +69,6 @@ class User implements UserInterface
      */
     private $description;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
-    private $zipCode;
 
     /**
      * @ORM\Column(type="datetime")
@@ -317,17 +313,6 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getZipCode(): ?int
-    {
-        return $this->zipCode;
-    }
-
-    public function setZipCode(?int $zipCode): self
-    {
-        $this->zipCode = $zipCode;
-
-        return $this;
-    }
 
     public function getCreatedAt(): ?\DateTimeInterface
     {
