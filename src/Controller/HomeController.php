@@ -37,7 +37,7 @@ class HomeController extends AbstractController
     ): Response {
         $users = $userRepository->findWithPosition();
         if (empty($users)) {
-           $users = $userRepository->findAll('DESC');
+           $users = $userRepository->findAll('DESC', 6);
         }
         $happenings = $happeningRepository->findBy(
             [],
