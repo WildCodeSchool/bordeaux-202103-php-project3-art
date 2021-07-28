@@ -24,7 +24,7 @@ class UserType extends AbstractType
             ])
             ->add('avatar', AvatarType::class,[
                 'label'=>false,
-                'required' => true,
+                'required' => false,
             ])
             ->add('firstname', TextType::class, [
                 'label' => 'Prénom',
