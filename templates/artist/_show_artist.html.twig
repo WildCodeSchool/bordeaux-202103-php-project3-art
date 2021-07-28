@@ -87,7 +87,7 @@
 							<div class="container pt-5 d-flex flex-wrap">
 								{% for friend in artist.friends %}
 									<div class="img-wrap">
-										<a href="{{ path('artist_show', {id: friend.id}) }}" target="_blank"><img src="/uploads/images/users/{{ friend.avatar.image }}" class="img-friend p-1"></a>
+										<a href="{{ path('artist_show', {id: friend.id}) }}" target="_blank"><img src="/uploads/images/users/{{ friend.avatar.image }}" class="rounded-circle img-friend p-1"></a>
 										<p class="img-description font-light">{{ friend.pseudo }}</p>
 									</div>
 								{% else %}
