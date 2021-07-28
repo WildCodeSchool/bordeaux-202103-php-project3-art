@@ -55,7 +55,7 @@
 							<span class="title-content">{{ artwork.name }}</span>
 						</h4>
 						<div class="mt-3 d-flex justify-content-between">
-							<img class="image-size mt-2" src="{{ artwork.media.url }}" alt="{{ artwork.name }}" width="100%">
+							<img class="image-size mt-2" src="/uploads/images/users/{{ artwork.media.imageArtwork.image }}"  alt="{{ artwork.media.imageArtwork.image }}" width="100%">
 						</div>
 					</div>
 				{% elseif artwork.media.support == "video" %}
