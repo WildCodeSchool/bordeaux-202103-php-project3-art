@@ -232,6 +232,7 @@
 		</div>
 	</div>
 {% endfor %}
+		{{ date_min|date('Y-m-d') }}
 <div class="col-sm-4 d-flex justify-content-center">
 	<div class="card rounded-0 card-announcement card-move bg-light mb-5 " style="width: 18rem;">
 		<div class="card-body d-flex flex-column justify-content-center newModal-trigger" data-toggle="modal" data-target="#newModal">
@@ -248,7 +249,11 @@
 					</div>
 					<div class="modal-body">
 						{{ form_start(announcementForm) }}
-						{{ form_widget(announcementForm) }}
+						{{ form_row(announcementForm.title) }}
+						{{ form_row(announcementForm.content) }}
+						{{ form_row(announcementForm.date,{'attr':{'min':date_min|date('Y-m-d')}}) }}
+						{{ form_row(announcementForm.time) }}
+						{{ form_row(announcementForm.discipline) }}
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn rounded-0 btn-secondary text-uppercase" data-dismiss="modal">Fermer</button>

@@ -14,6 +14,7 @@ for (const artist of artists) {
         if (target.dataset.link !== showLink) {
             target.classList.add('show');
             target.classList.remove('hidden');
+            target.scrollIntoView();
         }
 
 
