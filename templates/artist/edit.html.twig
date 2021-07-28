@@ -1,8 +1,8 @@
 {% extends 'base.html.twig' %}
 {% form_theme formUpdate 'bootstrap_4_layout.html.twig' %}
 {% block title %}
-	Modifier profil -
-	{{ (artist.pseudo) ? artist.pseudo : artist.firstname }}
+	Modifier profil
+	{{ (artist.pseudo) ? artist.pseudo : artist.firstname }} - Arts d'Eko
 {% endblock %}
 {% block javascripts %}
 	{{ parent() }}
