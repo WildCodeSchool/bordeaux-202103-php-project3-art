@@ -16,7 +16,7 @@
 								</div>
 								<div class="col-sm-4 offset-2">
 									<div class="card-img">
-										<img src="/uploads/images/users/{{ happening.ImageHappening.image }}" alt="{{ happening.title }}" href="{{ path('blog_article', {'id': happening.id}) }}" class="rounded-0 img-thumbnail mt-2" style="width: 18rem">
+										<a href="{{ path('blog_article', {'id': happening.id}) }}"><img src="/uploads/images/users/{{ happening.ImageHappening.image }}" alt="{{ happening.title }}" href="{{ path('blog_article', {'id': happening.id}) }}" class="rounded-0 img-thumbnail mt-2" style="width: 18rem"></a>
 									</div>
 								</div>
 							</div>
