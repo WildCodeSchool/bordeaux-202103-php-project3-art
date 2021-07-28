@@ -4,10 +4,12 @@ namespace App\Controller;
 
 use App\Entity\Avatar;
 use App\Entity\User;
+use App\Entity\City;
 use App\Repository\DisciplineRepository;
 use DateTimeInterface;
 use App\Form\RegistrationFormType;
 use App\Security\Authenticator;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,7 +27,8 @@ class RegistrationController extends AbstractController
         GuardAuthenticatorHandler $guardHandler,
         Authenticator $authenticator,
         UserPasswordEncoderInterface $passwordEncoder,
-        DisciplineRepository $disciplineRepository
+        DisciplineRepository $disciplineRepository,
+        EntityManagerInterface $entityManager
     ): Response {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
@@ -42,10 +45,18 @@ class RegistrationController extends AbstractController
             $user->setRoles(['ROLE_USER']);
             $user->setAvatar($avatar);
             $defaultDiscipline = $disciplineRepository->findOneBy(['identifier' => 'artvisu']);
+            $city = new City();
+            $city->setZipCode('33000');
+            $city->setName('Bordeaux');
+            $city->setLongitude('-0.5874');
+            $city->setLatitude('44.8572');
+
+            $entityManager->persist($city);
+            $user->setCity($city);
+            $user->getCity()->setZipCode('33000');
             $user->addDiscipline($defaultDiscipline);
             $user->setCreatedAt(new \DateTime());
             $user->setUpdatedAt(new \DateTime());
-            $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
             // do anything else you need here, like send an email
