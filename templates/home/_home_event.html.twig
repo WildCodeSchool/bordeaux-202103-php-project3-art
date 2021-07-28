@@ -1,30 +1,30 @@
 <div id="bloc-event" class="mt-5 pt-5">
-    <div class="container pt-5 pb-5">
-        <h2 class="ml-3 mb-5 presentation-title rounded-0 card-title title-shadow text-dark text-uppercase font-medium">
-            <span class="title-content">Actualités</span>
-        </h2>
-        <div class="d-flex justify-content-center mt-1">
-        <div class="swiper-container pt-5 pb-5">
-            <div class="swiper-wrapper">
-                    {% for happening in happenings %}
-                       <div class="swiper-slide">
-                           <div class="row">
-                           <div class="col-sm-6 justify-content-center">
-                               <h5 class="rounded-0 card-title font-medium">{{ happening.title }}</h5>
-                               <p class="rounded-0 card-text font-light text-justify">{{ happening.content|u.truncate(600, '...')|raw }}</p>
-                               <a href="{{ path('blog_article', {'id': happening.id}) }}" class="btn rounded-0 font-regular btn-outline-secondary">En savoir plus</a>
-                               </div>
-                           <div class="col-sm-4 offset-2">
-                               <div class="card-img">
-                               <img src="/uploads/images/users/{{ happening.ImageHappening.image }}" alt="{{ happening.title }}" class="rounded-0 img-thumbnail mt-2" style="width: 18rem">
-                           </div>
-                       </div>
-                           </div>
-                       </div>
-                    {% endfor %}
-                </div>
-            <div class="swiper-pagination"></div>
-            </div>
-        </div>
-        </div>
+	<div class="container pt-5 pb-5">
+		<h2 class="ml-3 mb-5 presentation-title rounded-0 card-title title-shadow text-dark text-uppercase font-medium">
+			<span class="title-content">Actualités</span>
+		</h2>
+		<div class="d-flex mt-1">
+			<div class="swiper-container pt-5 pb-5">
+				<div class="swiper-wrapper">
+					{% for happening in happenings %}
+						<div class="swiper-slide">
+							<div class="row d-flex justify-content-center">
+								<div class="col-sm-6 ">
+									<h5 class="rounded-0 card-title font-medium">{{ happening.title }}</h5>
+									<p class="rounded-0 card-text font-light text-justify">{{ happening.content|u.truncate(600, '...')|raw }}</p>
+									<a href="{{ path('blog_article', {'id': happening.id}) }}" class="btn rounded-0 font-regular btn-outline-secondary">En savoir plus</a>
+								</div>
+								<div class="col-sm-4 offset-2">
+									<div class="card-img">
+										<img src="/uploads/images/users/{{ happening.ImageHappening.image }}" alt="{{ happening.title }}" href="{{ path('blog_article', {'id': happening.id}) }}" class="rounded-0 img-thumbnail mt-2" style="width: 18rem">
+									</div>
+								</div>
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+				<div class="swiper-pagination"></div>
+			</div>
+		</div>
+	</div>
 </div>

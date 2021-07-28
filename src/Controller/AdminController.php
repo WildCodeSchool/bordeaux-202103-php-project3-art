@@ -20,7 +20,6 @@ use App\Repository\AnnouncementRepository;
 use App\Repository\UserRepository;
 use App\Service\SearchSingleEntityProvider;
 use Doctrine\ORM\EntityManagerInterface;
-use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -49,16 +48,11 @@ class AdminController extends AbstractController
     public function happeningShow(
         HappeningRepository $happeningRepository,
         Request $request,
-        SearchSingleEntityProvider $searchProvider,
-        PaginatorInterface $paginator
+        SearchSingleEntityProvider $searchProvider
     ): Response
     {
-        $happeningsData = $happeningRepository->findBy([], ['createdAt' => 'ASC']);
-        $happenings = $paginator->paginate(
-            $happeningsData,
-            $request->query->getInt('page', 1),
-            10
-        );
+        $happenings = $happeningRepository->findBy([], ['createdAt' => 'ASC']);
+
         $searchEntity = new SearchSingleEntity();
         $form = $this->createForm(EntitySearchType::class, $searchEntity);
         $form->handleRequest($request);
@@ -129,16 +123,11 @@ class AdminController extends AbstractController
     public function showAnnouncements(
         AnnouncementRepository $announcementRepository,
         Request $request,
-        SearchSingleEntityProvider $searchProvider,
-        PaginatorInterface $paginator
+        SearchSingleEntityProvider $searchProvider
     ): Response
     {
-        $announcementsData = $announcementRepository->findBy([], ['createdAt' => 'DESC']);
-        $announcements = $paginator->paginate(
-            $announcementsData,
-            $request->query->getInt('page', 1),
-            10
-        );
+        $announcements = $announcementRepository->findBy([], ['createdAt' => 'DESC']);
+
         $searchEntity = new SearchSingleEntity();
         $form = $this->createForm(EntitySearchType::class, $searchEntity);
         $form->handleRequest($request);
@@ -194,16 +183,11 @@ class AdminController extends AbstractController
     public function showUsers(
         UserRepository $userRepository,
         Request $request,
-        SearchSingleEntityProvider $searchProvider,
-        PaginatorInterface $paginator
+        SearchSingleEntityProvider $searchProvider
     ): Response
     {
-        $usersData = $userRepository->findByRoleUser('DESC');
-        $users = $paginator->paginate(
-            $usersData,
-            $request->query->getInt('page', 1),
-            10
-        );
+        $users = $userRepository->findByRoleUser('DESC');
+
         $searchEntity = new SearchSingleEntity();
         $form = $this->createForm(EntitySearchType::class, $searchEntity);
         $form->handleRequest($request);
@@ -244,16 +228,11 @@ class AdminController extends AbstractController
     public function articleShow(
         ArticleRepository $articleRepository,
         Request $request,
-        SearchSingleEntityProvider $searchProvider,
-        PaginatorInterface $paginator
+        SearchSingleEntityProvider $searchProvider
     ): Response
     {
-        $articlesData = $articleRepository->findBy([], ['createdAt' => 'DESC']);
-        $articles = $paginator->paginate(
-            $articlesData,
-            $request->query->getInt('page', 1),
-            10
-        );
+        $articles = $articleRepository->findBy([], ['createdAt' => 'DESC']);
+
         $searchEntity = new SearchSingleEntity();
         $form = $this->createForm(EntitySearchType::class, $searchEntity);
         $form->handleRequest($request);
@@ -322,40 +301,13 @@ class AdminController extends AbstractController
      * @Route("/external/show", name="external_show")
      */
     public function externalShow(
-        ExternalArticleRepository $externalRepository,
-        Request $request,
-        SearchSingleEntityProvider $searchProvider
+        ExternalArticleRepository $externalRepository
     ): Response
     {
         $externals = $externalRepository->findBy([], ['id' => 'DESC']);
-        $searchEntity = new SearchSingleEntity();
-        $form = $this->createForm(EntitySearchType::class, $searchEntity);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $externals = $searchEntity->getResults();
-        }
+
         return $this->render('admin/external/show_external.html.twig', [
             'externals' => $externals,
-            'form' => $form->createView()
-        ]);
-    }
-
-    /**
-     * @Route("/external/new", name="external_new")
-     */
-    public function externalNew(Request $request, EntityManagerInterface $entityManager): Response
-    {
-        $external = new ExternalArticle();
-        $form = $this->createForm(ExternalType::class, $external);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($external);
-            $entityManager->flush();
-            return $this->redirectToRoute('admin_external_show');
-        }
-        return $this->render('admin/external/new_external.html.twig', [
-            'form' => $form->createView(),
-
         ]);
     }
 
@@ -495,15 +447,10 @@ class AdminController extends AbstractController
      */
     public function showAdmin(
         UserRepository $userRepository,
-        Request $request,
-        PaginatorInterface $paginator
-    ): Response {
-        $usersData = $userRepository->findByAdmin();
-        $users = $paginator->paginate(
-            $usersData,
-            $request->query->getInt('page', 1),
-            10
-        );
+        Request $request
+    ): Response
+    {
+        $users = $userRepository->findByAdmin();
 
         return $this->render('admin/user/admin_show.html.twig', [
             'users' => $users,
