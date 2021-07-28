@@ -9,13 +9,13 @@
                 Publié le {{ happening.createdAt|date('d/m/Y') }}
                 <div class="main-box mt-5 mb-5">
                     <div class="row">
-                        <div class="col-sm-6 text-justify">
+                        <div class="col-sm-8 text-justify">
                       {{ happening.content | raw }}
 {#                            <a href="{{ path('blog_article', {'id': happening.id}) }}" class="text-right">Lien vers l'évènement</a>#}
                             <a href="{{ path(happening.type == "happening"?'blog_article':'article', {'id': happening.id}) }}" class="text-right">Lien vers l'évènement</a>
 
                         </div>
-                            <div class="col-sm-6 text-center">
+                            <div class="col-sm-4 text-right">
                     <img src="{{ happening.imageHappening is defined ? "/uploads/images/users/" ~ happening.imageHappening.image : "/uploads/images/users/" ~ happening.imageArticle.image }}" alt="{{ happening.title }}" class="card-img rounded-0 " style="width: 300px">
                     </div>
                     </div>
@@ -31,10 +31,10 @@
             <p class="text-right">Publié le {{ happening.createdAt|date('d/m/Y') }}</p>
         <div class="main-box mt-5 mb-5">
             <div class="row">
-                <div class="col-sm-6 text-center">
+                <div class="col-sm-4">
                     <img src="{{ happening.imageHappening is defined ? "/uploads/images/users/" ~ happening.imageHappening.image : "/uploads/images/users/" ~ happening.imageArticle.image }}" alt="{{ happening.title }}" class="card-img rounded-0 " style="width: 300px">
                 </div>
-                <div class="col-sm-6 text-justify">
+                <div class="col-sm-8 text-justify">
                     {{ happening.content | raw }}
                     <a href="{{ path(happening.type == "happening"?'blog_article':'article', {'id': happening.id}) }}" class="text-right">Lien vers l'évènement</a>
                 </div>
