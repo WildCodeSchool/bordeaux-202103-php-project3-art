@@ -310,6 +310,24 @@ class AdminController extends AbstractController
             'externals' => $externals,
         ]);
     }
+    /**
+     * @Route("/external/new", name="external_new")
+     */
+    public function externalNew(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $external = new ExternalArticle();
+        $form = $this->createForm(ExternalType::class, $external);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($external);
+            $entityManager->flush();
+            return $this->redirectToRoute('admin_external_show');
+        }
+        return $this->render('admin/external/new_external.html.twig', [
+            'form' => $form->createView(),
+
+        ]);
+    }
 
     /**
      * @Route("/external/edit/{id}", name="external_edit")
@@ -533,4 +551,70 @@ class AdminController extends AbstractController
         }
         return $this->redirectToRoute('admin_podium_article');
     }
+    /**
+     * @Route("/externalPodium/show", name="podium_external")
+     */
+    public function externalPodiumShow(ExternalArticleRepository $externalArticleRepository): Response
+    {
+        $externals = $externalArticleRepository->findWithPosition();
+        return $this->render('admin/podium_about_us/show.html.twig', [
+            'externals' => $externals,
+        ]);
+    }
+    /**
+     * @Route("/externalPodium/edit/{position}", name="edit_podium_external",  requirements={"position"="\d+"})
+     */
+    public function changePodiumExternal(
+        int $position,
+        ExternalArticleRepository $externalArticleRepository,
+        Request $request
+    ): Response
+    {
+        $externals = $externalArticleRepository->findAll();
+        return $this->render('admin/podium_about_us/edit.html.twig', [
+            'externals' => $externals,
+            'position' => $position,
+        ]);
+    }
+    /**
+     * @Route("/externalPodium/{position}/{id}", name="set_external_podium", methods={"POST"}, requirements={"position"="\d+"})
+     */
+    public function setPodiumExternal(
+        int $position,
+        ExternalArticle $externalArticle,
+        ExternalArticleRepository $externalArticleRepository,
+        EntityManagerInterface $entityManager,
+        Request $request
+    ): Response {
+        if ($this->isCsrfTokenValid('add_podium_external' . $externalArticle->getId(), $request->request->get('_token'))) {
+            $podiumOwner = $externalArticleRepository->findOneBy(['podium' => $position]);
+            $statusPodium = ($podiumOwner != null);
+            if ($statusPodium) {
+                if ($podiumOwner->getPodium()) {
+                    $podiumOwner->setPodium(null);
+                }
+            }
+            $externalArticle->setPodium($position);
+            $entityManager->flush();
+        }
+        return $this->redirectToRoute('admin_podium_external');
+    }
+    /**
+     * @Route("/deletePodiumExternal{position}", name="delete_external_podium", methods={"POST"},
+     *      requirements={"position"="\d+"})
+     */
+    public function deletePodiumExternal(
+        int $position,
+        ExternalArticleRepository $externalArticleRepository,
+        EntityManagerInterface $entityManager,
+        Request $request
+    ): Response {
+        if ($this->isCsrfTokenValid('delete_external_podium' . $position, $request->request->get('_token'))) {
+            $externalWithPosition = $externalArticleRepository->findOneBy(['podium' => $position]);
+            $externalWithPosition->setPodium(null);
+            $entityManager->flush();
+        }
+        return $this->redirectToRoute('admin_podium_external');
+    }
+
 }

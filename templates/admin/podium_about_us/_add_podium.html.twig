@@ -1,0 +1,5 @@
+<form method="post" action="{{ path('admin_set_external_podium', {position: position, id:external.id}) }}"
+      onsubmit="return confirm('Ajouter cet article sur le podium ?');">
+    <input type="hidden" name="_token" value="{{ csrf_token('add_podium_external' ~ external.id) }}">
+    <button class="btn-admin card-link text-dark"><i class="fas fa-user-plus"></i> Ajouter</button>
+</form>
