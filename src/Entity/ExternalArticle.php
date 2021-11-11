@@ -32,6 +32,11 @@ class ExternalArticle
      */
     private $imageExternalArticle;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $podium = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -69,6 +74,18 @@ class ExternalArticle
     public function setImageExternalArticle(?ImageExternalArticle $imageExternalArticle): self
     {
         $this->imageExternalArticle = $imageExternalArticle;
+
+        return $this;
+    }
+
+    public function getPodium(): ?int
+    {
+        return $this->podium;
+    }
+
+    public function setPodium(?int $podium): self
+    {
+        $this->podium = $podium;
 
         return $this;
     }
