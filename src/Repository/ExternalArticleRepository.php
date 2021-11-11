@@ -18,6 +18,13 @@ class ExternalArticleRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, ExternalArticle::class);
     }
+    public function findWithPosition()
+    {
+        $qb = $this->createQueryBuilder('e')
+            ->andWhere('e.podium IS NOT NULL')
+            ->orderBy('e.podium', 'ASC');
+        return  $qb->getQuery()->getResult();
+    }
 
     // /**
     //  * @return ExternalArticle[] Returns an array of ExternalArticle objects
