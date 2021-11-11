@@ -310,6 +310,24 @@ class AdminController extends AbstractController
             'externals' => $externals,
         ]);
     }
+    /**
+     * @Route("/external/new", name="external_new")
+     */
+    public function externalNew(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $external = new ExternalArticle();
+        $form = $this->createForm(ExternalType::class, $external);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($external);
+            $entityManager->flush();
+            return $this->redirectToRoute('admin_external_show');
+        }
+        return $this->render('admin/external/new_external.html.twig', [
+            'form' => $form->createView(),
+
+        ]);
+    }
 
     /**
      * @Route("/external/edit/{id}", name="external_edit")
