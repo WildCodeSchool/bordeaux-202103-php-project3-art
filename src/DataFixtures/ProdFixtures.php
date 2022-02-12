@@ -6,14 +6,21 @@ use App\Entity\Avatar;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class ProdFixtures extends Fixture
 {
+    private $encoder;
+
+    public function __construct(UserPasswordEncoderInterface $encoder)
+    {
+        $this->encoder = $encoder;
+    }
     public function load(ObjectManager $manager)
     {
         $admin = new User();
-        $admin->setCreatedAt(new DateTime());
-        $admin->setUpdatedAt(new DateTime());
+        $admin->setCreatedAt(new \DateTime());
+        $admin->setUpdatedAt(new \DateTime());
         $admin->setEmail('artdekos@protonmail.com');
         $admin->setPassword($this->encoder->encodePassword($admin, 'w@zM5~Y3Q*z4'));
         $admin->setRoles(["ROLE_SUPER_ADMIN"]);

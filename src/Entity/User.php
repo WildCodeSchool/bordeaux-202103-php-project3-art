@@ -368,7 +368,7 @@ class User implements UserInterface
         return $this->disciplines;
     }
 
-    public function addDiscipline(Discipline $discipline): self
+    public function addDiscipline(?Discipline $discipline): self
     {
         if (!$this->disciplines->contains($discipline)) {
             $this->disciplines[] = $discipline;
