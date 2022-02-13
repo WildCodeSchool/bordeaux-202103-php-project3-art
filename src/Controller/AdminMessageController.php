@@ -30,8 +30,7 @@ class AdminMessageController extends AbstractController
         PaginatorInterface $paginator,
         Request $request
     ): Response {
-        $message = new Message();
-        $admin = $userRepository->findOneBy(['email' => $message->getAdminMailMessenger()]);
+        $admin = $userRepository->findOneBy(['email' => Message::ADMIN_MAIL]);
         $adminMessagesData = $messageRepository->findBy(
             ['user' => $admin->getId()],
             ['sendAt' => 'DESC']
@@ -49,7 +48,7 @@ class AdminMessageController extends AbstractController
     public function countUnreadMessage(UserRepository $userRepository, MessageRepository $messageRepository): Response
     {
         $message = new Message();
-        $admin = $userRepository->findOneBy(['email' => $message->getAdminMailMessenger()]);
+        $admin = $userRepository->findOneBy(['email' => Message::ADMIN_MAIL]);
         $totalUnreadAdminMessage = $messageRepository->countUnreadMessage($admin);
         return $this->render('admin/_unread_admin.html.twig', [
             'totalUnreadAdminMessage' => $totalUnreadAdminMessage,

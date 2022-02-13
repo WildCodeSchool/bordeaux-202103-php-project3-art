@@ -12,6 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Message
 {
+    public const ADMIN_MAIL = "artsdeko@protonmail.com";
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
