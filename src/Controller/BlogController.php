@@ -32,12 +32,12 @@ class BlogController extends AbstractController
         );
         $orderedMixedTable = $fusion->goTenks($happeningsData, $articleData);
 
-
         $happenings = $paginator->paginate(
             $orderedMixedTable,
             $request->query->getInt('page', 1),
             3
         );
+
 
         return $this->render('blog/index.html.twig', [
             'happenings' => $happenings,

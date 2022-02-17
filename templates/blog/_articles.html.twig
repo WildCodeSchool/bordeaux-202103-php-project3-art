@@ -37,7 +37,11 @@
                 <div class="col-sm-8 text-justify">
                     {{ happening.content|u.truncate(1000, '...')|raw }}
                     <br>
-                    <a href="{{ path(happening.type == "happening"?'blog_article':'article', {'id': happening.id}) }}" class="text-right">Lien vers l'évènement</a>
+                    {% if happening.type == "happening" %}
+                        <a href="{{ path('blog_article', {'id': happening.id}) }}" class="text-right">Lien vers l'évènement</a>
+                    {% else %}
+                        <a href="{{ path('article', {'id': happening.id}) }}" class="text-right">Lien vers l'article</a>
+                    {% endif %}
                 </div>
             </div>
         </div>
