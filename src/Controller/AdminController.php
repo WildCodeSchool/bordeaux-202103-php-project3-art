@@ -96,6 +96,7 @@ class AdminController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $happening->setUser($this->getUser());
             $entityManager->flush();
+            dd($happening->getImageHappening());
             return $this->redirectToRoute('admin_happening_show');
         }
         return $this->render('admin/happening/edit_happening.html.twig', [

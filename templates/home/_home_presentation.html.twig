@@ -5,12 +5,12 @@
 			</span>
 		</h2>
 		<div class="row">
-			<p class="col-md-6 mt-5 mb-5 rounded-0 card-text font-light text-block text-justify ">
+			<div class="col-md-6 mt-5 mb-5 rounded-0 card-text font-light ">
 				{{ presentation.description|raw }}
-			</p>
+			</div>
 			<div class="col-md-4 mb-5 mt-5 offset-md-2">
-				<img class="img-fluid" src="/uploads/images/users/{{ presentation.picture }}"  >
-				<p class="mb-5">Crédit photo: {{ presentation.copyright }}</p>
+				<img class="img-fluid" src="/uploads/images/users/{{ presentation.image }}"  >
+				<p class="mb-5">{{ presentation.copyright }}</p>
 			</div>
 		</div>
 	</div>
