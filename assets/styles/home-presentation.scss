@@ -9,6 +9,10 @@
     margin-bottom: 80px;
     padding-bottom: 40px;
     background: $presentation;
+     color:#000000 !important;
+  font-size: 1rem !important;
+
+
 }
 
 .presentation-body {
@@ -26,3 +30,4 @@
 .title-content {
   @include spanHighlight();
   }
+

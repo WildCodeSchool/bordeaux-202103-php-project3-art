@@ -21,8 +21,8 @@ class ImageArtworkType extends AbstractType
                 'label' => false,
                 'attr' => ['lang' => 'fr'],
                 'constraints' => [new File([
-                    'maxSize' => '1M',
-                    'maxSizeMessage' => 'Taille max de fichier 1M',
+                    'maxSize' => '4M',
+                    'maxSizeMessage' => 'Taille max de fichier 4M',
                     'mimeTypes' => [
                         'image/jpg',
                         'image/png',
