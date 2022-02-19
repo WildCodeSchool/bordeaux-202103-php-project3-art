@@ -9,6 +9,7 @@ use App\Entity\GlobalSearch;
 use App\Repository\ArticleRepository;
 use App\Repository\ExternalArticleRepository;
 use App\Repository\HappeningRepository;
+use App\Repository\PresentationRepository;
 use App\Repository\UserRepository;
 use App\Service\GlobalSearchProvider;
 use Doctrine\ORM\EntityManagerInterface;
@@ -33,6 +34,7 @@ class HomeController extends AbstractController
         UserRepository $userRepository,
         HappeningRepository $happeningRepository,
         ExternalArticleRepository $externalArticleRepository,
+        PresentationRepository $presentationRepository,
         ArticleRepository $articleRepository
     ): Response {
         $users = $userRepository->findWithPosition();
@@ -66,12 +68,14 @@ class HomeController extends AbstractController
 
             return $this->redirectToRoute('home_page');
         }
+        $presentation = $presentationRepository->findAll()[0];
         return $this->render('home/index.html.twig', [
             'form' => $form->createView(),
             'artists' => $users,
             'happenings' => $happenings,
             'externals' => $externals,
             'articles' => $articlesAboutThem,
+            'presentation' => $presentation
         ]);
     }
 
