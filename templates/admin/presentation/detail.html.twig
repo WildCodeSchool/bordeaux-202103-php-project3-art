@@ -1,0 +1,27 @@
+{% extends 'admin/dashboard.html.twig' %}
+
+{% block title %}
+    {{ parent() }} - Présentation d'Arts d'Éko
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h2 class="ml-3 mb-5 rounded-0 card-title title-shadow text-uppercase font-medium">
+			<span class="title-content">Arts d'éko c'est quoi ?
+			</span>
+        </h2>
+        <div class="row">
+            <div class="col-md-6 mt-5 mb-5 rounded-0  font-light text-block ">
+                    {{ presentation.description|raw }}
+            </div>
+            <div class="col-md-4 mb-5 mt-5 offset-md-2">
+                <img class="img-fluid" src="/uploads/images/users/{{ presentation.image }}"  >
+                <p class="mb-5">Crédit photo: {{ presentation.copyright }}</p>
+            </div>
+            <p>
+                <a href="{{ path('admin_presentation_update') }}"
+                   class="card-link text-dark"><i class="far fa-edit"></i>Modifier</a>
+            </p>
+        </div>
+    </div>
+{% endblock %}

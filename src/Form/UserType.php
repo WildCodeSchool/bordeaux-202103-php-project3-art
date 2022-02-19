@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Avatar;
 use App\Entity\Discipline;
 use App\Entity\User;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;

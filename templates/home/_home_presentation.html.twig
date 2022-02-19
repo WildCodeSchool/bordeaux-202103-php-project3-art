@@ -5,17 +5,12 @@
 			</span>
 		</h2>
 		<div class="row">
-			<p class="col-md-6 mt-5 mb-5 rounded-0 card-text font-light text-block text-justify ">
-				Arts d'Éko a pour mission d'accompagner des jeunes de moins de 25 ans, doté·e·s de talents s’appuyant sur des pratiques éprouvées, mais rencontrant des difficultés d’accès à des moyens : d’information, de promotion de leurs talents, et d’intégration dans les circuits adaptés à leurs projets.
-				<br>
-				<br>
-				Nous les accompagnons individuellement et collectivement dans la construction de projets artistiques et proposons parallèlement l'organisation d'événements au sein de structures à visée sociale et solidaire (ex : expositions/vernissages, concerts, performances de danse). L'association souhaite ainsi participer à la mise en avant des différentes créations et de l’engagement des structures partenaires.
-				<br>
-				<br>
-				Objectif : offrir à des artistes émergent·e·s de nouvelles opportunités d'expression au sein de l'espace public et de la lutte contre toutes les formes d'inégalités.
-			</p>
+			<div class="col-md-6 mt-5 mb-5 rounded-0 card-text font-light ">
+				{{ presentation.description|raw }}
+			</div>
 			<div class="col-md-4 mb-5 mt-5 offset-md-2">
-				<img class="img-fluid mb-5" src="{{ asset('build/photo_asso.jpg') }}">
+				<img class="img-fluid" src="/uploads/images/users/{{ presentation.image }}"  >
+				<p class="mb-5">{{ presentation.copyright }}</p>
 			</div>
 		</div>
 	</div>

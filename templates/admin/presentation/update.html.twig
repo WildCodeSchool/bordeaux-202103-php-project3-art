@@ -1,0 +1,24 @@
+{% extends 'admin/dashboard.html.twig' %}
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+{% block title %}
+    {{ parent() }} - Modification Présentation d'Arts d'Éko
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('inputFileValue') }}
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h2 class="ml-3 mb-5 rounded-0 card-title title-shadow text-uppercase font-medium">
+			<span class="title-content">Arts d'éko c'est quoi ?
+			</span>
+        </h2>
+        <div class="mt-5">
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <button class="btn rounded-0 btn-outline-secondary text-uppercase">Modifier</button>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}
