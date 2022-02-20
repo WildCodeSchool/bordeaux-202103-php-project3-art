@@ -21,8 +21,8 @@ class AvatarType extends AbstractType
                 'label' => false,
                 'attr' => ['lang' => 'fr'],
                 'constraints' => [new File([
-                    'maxSize' => '2M',
-                    'maxSizeMessage' => 'Taille max de fichier 2M',
+                    'maxSize' => '4M',
+                    'maxSizeMessage' => 'Taille max de fichier 4M',
                     'mimeTypes' => [
                         'image/jpg',
                         'image/png',
